@@ -1,4 +1,4 @@
-CREATE TABLE casting(
+CREATE TABLE IF NOT EXISTS casting(
    cast_id INT auto_increment NOT NULL,
    name VARCHAR(50),
    surname VARCHAR(50),
@@ -6,13 +6,13 @@ CREATE TABLE casting(
    PRIMARY KEY(cast_id)
 );
 
-CREATE TABLE picture(
+CREATE TABLE IF NOT EXISTS picture(
    picture_id INT auto_increment NOT NULL,
    link VARCHAR(100),
    PRIMARY KEY(picture_id)
 );
 
-CREATE TABLE person(
+CREATE TABLE IF NOT EXISTS person(
    person_id INT auto_increment NOT NULL,
    username VARCHAR(50),
    name VARCHAR(50),
@@ -25,13 +25,13 @@ CREATE TABLE person(
    FOREIGN KEY(picture_id) REFERENCES picture(picture_id)
 );
 
-CREATE TABLE genre(
+CREATE TABLE IF NOT EXISTS genre(
    genre_id INT auto_increment NOT NULL,
    name VARCHAR(50),
    PRIMARY KEY(genre_id)
 );
 
-CREATE TABLE shows(
+CREATE TABLE IF NOT EXISTS shows(
    show_id INT auto_increment NOT NULL,
    name VARCHAR(50),
    description VARCHAR(500),
@@ -47,7 +47,7 @@ CREATE TABLE shows(
    FOREIGN KEY(picture_id) REFERENCES picture(picture_id)
 );
 
-CREATE TABLE episode(
+CREATE TABLE IF NOT EXISTS episode(
    episode_id INT auto_increment NOT NULL,
    name VARCHAR(100),
    description VARCHAR(500),
@@ -59,7 +59,7 @@ CREATE TABLE episode(
    FOREIGN KEY(show_id) REFERENCES shows(show_id)
 );
 
-CREATE TABLE favorite(
+CREATE TABLE IF NOT EXISTS favorite(
    show_id INT,
    person_id INT,
    rating TINYINT,
@@ -69,7 +69,7 @@ CREATE TABLE favorite(
    FOREIGN KEY(person_id) REFERENCES person(person_id)
 );
 
-CREATE TABLE play(
+CREATE TABLE IF NOT EXISTS play(
    play_id INT auto_increment NOT NULL,
    cast_id INT,
    show_id INT,
@@ -79,7 +79,7 @@ CREATE TABLE play(
    FOREIGN KEY(show_id) REFERENCES shows(show_id)
 );
 
-CREATE TABLE has(
+CREATE TABLE IF NOT EXISTS has(
    show_id INT,
    genre_id INT,
    PRIMARY KEY(show_id, genre_id),
@@ -87,7 +87,7 @@ CREATE TABLE has(
    FOREIGN KEY(genre_id) REFERENCES genre(genre_id)
 );
 
-CREATE TABLE comments(
+CREATE TABLE IF NOT EXISTS comments(
    comment_id INT  auto_increment NOT NULL,
    show_id INT NULL,
    episode_id INT NULL,
