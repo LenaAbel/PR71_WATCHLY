@@ -58,15 +58,15 @@ Person.init(
 
 module.exports = Person;
 
-// // create a person example
-// const person = Person.build({
-//     person_id: 1,
-//     username: 'username',
-//     name: 'name',
-//     surname: 'surname',
-//     is_admin: true,
-//     mail: 'mail',
-//     password: 'password',
-//     picture_id: 1,
-// });
-// person.save().then(() => console.log('Person created'));
+// create a person example
+const person = Person.build({
+    person_id: 1,
+    username: 'username',
+    name: 'name',
+    surname: 'surname',
+    is_admin: true,
+    mail: 'mail',
+    password: 'password',
+    picture_id: 1,
+});
+person.save().then(() => console.log('Person created'));
