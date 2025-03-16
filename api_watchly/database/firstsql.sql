@@ -1,19 +1,19 @@
 CREATE TABLE casting(
-   Cast_id INT,
+   cast_id INT auto_increment NOT NULL,
    name VARCHAR(50),
    surname VARCHAR(50),
    is_actor BOOLEAN,
-   PRIMARY KEY(Cast_id)
+   PRIMARY KEY(cast_id)
 );
 
 CREATE TABLE picture(
-   picture_id INT,
+   picture_id INT auto_increment NOT NULL,
    link VARCHAR(100),
    PRIMARY KEY(picture_id)
 );
 
 CREATE TABLE person(
-   person_id INT,
+   person_id INT auto_increment NOT NULL,
    username VARCHAR(50),
    name VARCHAR(50),
    surname VARCHAR(50),
@@ -26,13 +26,13 @@ CREATE TABLE person(
 );
 
 CREATE TABLE genre(
-   Genre_id INT,
+   genre_id INT auto_increment NOT NULL,
    name VARCHAR(50),
-   PRIMARY KEY(Genre_id)
+   PRIMARY KEY(genre_id)
 );
 
 CREATE TABLE shows(
-   serie_id INT,
+   show_id INT auto_increment NOT NULL,
    name VARCHAR(50),
    description VARCHAR(500),
    released_date DATE,
@@ -41,61 +41,63 @@ CREATE TABLE shows(
    status VARCHAR(50),
    duration TIME,
    is_movie BOOLEAN,
-   rating INT,
+   rating TINYINT CHECK (rating BETWEEN 0 AND 10),
    picture_id INT NOT NULL,
-   PRIMARY KEY(serie_id),
+   PRIMARY KEY(show_id),
    FOREIGN KEY(picture_id) REFERENCES picture(picture_id)
 );
 
 CREATE TABLE episode(
-   episode_id INT,
+   episode_id INT auto_increment NOT NULL,
    name VARCHAR(100),
    description VARCHAR(500),
    duration TIME,
    picture_id INT NOT NULL,
-   serie_id INT NOT NULL,
+   show_id INT NOT NULL,
    PRIMARY KEY(episode_id),
    FOREIGN KEY(picture_id) REFERENCES picture(picture_id),
-   FOREIGN KEY(serie_id) REFERENCES shows(serie_id)
+   FOREIGN KEY(show_id) REFERENCES shows(show_id)
 );
 
 CREATE TABLE favorite(
-   serie_id INT,
+   show_id INT,
    person_id INT,
-   rating INT,
+   rating TINYINT,
    is_watched BOOLEAN,
-   PRIMARY KEY(serie_id, person_id),
-   FOREIGN KEY(serie_id) REFERENCES shows(serie_id),
+   PRIMARY KEY(show_id, person_id),
+   FOREIGN KEY(show_id) REFERENCES shows(show_id),
    FOREIGN KEY(person_id) REFERENCES person(person_id)
 );
 
 CREATE TABLE play(
-   Cast_id INT,
-   serie_id INT,
-   play_id VARCHAR(50),
+   play_id INT auto_increment NOT NULL,
+   cast_id INT,
+   show_id INT,
    role VARCHAR(50),
-   PRIMARY KEY(Cast_id, serie_id),
-   FOREIGN KEY(Cast_id) REFERENCES casting(Cast_id),
-   FOREIGN KEY(serie_id) REFERENCES shows(serie_id)
+   PRIMARY KEY(play_id),
+   FOREIGN KEY(cast_id) REFERENCES casting(cast_id),
+   FOREIGN KEY(show_id) REFERENCES shows(show_id)
 );
 
 CREATE TABLE has(
-   serie_id INT,
-   Genre_id INT,
-   PRIMARY KEY(serie_id, Genre_id),
-   FOREIGN KEY(serie_id) REFERENCES shows(serie_id),
-   FOREIGN KEY(Genre_id) REFERENCES genre(Genre_id)
+   show_id INT,
+   genre_id INT,
+   PRIMARY KEY(show_id, genre_id),
+   FOREIGN KEY(show_id) REFERENCES shows(show_id),
+   FOREIGN KEY(genre_id) REFERENCES genre(genre_id)
 );
 
 CREATE TABLE comments(
-   episode_id INT,
-   person_id INT,
-   comment_id INT NOT NULL,
+   comment_id INT  auto_increment NOT NULL,
+   show_id INT NULL,
+   episode_id INT NULL,
+   person_id INT NOT NULL,
    comment_text VARCHAR(500),
    comment_date DATETIME,
    is_watched BOOLEAN,
-   PRIMARY KEY(episode_id, person_id),
-   UNIQUE(comment_id),
+   is_spoiler BOOLEAN,
+   PRIMARY KEY(comment_id),
+   FOREIGN KEY(show_id) REFERENCES shows(show_id),
    FOREIGN KEY(episode_id) REFERENCES episode(episode_id),
    FOREIGN KEY(person_id) REFERENCES person(person_id)
 );
