@@ -18,15 +18,12 @@ class Casting extends Model {}
     },
     name: {
         type: DataTypes.STRING(50),
-        allowNull: true,
     },
     surname: {
         type: DataTypes.STRING(50),
-        allowNull: true,
     },
     is_actor: {
         type: DataTypes.BOOLEAN,
-        allowNull: true,
     },
 }, 
 {
@@ -38,7 +35,7 @@ class Casting extends Model {}
 
 module.exports = Casting;
 
-// // create a casting example
+// create a casting example
 const casting = Casting.build({
     cast_id: 1,
     name: 'name',

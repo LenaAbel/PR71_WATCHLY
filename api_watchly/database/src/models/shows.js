@@ -71,5 +71,4 @@ const shows  = Shows.build({
     picture_id: 1,
 
 });
-shows.save().then(() => console.log
-('Show created'));
+shows.save().then(() => console.log('Show created'));

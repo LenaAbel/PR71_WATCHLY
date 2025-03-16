@@ -17,7 +17,6 @@ Picture.init(
         },
         link: {
             type: DataTypes.STRING(100),
-            allowNull: true,
         },
     },
     {

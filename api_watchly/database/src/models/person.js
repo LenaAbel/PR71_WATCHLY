@@ -17,27 +17,21 @@ Person.init(
         },
         username: {
             type: DataTypes.STRING(50),
-            allowNull: true,
         },
         name: {
             type: DataTypes.STRING(50),
-            allowNull: true,
         },
         surname: {
             type: DataTypes.STRING(50),
-            allowNull: true,
         },
         is_admin: {
             type: DataTypes.BOOLEAN,
-            allowNull: true,
         },
         mail: {
             type: DataTypes.STRING(100),
-            allowNull: true,
         },
         password: {
             type: DataTypes.STRING(50),
-            allowNull: true,
         },
     },
     {
