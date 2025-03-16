@@ -20,9 +20,7 @@ CREATE TABLE IF NOT EXISTS person(
    is_admin BOOLEAN,
    mail VARCHAR(100),
    password VARCHAR(50),
-   picture_id INT NOT NULL,
-   PRIMARY KEY(person_id),
-   FOREIGN KEY(picture_id) REFERENCES picture(picture_id)
+   PRIMARY KEY(person_id)
 );
 
 CREATE TABLE IF NOT EXISTS genre(
@@ -42,9 +40,7 @@ CREATE TABLE IF NOT EXISTS shows(
    duration TIME,
    is_movie BOOLEAN,
    rating TINYINT CHECK (rating BETWEEN 0 AND 10),
-   picture_id INT NOT NULL,
-   PRIMARY KEY(show_id),
-   FOREIGN KEY(picture_id) REFERENCES picture(picture_id)
+   PRIMARY KEY(show_id)
 );
 
 CREATE TABLE IF NOT EXISTS episode(
@@ -52,10 +48,8 @@ CREATE TABLE IF NOT EXISTS episode(
    name VARCHAR(100),
    description VARCHAR(500),
    duration TIME,
-   picture_id INT NOT NULL,
    show_id INT NOT NULL,
    PRIMARY KEY(episode_id),
-   FOREIGN KEY(picture_id) REFERENCES picture(picture_id),
    FOREIGN KEY(show_id) REFERENCES shows(show_id)
 );
 
@@ -98,6 +92,19 @@ CREATE TABLE IF NOT EXISTS comments(
    is_spoiler BOOLEAN,
    PRIMARY KEY(comment_id),
    FOREIGN KEY(show_id) REFERENCES shows(show_id),
+   FOREIGN KEY(episode_id) REFERENCES episode(episode_id),
+   FOREIGN KEY(person_id) REFERENCES person(person_id)
+);
+
+CREATE TABLE IF NOT EXISTS illustrated(
+   illustrated_id INT auto_increment NOT NULL,
+   show_id INT NULL,
+   picture_id INT NULL,
+   episode_id INT NULL,
+   person_id INT NULL,
+   PRIMARY KEY(illustrated_id),
+   FOREIGN KEY(show_id) REFERENCES shows(show_id),
+   FOREIGN KEY(picture_id) REFERENCES picture(picture_id),
    FOREIGN KEY(episode_id) REFERENCES episode(episode_id),
    FOREIGN KEY(person_id) REFERENCES person(person_id)
 );

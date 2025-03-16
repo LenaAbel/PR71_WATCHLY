@@ -39,14 +39,6 @@ Person.init(
             type: DataTypes.STRING(50),
             allowNull: true,
         },
-        picture_id: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            references: {
-                model: 'picture', // Name of the table being referenced
-                key: 'picture_id',
-            },
-        },
     },
     {
         sequelize,
@@ -67,6 +59,5 @@ const person = Person.build({
     is_admin: true,
     mail: 'mail',
     password: 'password',
-    picture_id: 1,
 });
 person.save().then(() => console.log('Person created'));
