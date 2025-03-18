@@ -33,6 +33,15 @@ Episode.init(
                 key: 'show_id',
             },
         },
+        season: {
+            type: DataTypes.TINYINT,
+        },
+        episode_number: {
+            type: DataTypes.TINYINT,
+        },
+        release_date: {
+            type: DataTypes.DATE,
+        },
     },
     {
     sequelize,

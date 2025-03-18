@@ -49,6 +49,9 @@ CREATE TABLE IF NOT EXISTS episode(
    description VARCHAR(500),
    duration TIME,
    show_id INT NOT NULL,
+   season TINYINT,
+   episode_number TINYINT,
+   release_date DATE,
    PRIMARY KEY(episode_id),
    FOREIGN KEY(show_id) REFERENCES shows(show_id)
 );
@@ -56,7 +59,7 @@ CREATE TABLE IF NOT EXISTS episode(
 CREATE TABLE IF NOT EXISTS favorite(
    show_id INT,
    person_id INT,
-   rating TINYINT,
+   rating TINYINT CHECK (rating BETWEEN 0 AND 10),
    is_watched BOOLEAN,
    PRIMARY KEY(show_id, person_id),
    FOREIGN KEY(show_id) REFERENCES shows(show_id),
