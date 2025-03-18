@@ -1,4 +1,4 @@
-const { connect } = require("./connexion.js");
+const { connect } = require("./config/database.js");
 const fs = require("fs");
 
 const dbPath = "../data/watchlyDB";
