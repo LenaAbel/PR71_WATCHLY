@@ -1,8 +1,19 @@
 {
+  "name": "api_watchly",
+  "version": "1.0.0",
+  "description": "API for Watchly application",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm run create-db && nodemon server.js",
+    "create-db": "node database/src/creation.js"
+  },
   "dependencies": {
     "axios": "^1.8.3",
+    "chalk": "^4.1.2",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
-    "sequelize": "^6.37.5"
+    "nodemon": "^3.1.9",
+    "sequelize": "^6.37.5",
+    "sqlite3": "^5.1.6"
   }
 }
