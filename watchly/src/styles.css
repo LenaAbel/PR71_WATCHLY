@@ -1,1 +1,38 @@
 /* You can add global styles to this file, and also import other style files */
+@layer theme {
+    :root {
+        --color-main-light: #912B63;
+        --color-main-dark: #A288E3;
+
+        --bg-color-light: #FFFFFF;
+        --bg-surface-1-light: #f0f0f0;
+        --bg-surface-2-light: #e1e1e1;
+        --bg-surface-3-light: #d3d3d3;
+        --bg-surface-4-light: #c5c5c5;
+        --bg-surface-5-light: #b6b6b6;
+
+        --bg-color-dark: #120D17;
+        --bg-surface-1-dark: #28242C;
+        --bg-surface-2-dark: #3E3B43;
+        --bg-surface-3-dark: #57545B;
+        --bg-surface-4-dark: #716E74;
+        --bg-surface-5-dark: #8B898E;
+
+        --shadow-light: 5px 10px 20px rgba(203, 150, 174, 0.25), 10px 30px 100px rgba(203, 150, 174, 0.1);
+        --shadow-dark: 5px 10px 20px rgba(85, 71, 116, 0.25), 10px 30px 100px rgba(85, 71, 116, 0.1);
+
+        --font-color-light: #000000;
+        --font-color-dark: #FFFFFF;
+
+        --radius-outer: 15px;
+        --radius-inner: 10px;
+    }
+
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Lexend', sans-serif;
+}
