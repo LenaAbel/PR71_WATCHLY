@@ -2,6 +2,10 @@
 
 A TV & Movie tracker built with Angular & TypeScript that lets users manage watchlists, track progress, discover new content, and rate shows/movies.
 
+## FIGMA design
+
+https://www.figma.com/design/BFw10l912WWP8uPyzLCNX7/Watchly-maquette-lololol?node-id=0-1&t=wlwYexfgLVnHw9ap-1
+
 ## Features
 
 - Create and manage watchlists
