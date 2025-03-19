@@ -1,4 +1,4 @@
-# WATCHLY
+# WATCHLY 🎞️⭐
 
 A TV & Movie tracker built with Angular & TypeScript that lets users manage watchlists, track progress, discover new content, and rate shows/movies.
 
@@ -47,4 +47,5 @@ npm start
 
 ## Development
 
-- Run `ng serve` for a dev server
+- Run `ng serve` for a dev front
+- Run `npm start` for a dev api
