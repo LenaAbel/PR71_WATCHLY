@@ -1,5 +1,5 @@
 // get the ids of the trending shows
-const { getTrending, getID } = require('../../database/src/controllers/api');
+const { getTrending, getID } = require('../../database/src/tmdb/api');
 
 async function getIds(name, time) {
     const data = await getTrending(name, time);
