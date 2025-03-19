@@ -12,16 +12,16 @@ function getIds(name, time){
     });
 }
 
-function getShows(name, time){
-    return getIds(name, time).then((ids) => {
-        let shows = [];
-        for (let i = 0; i < ids.length; i++) {
-            console.log(getID(ids[i], name));
-            shows.push(getID(ids[i], name));
-        }
-        return shows;
-    });
+async function getShows(name, time){
+    const ids = await getIds(name, time);
+    let shows = [];
+    for (let i = 0; i < ids.length; i++) {
+        shows.push(await getID(ids[i], name));
+    }
+    return shows;
 }
 
-let shows = getShows('tv', 'week');
-// console.log(shows[0].id);
+(async () => {
+    let shows = await getShows('tv', 'week');
+    console.log(shows); // Utilize the resolved value of shows
+})();
