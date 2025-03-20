@@ -1,0 +1,29 @@
+<div class="max-w-sm mx-auto bg-white p-6 rounded-lg shadow-md">
+  <h2 class="text-xl font-semibold text-center text-purple-800 mb-4">Welcome back !</h2>
+
+  <form name="form" #f="ngForm" (ngSubmit)="onSubmit()">
+    <label class="block text-gray-700">E-mail</label>
+    <input
+        type="email"
+        class="form-control border border-gray-300 p-2 rounded w-full mt-4"
+        name="email"
+        [(ngModel)]="form.email"
+        required
+        placeholder="E-mail"
+      />
+
+    <label class="block text-gray-700">Password</label>
+    <input
+        type="password"
+        class="form-control border border-gray-300 p-2 rounded w-full mt-4"
+        name="password"
+        [(ngModel)]="form.password"
+        required
+        placeholder="Password"
+      />
+
+    <button type="submit" class="bg-purple-700 text-white p-2 rounded w-full">
+      Log in !
+    </button>
+  </form>
+</div>
