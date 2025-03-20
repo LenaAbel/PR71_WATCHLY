@@ -1,5 +1,14 @@
 // get the ids of the trending shows
 const { getTrending, getID } = require('../../database/src/tmdb/api');
+const Show = require('../../database/src/models/shows.js');
+const { Sequelize } = require('sequelize');
+const path = require('path');
+const { get } = require('http');
+
+const sequelize = new Sequelize({
+    dialect: 'sqlite',
+    storage: path.resolve(__dirname, '../../database/data/watchlyDB'),
+});
 
 async function getIds(name, time) {
     const data = await getTrending(name, time);
@@ -20,10 +29,21 @@ async function getShows(name, time) {
     return shows;
 }
 
+
+function getShowIdFromDB(show){
+    return Show.findOne({
+        where: {
+            name: show.name,
+            description: show.overview,
+        }
+    });
+}
+
 let shows = getShows('tv', 'week');
 // console.log(shows[0].id);
 
 module.exports = {
     getIds,
-    getShows
+    getShows,
+    getShowIdFromDB
 }

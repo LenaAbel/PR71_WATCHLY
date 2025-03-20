@@ -17,7 +17,7 @@ async function addsShowsDB(time){
     try {
         const movies = await showsServices.getShows("movie", time); // get trending movies
         const tv = await showsServices.getShows("tv", time); // get trending tv shows
-        // addMovies(movies); // add trending movies to the database
+        addMovies(movies); // add trending movies to the database
         addTv(tv); // add trending tv shows to the database
     } catch (error) {
         console.error(chalk.red('Error getting shows:', error));
@@ -97,7 +97,6 @@ async function createTv(s){
         is_displayed: false,
         rating: s.vote_average || 0,
     });
-
 }
 
 
@@ -107,4 +106,11 @@ function saveShow(show){
 }
 
 
-addsShowsDB('week');
+module.exports = {
+    addsShowsDB,
+    createMovie,
+    createTv,
+    saveShow
+}
+
+// addsShowsDB('week');
