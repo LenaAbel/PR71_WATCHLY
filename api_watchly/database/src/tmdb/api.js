@@ -73,6 +73,12 @@ function getTrending(name, time) {
     return fetchTMDB('trending/'+name+'/'+time,'trending');
 }
 
+function getSeason(id, number) {
+    return fetchTMDB('tv/'+id+'/season/'+number, 'seasons');
+}
+
+
+
 // console.log(getTrending('tv', 'week'));
 
-module.exports = { getID, getTitle, getCast, getComments, getImage, getTrailer, getTrending };
+module.exports = { getID, getTitle, getCast, getComments, getImage, getTrailer, getTrending, getSeason };
