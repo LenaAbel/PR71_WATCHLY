@@ -1,0 +1,12 @@
+.infos > span:not(:last-of-type)::after {
+    content: " | ";
+    padding: 1em;
+    color: var(--bg-surface-5-light);
+}
+
+@media (prefers-color-scheme: dark) {
+    .infos > span:not(:last-of-type)::after {
+        content: " | ";
+        color: var(--bg-surface-5-dark);
+    }
+}
