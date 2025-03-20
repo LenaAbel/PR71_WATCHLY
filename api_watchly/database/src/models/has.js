@@ -1,10 +1,12 @@
 const { Model, DataTypes } = require('sequelize');
 const { Sequelize } = require('sequelize');
+const path = require('path');
 
 const sequelize = new Sequelize({
     dialect: 'sqlite',
-    storage: '../../data/watchlyDB',
+    storage: path.resolve(__dirname, '../../data/watchlyDB'),
 });
+
 
 class Has extends Model {}
 

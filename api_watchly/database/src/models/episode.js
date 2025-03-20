@@ -1,10 +1,13 @@
 const { Model, DataTypes } = require('sequelize');
 const { Sequelize } = require('sequelize');
 
+const path = require('path');
+
 const sequelize = new Sequelize({
     dialect: 'sqlite',
-    storage: '../../data/watchlyDB',
+    storage: path.resolve(__dirname, '../../data/watchlyDB'),
 });
+
 
 class Episode extends Model {}
 
@@ -52,12 +55,3 @@ Episode.init(
 
 module.exports = Episode;
 
-// create a show example
-const ep  = Episode.build({
-    episode_id: 1,
-    name: 'Episode 1',
-    description: 'Description',
-    duration: '01:00:00',
-    show_id: 1,
-});
-ep.save().then(() => console.log('Episode created'));
