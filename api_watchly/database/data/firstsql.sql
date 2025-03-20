@@ -1,36 +1,32 @@
 CREATE TABLE IF NOT EXISTS casting(
-   cast_id INT auto_increment NOT NULL,
+   cast_id INTEGER PRIMARY KEY AUTOINCREMENT,
    name VARCHAR(50),
    surname VARCHAR(50),
-   is_actor BOOLEAN,
-   PRIMARY KEY(cast_id)
+   is_actor BOOLEAN
 );
 
 CREATE TABLE IF NOT EXISTS picture(
-   picture_id INT auto_increment NOT NULL,
-   link VARCHAR(100),
-   PRIMARY KEY(picture_id)
+   picture_id INTEGER PRIMARY KEY AUTOINCREMENT,
+   link VARCHAR(100)
 );
 
 CREATE TABLE IF NOT EXISTS person(
-   person_id INT auto_increment NOT NULL,
+   person_id INTEGER PRIMARY KEY AUTOINCREMENT,
    username VARCHAR(50),
    name VARCHAR(50),
    surname VARCHAR(50),
    is_admin BOOLEAN,
    mail VARCHAR(100),
-   password VARCHAR(50),
-   PRIMARY KEY(person_id)
+   password VARCHAR(50)
 );
 
 CREATE TABLE IF NOT EXISTS genre(
-   genre_id INT auto_increment NOT NULL,
-   name VARCHAR(50),
-   PRIMARY KEY(genre_id)
+   genre_id INTEGER PRIMARY KEY AUTOINCREMENT,
+   name VARCHAR(50)
 );
 
 CREATE TABLE IF NOT EXISTS shows(
-   show_id INT auto_increment NOT NULL,
+   show_id INTEGER PRIMARY KEY AUTOINCREMENT,
    name VARCHAR(50),
    description VARCHAR(500),
    released_date DATE,
@@ -39,12 +35,12 @@ CREATE TABLE IF NOT EXISTS shows(
    status VARCHAR(50),
    duration TIME,
    is_movie BOOLEAN,
-   rating TINYINT CHECK (rating BETWEEN 0 AND 10),
-   PRIMARY KEY(show_id)
+   is_displayed BOOLEAN,
+   rating TINYINT CHECK (rating BETWEEN 0 AND 10)
 );
 
 CREATE TABLE IF NOT EXISTS episode(
-   episode_id INT auto_increment NOT NULL,
+   episode_id INTEGER PRIMARY KEY AUTOINCREMENT,
    name VARCHAR(100),
    description VARCHAR(500),
    duration TIME,
@@ -52,7 +48,6 @@ CREATE TABLE IF NOT EXISTS episode(
    season TINYINT,
    episode_number TINYINT,
    release_date DATE,
-   PRIMARY KEY(episode_id),
    FOREIGN KEY(show_id) REFERENCES shows(show_id)
 );
 
@@ -67,11 +62,10 @@ CREATE TABLE IF NOT EXISTS favorite(
 );
 
 CREATE TABLE IF NOT EXISTS play(
-   play_id INT auto_increment NOT NULL,
+   play_id INTEGER PRIMARY KEY AUTOINCREMENT,
    cast_id INT,
    show_id INT,
    role VARCHAR(50),
-   PRIMARY KEY(play_id),
    FOREIGN KEY(cast_id) REFERENCES casting(cast_id),
    FOREIGN KEY(show_id) REFERENCES shows(show_id)
 );
@@ -85,7 +79,7 @@ CREATE TABLE IF NOT EXISTS has(
 );
 
 CREATE TABLE IF NOT EXISTS comments(
-   comment_id INT  auto_increment NOT NULL,
+   comment_id INTEGER  PRIMARY KEY AUTOINCREMENT,
    show_id INT NULL,
    episode_id INT NULL,
    person_id INT NOT NULL,
@@ -93,19 +87,17 @@ CREATE TABLE IF NOT EXISTS comments(
    comment_date DATETIME,
    is_watched BOOLEAN,
    is_spoiler BOOLEAN,
-   PRIMARY KEY(comment_id),
    FOREIGN KEY(show_id) REFERENCES shows(show_id),
    FOREIGN KEY(episode_id) REFERENCES episode(episode_id),
    FOREIGN KEY(person_id) REFERENCES person(person_id)
 );
 
 CREATE TABLE IF NOT EXISTS illustrated(
-   illustrated_id INT auto_increment NOT NULL,
+   illustrated_id INTEGER PRIMARY KEY AUTOINCREMENT,
    show_id INT NULL,
    picture_id INT NULL,
    episode_id INT NULL,
    person_id INT NULL,
-   PRIMARY KEY(illustrated_id),
    FOREIGN KEY(show_id) REFERENCES shows(show_id),
    FOREIGN KEY(picture_id) REFERENCES picture(picture_id),
    FOREIGN KEY(episode_id) REFERENCES episode(episode_id),

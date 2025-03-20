@@ -1,31 +1,44 @@
 const showsServices = require('../services/shows_services.js');
 const chalk = require('chalk');
+const Show = require('../../database/src/models/shows.js');
+const { Sequelize } = require('sequelize');
+const path = require('path');
+const sequelize = new Sequelize({
+    dialect: 'sqlite',
+    storage: path.resolve(__dirname, '../../database/data/watchlyDB'),
+});
 
-const getShows = async (req, res) => {
+
+async function AddsShowsDB(time){
     try {
-        const { type = 'tv', time = 'week' } = req.query;
-        const shows = await showsServices.getShows(type, time);
-        console.log(chalk.green('Successfully retrieved shows'));
-        res.json(shows);
+        const shows = await showsServices.getShows("movie", time);
+        for (let i = 0; i < shows.length; i++){
+            let s = createMovie(shows[i]);
+            saveShow(s);
+        }
     } catch (error) {
         console.error(chalk.red('Error getting shows:', error));
-        res.status(500).json({ error: 'Failed to get shows' });
     }
-};
+}
 
-const getTrendingShows = async (req, res) => {
-    try {
-        const { type = 'tv', time = 'week' } = req.query;
-        const ids = await showsServices.getIds(type, time);
-        console.log(chalk.green('Successfully retrieved trending shows'));
-        res.json(ids);
-    } catch (error) {
-        console.error(chalk.red('Error getting trending shows:', error));
-        res.status(500).json({ error: 'Failed to get trending shows' });
-    }
-};
+function createMovie(s){
+    return Show.build({
+        name: s.original_title,
+        description: s.overview,
+        released_date: s.release_date || 'Unknown',
+        nationality: (s.origin_country && s.origin_country[0]) || 'Unknown',
+        trailer_link: s.trailer_link || 'Unknown',
+        availability_status: s.status || 'Unknown',
+        duration: s.runtime || 'Unknown',
+        is_movie: true,
+        is_displayed: false,
+        rating: s.vote_average || 0,
+    });
+}
 
-module.exports = {
-    getShows,
-    getTrendingShows
-};
+function saveShow(show){
+    show.save().then(() => console.log('Show created'));
+}
+
+
+AddsShowsDB('week');
