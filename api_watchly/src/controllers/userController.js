@@ -1,5 +1,5 @@
 const User = require('../models/user'); // Assuming you have a User model
-
+import auth from '../middleware/auth';
 // Get all users
 exports.getAllUsers = async (req, res) => {
     try {
@@ -59,3 +59,21 @@ exports.deleteUser = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+
+exports.register = async (req, res) => {
+    try {
+        auth.register(req, res);
+    }
+    catch (error) {
+        res.status(500).json({ message: 'Server error', error });
+    }
+}
+
+exports.login = async (req, res) => {
+    try {
+        auth.login(req, res);
+    }
+    catch (error) {
+        res.status(500).json({ message: 'Server error', error });
+    }
+}

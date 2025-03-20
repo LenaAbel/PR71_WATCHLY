@@ -1,0 +1,51 @@
+<div class="max-w-sm mx-auto bg-white p-6 rounded-lg shadow-md">
+  <h2 class="text-xl font-semibold text-center text-purple-800 mb-4">Create an account !</h2>
+
+  <form name="form" #f="ngForm" (ngSubmit)="onSubmit()">
+    <div class="grid grid-cols-2 gap-4">
+      <input
+        type="text"
+        class="form-control border border-gray-300 p-2 rounded w-full mt-4"
+        name="firstname"
+        [(ngModel)]="form.firstname"
+        required
+        placeholder="First Name"
+      />
+      <input
+        type="text"
+        class="form-control border border-gray-300 p-2 rounded w-full mt-4"
+        [(ngModel)]="form.lastname"
+        required
+        name="lastname"
+        placeholder="Last Name"
+      />
+    </div>
+    <input
+        type="text"
+        class="form-control border border-gray-300 p-2 rounded w-full mt-4"
+        name="username"
+        [(ngModel)]="form.username"
+        required
+        placeholder="Username"
+      />
+    <input
+        type="email"
+        class="form-control border border-gray-300 p-2 rounded w-full mt-4"
+        name="email"
+        [(ngModel)]="form.email"
+        required
+        placeholder="Email"
+      />
+    <input
+        type="password"
+        class="form-control border border-gray-300 p-2 rounded w-full mt-4"
+        name="password"
+        [(ngModel)]="form.password"
+        required
+        placeholder="Password"
+      />
+    <button type="submit" class="bg-purple-700 text-white p-2 rounded w-full mt-4">
+      Log in !
+    </button>
+  </form>
+</div>
