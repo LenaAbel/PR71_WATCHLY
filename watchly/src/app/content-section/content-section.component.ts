@@ -7,6 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class ContentSectionComponent implements OnInit {
   @Input() type !: string;
+  @Input() id !: number;
   constructor() { }
 
   ngOnInit(): void {

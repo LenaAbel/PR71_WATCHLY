@@ -3,15 +3,15 @@
   <div class="p-4 flex flex-col gap-2.5">
     <div class="flex items-center gap-2">
       <h2 class="text-lg font-bold">Arcane </h2>
-      <p class="text-lg" *ngIf="type == 'tv'"> - 2 seasons</p>
+      <p class="text-lg" *ngIf="type == 'series'"> - 2 seasons</p>
     </div>
       <p class=" text-sm text-justify">Amid the stark discord of twin cities Piltover and Zaun, two sisters fight on rival sides of a war between magic technologies and clashing convictions.</p>
       <p class="text-white text-sm font-bold bg-(--netflix-red) w-fit py-0.5 px-3 rounded-(--radius-inner) mt-1">Netflix</p>
       <div class="flex items-center gap-4">
         <p class="text-(--color-main-light) dark:text-(--color-main-dark) text-2xl">&#9733; &#9733; &#9733; &#9733; &#9734;</p> <!-- faire logique en fonction du rating-->
         <p class="font-bold">·</p>
-        <p class="text-sm" *ngIf="type == 'tv'">18 episodes</p>
-        <p class="text-sm" *ngIf="type == 'movie'">1h 20 min</p>
+        <p class="text-sm" *ngIf="type == 'series'">18 episodes</p>
+        <p class="text-sm" *ngIf="type == 'movies'">1h 20 min</p>
       </div>
   </div>
 </div>

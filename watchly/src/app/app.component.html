@@ -1,15 +1,7 @@
-<div class="bg-(--bg-color-light) dark:bg-(--bg-color-dark) text-(--font-color-light) dark:text-(--font-color-dark)">
-    <app-header></app-header>
-    <app-trailer-banner></app-trailer-banner>
-
-
-    <app-content-section type="tv"></app-content-section>
-    <app-content-section type="movie"></app-content-section>
-    <app-register></app-register>
-    <app-login></app-login>
-
-    <div class="flex gap-2">
-        <app-content-card type="tv"></app-content-card>
-        <app-content-card type="movie"></app-content-card>
+<div class="bg-(--bg-color-light) dark:bg-(--bg-color-dark) text-(--font-color-light) dark:text-(--font-color-dark) min-h-screen">
+    <app-header [route]="currentRoute"></app-header>
+    <router-outlet></router-outlet>
+    <div class="text-center text-(--bg-surface-5-light) dark:text-(--bg-surface-5-dark) p-6 font-regular text-sm">
+        <p>2025 © ABEL GERARD IZOULET LEBREUIL</p>
     </div>
 </div>
