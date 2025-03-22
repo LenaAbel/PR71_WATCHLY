@@ -8,6 +8,7 @@ import { ContentSectionComponent } from './content-section/content-section.compo
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { TrailerBannerComponent } from './trailer-banner/trailer-banner.component';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { TrailerBannerComponent } from './trailer-banner/trailer-banner.componen
     ContentSectionComponent,
     RegisterComponent,
     LoginComponent,
-    TrailerBannerComponent
+    TrailerBannerComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
