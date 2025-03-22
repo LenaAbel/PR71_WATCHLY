@@ -7,6 +7,7 @@ import { ContentCardComponent } from './content-card/content-card.component';
 import { ContentSectionComponent } from './content-section/content-section.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
+import { TrailerBannerComponent } from './trailer-banner/trailer-banner.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { LoginComponent } from './login/login.component';
     ContentCardComponent,
     ContentSectionComponent,
     RegisterComponent,
-    LoginComponent
+    LoginComponent,
+    TrailerBannerComponent
   ],
   imports: [
     BrowserModule,
