@@ -10,8 +10,8 @@ import { last } from 'rxjs';
 })
 export class RegisterComponent implements OnInit {
   form = {
-    firstname: '',
-    lastname: '',
+    name: '',
+    surname: '',
     username: '',
     email: '',
     password: ''

@@ -40,3 +40,13 @@
     box-sizing: border-box;
     font-family: 'Lexend', sans-serif;
 }
+
+*:focus {
+    outline : var(--color-main-light) auto;
+}
+
+@media (prefers-color-scheme: dark){
+    *:focus {
+        outline : var(--color-main-dark) auto;
+    }
+}

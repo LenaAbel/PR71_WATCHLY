@@ -1,8 +1,8 @@
 <div class="max-w-lg mx-auto bg-(--bg-surface-1-light) dark:bg-(--bg-surface-1-dark) p-6 rounded-[25px] shadow-(--shadow-light) dark:shadow-(--shadow-dark)">
-  <h2 class="text-xl font-semibold text-center text-(--color-main-light) dark:text-(--color-main-dark) mb-4">Welcome back !</h2>
+  <h2 class="text-xl font-bold text-center text-(--color-main-light) dark:text-(--color-main-dark) mb-4">Welcome back !</h2>
 
   <form name="form" #f="ngForm" (ngSubmit)="onSubmit()" class=" flex flex-col justify-center text-(--color-main-light) dark:text-(--color-main-dark)">
-    <label class="block">E-mail</label>
+    <label>E-mail</label>
     <input
         type="email"
         class="form-control border border-(--bg-surface-3-light) dark:border-(--bg-surface-3-dark) rounded-(--radius-inner) p-2 rounded w-full mt-2 bg-(--bg-surface-2-light) dark:bg-(--bg-surface-2-dark)"
@@ -11,7 +11,7 @@
         required
       />
 
-    <label class="block mt-4">Password</label>
+    <label class="mt-4">Password</label>
     <input
         type="password"
         class="form-control border border-(--bg-surface-3-light) dark:border-(--bg-surface-3-dark) rounded-(--radius-inner) p-2 rounded w-full mt-2 bg-(--bg-surface-2-light) dark:bg-(--bg-surface-2-dark)"
