@@ -1,28 +1,26 @@
-<div class="max-w-sm mx-auto bg-white p-6 rounded-lg shadow-md">
-  <h2 class="text-xl font-semibold text-center text-purple-800 mb-4">Welcome back !</h2>
+<div class="max-w-lg mx-auto bg-(--bg-surface-1-light) dark:bg-(--bg-surface-1-dark) p-6 rounded-[25px] shadow-(--shadow-light) dark:shadow-(--shadow-dark)">
+  <h2 class="text-xl font-semibold text-center text-(--color-main-light) dark:text-(--color-main-dark) mb-4">Welcome back !</h2>
 
-  <form name="form" #f="ngForm" (ngSubmit)="onSubmit()">
-    <label class="block text-gray-700">E-mail</label>
+  <form name="form" #f="ngForm" (ngSubmit)="onSubmit()" class=" flex flex-col justify-center text-(--color-main-light) dark:text-(--color-main-dark)">
+    <label class="block">E-mail</label>
     <input
         type="email"
-        class="form-control border border-gray-300 p-2 rounded w-full mt-4"
+        class="form-control border border-(--bg-surface-3-light) dark:border-(--bg-surface-3-dark) rounded-(--radius-inner) p-2 rounded w-full mt-2 bg-(--bg-surface-2-light) dark:bg-(--bg-surface-2-dark)"
         name="email"
         [(ngModel)]="form.email"
         required
-        placeholder="E-mail"
       />
 
-    <label class="block text-gray-700">Password</label>
+    <label class="block mt-4">Password</label>
     <input
         type="password"
-        class="form-control border border-gray-300 p-2 rounded w-full mt-4"
+        class="form-control border border-(--bg-surface-3-light) dark:border-(--bg-surface-3-dark) rounded-(--radius-inner) p-2 rounded w-full mt-2 bg-(--bg-surface-2-light) dark:bg-(--bg-surface-2-dark)"
         name="password"
         [(ngModel)]="form.password"
         required
-        placeholder="Password"
       />
 
-    <button type="submit" class="bg-purple-700 text-white p-2 rounded w-full">
+    <button type="submit" class="hover:cursor-pointer mt-12 bg-(--color-main-light) dark:bg-(--color-main-dark) font-bold text-white p-2 rounded-(--radius-inner) mx-auto w-2/5">
       Log in !
     </button>
   </form>
