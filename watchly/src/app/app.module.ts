@@ -1,16 +1,31 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { FormsModule } from  '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { ContentCardComponent } from './content-card/content-card.component';
+import { ContentSectionComponent } from './content-section/content-section.component';
+import { RegisterComponent } from './register/register.component';
+import { LoginComponent } from './login/login.component';
+import { TrailerBannerComponent } from './trailer-banner/trailer-banner.component';
+import { HeaderComponent } from './header/header.component';
+import { ShowPageComponent } from './show-page/show-page.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ContentCardComponent,
+    ContentSectionComponent,
+    RegisterComponent,
+    LoginComponent,
+    TrailerBannerComponent,
+    HeaderComponent,
+    ShowPageComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
