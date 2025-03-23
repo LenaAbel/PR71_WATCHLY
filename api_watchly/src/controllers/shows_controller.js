@@ -15,12 +15,13 @@ const sequelize = new Sequelize({
  */
 async function addsShowsDB(time){
     try {
-        const movies = await showsServices.getShows("movie", time); // get trending movies
-        const tv = await showsServices.getShows("tv", time); // get trending tv shows
-        addMovies(movies); // add trending movies to the database
-        addTv(tv); // add trending tv shows to the database
+        const movies = await showsServices.getShows("movie", time);
+        const tv = await showsServices.getShows("tv", time);
+        console.log(chalk.cyan(`[DB] Found: ${movies.length} movies, ${tv.length} TV shows`));
+        await addMovies(movies);
+        await addTv(tv);
     } catch (error) {
-        console.error(chalk.red('Error getting shows:', error));
+        console.error(chalk.red('[Error] Shows fetch failed:', error));
     }
 }
 
@@ -82,27 +83,30 @@ async function createMovie(s){
  * @async waits for the trailer to be found
  */
 async function createTv(s){
-    console.log(s);
-    const trailer = await apiServices.getTrailer(s.id,"tv");
-    let t = trailer.results[0].key;
+    const trailer = await apiServices.getTrailer(s.id, "tv");
+    let t = trailer.results[0]?.key || ''; 
+
     return Show.build({
         name: s.name,
         description: s.overview,
-        released_date: s.first_air_date,
-        nationality: s.origin_country[0],
+        released_date: s.first_air_date || null,
+        nationality: s.origin_country[0] || 'Unknown',
         trailer_link: t,
-        status: s.status,
-        duration: (s.last_episode_to_air && s.last_episode_to_air.runtime) || 0,
+        status: s.status || 'Unknown',
+        duration: (s.episode_run_time && s.episode_run_time[0]) || 0,
         is_movie: false,
-        is_displayed: false,
-        rating: s.vote_average || 0,
+        is_displayed: true, 
+        rating: Math.round(s.vote_average) || 0,
     });
 }
 
-
-
-function saveShow(show){
-    show.save().then(() => console.log('Show created'));
+async function saveShow(show){
+    try {
+        await show.save();
+        console.log(chalk.green(`[DB] Added: ${show.name}`));
+    } catch (err) {
+        console.error(chalk.red(`[Error] Failed to save: ${show.name}`));
+    }
 }
 
 

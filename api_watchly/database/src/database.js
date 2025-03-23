@@ -1,11 +1,11 @@
 const chalk = require('chalk');
 const { Sequelize } = require('sequelize');
-const Shows = require('./models/shows');
+const path = require('path');
 
 const sequelize = new Sequelize({
     dialect: 'sqlite',
-    storage: './data/watchlyDB',
-    logging: msg => console.log(chalk.blue(msg))
+    storage: path.resolve(__dirname, '../data/watchlyDB'),
+    logging: false
 });
 
 async function initializeDatabase() {

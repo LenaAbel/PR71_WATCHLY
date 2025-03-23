@@ -30,17 +30,16 @@ async function getShows(name, time) {
 }
 
 
-function getShowIdFromDB(show){
+function getShowIdFromDB(show) {
     return Show.findOne({
         where: {
-            name: show.name,
-            description: show.overview,
+            name: show.name
         }
     });
 }
 
+
 let shows = getShows('tv', 'week');
-// console.log(shows[0].id);
 
 module.exports = {
     getIds,
