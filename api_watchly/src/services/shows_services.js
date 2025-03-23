@@ -1,5 +1,5 @@
 // get the ids of the trending shows
-const { getTrending, getID } = require('../../database/src/tmdb/api');
+const { getTrending, getID } = require('../../database/src/tmdb/tmdb_api');
 const Show = require('../../database/src/models/shows.js');
 const { Sequelize } = require('sequelize');
 const path = require('path');

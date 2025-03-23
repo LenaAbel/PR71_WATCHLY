@@ -1,5 +1,5 @@
 const showsServices = require('../services/shows_services.js');
-const apiServices = require('../../database/src/tmdb/api.js');
+const apiServices = require('../../database/src/tmdb/tmdb_api.js');
 const chalk = require('chalk');
 const Show = require('../../database/src/models/shows.js');
 const { Sequelize } = require('sequelize');
