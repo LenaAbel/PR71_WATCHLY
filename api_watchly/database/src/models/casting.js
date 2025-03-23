@@ -1,12 +1,7 @@
 const { Model, DataTypes } = require('sequelize');
-const { Sequelize } = require('sequelize');
+const sequelize = require('../database');
 
 const path = require('path');
-
-const sequelize = new Sequelize({
-    dialect: 'sqlite',
-    storage: path.resolve(__dirname, '../../data/watchlyDB'),
-});
 
 class Casting extends Model {}
 
