@@ -32,11 +32,3 @@ class Casting extends Model {}
 
 module.exports = Casting;
 
-// create a casting example
-const casting = Casting.build({
-    cast_id: 1,
-    name: 'name',
-    surname: 'surname',
-    is_actor: true,
-});
-casting.save().then(() => console.log('Casting saved!'));

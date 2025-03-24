@@ -7,6 +7,8 @@ const port = process.env.PORT || 3000;
 
 const { addsShowsDB } = require('./src/controllers/shows_controller');
 const { addEpisodes } = require('./src/controllers/episode_controller');
+const { addCastingForAllShows } = require('./src/controllers/casting_controller');
+
 const showsServices = require('./src/services/shows_services');
 
 // Middlewares
@@ -46,7 +48,13 @@ const Show = require('./database/src/models/shows');
             console.log(chalk.cyan('[DB] Adding episodes...'));
             const shows = await showsServices.getShows('tv', 'week');
             await addEpisodes(shows);
+
+            console.log(chalk.cyan('[DB] Adding casting...'));
+            await addCastingForAllShows();
+            console.log(chalk.green('[DB] Casting added to all shows'));
+
             console.log(chalk.green('[DB] Database population complete'));
+
         } else {
             console.log(chalk.blue(`[DB] Database ready: ${count} shows`));
         }

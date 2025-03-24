@@ -79,6 +79,20 @@ function getSeason(id, number) {
 
 
 
-// console.log(getTrending('tv', 'week'));
+/**
+ * Get the TMDB ID of a show based on its title
+ * @param {string} title 
+ * @param {string} mediaType "movie" or "tv"
+ * @returns {number|null}
+ */
+async function getTmdbIdFromTitle(title, mediaType) {
+    try {
+        const result = await getTitle(title, mediaType);
+        return result?.results?.[0]?.id || null;
+    } catch (err) {
+        console.error(`Error getting TMDB ID for "${title}":`, err);
+        return null;
+    }
+}
 
-module.exports = { getID, getTitle, getCast, getComments, getImage, getTrailer, getTrending, getSeason };
+module.exports = { getID, getTitle, getCast, getComments, getImage, getTrailer, getTrending, getSeason, getTmdbIdFromTitle };
