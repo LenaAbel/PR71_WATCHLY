@@ -86,9 +86,9 @@ const Show = require('./database/src/models/shows');
             await castingServices.addCastingForAllShows();
             console.log(chalk.green('[DB] Casting added to all shows'));
 
-            /*
+            
             console.log(chalk.cyan('[DB] Adding genres...'));
-            await addGenresToAllShows();*/
+            await genreController.addGenresToAllShows();
 
             console.log(chalk.cyan('[DB] Adding images...'));
             await pictureServices.addImagesToAllShows();
