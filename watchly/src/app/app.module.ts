@@ -14,6 +14,7 @@ import { ActorCardComponent } from './actor-card/actor-card.component';
 import { NewShowBannerComponent } from './new-show-banner/new-show-banner.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { CastSectionComponent } from './cast-section/cast-section.component';
+import { CastPageComponent } from './cast-page/cast-page.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { CastSectionComponent } from './cast-section/cast-section.component';
     ActorCardComponent,
     NewShowBannerComponent,
     HomePageComponent,
-    CastSectionComponent
+    CastSectionComponent,
+    CastPageComponent
   ],
   imports: [
     BrowserModule,
