@@ -20,18 +20,12 @@
 
         --shadow-light: 5px 10px 20px rgba(203, 150, 174, 0.25), 10px 30px 100px rgba(203, 150, 174, 0.1);
         --shadow-dark: 5px 10px 20px rgba(85, 71, 116, 0.25), 10px 30px 100px rgba(85, 71, 116, 0.1);
-
+        
         --font-color-light: #000000;
         --font-color-dark: #FFFFFF;
 
         --radius-outer: 15px;
         --radius-inner: 10px;
-
-        --netflix-red: #E50914;
-        --prime-blue: #1399FF;
-        --disney-blue: #0033CC;
-        --hulu-green: #1CE783;
-        --apple-tv-blue: #0A84FF;
     }
 
 }
@@ -41,12 +35,22 @@
     font-family: 'Lexend', sans-serif;
 }
 
-*:focus {
-    outline : var(--color-main-light) auto;
+.banner-gradient {
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 100%);
 }
 
 @media (prefers-color-scheme: dark){
     *:focus {
         outline : var(--color-main-dark) auto;
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    *:focus {
+        outline: var(--color-main-light) auto;
+    }
+
+    .banner-gradient {
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 100%);
     }
 }

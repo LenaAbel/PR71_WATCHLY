@@ -14,6 +14,11 @@ import { ActorCardComponent } from './actor-card/actor-card.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthenticationService } from './services/authentification.service';
 import { AuthInterceptor } from './services/auth.interceptor';
+import { NewShowBannerComponent } from './new-show-banner/new-show-banner.component';
+import { HomePageComponent } from './home-page/home-page.component';
+import { CastSectionComponent } from './cast-section/cast-section.component';
+import { CastPageComponent } from './cast-page/cast-page.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,7 +29,11 @@ import { AuthInterceptor } from './services/auth.interceptor';
     TrailerBannerComponent,
     HeaderComponent,
     ShowPageComponent,
-    ActorCardComponent
+    ActorCardComponent,
+    NewShowBannerComponent,
+    HomePageComponent,
+    CastSectionComponent,
+    CastPageComponent
   ],
   imports: [
     BrowserModule,
