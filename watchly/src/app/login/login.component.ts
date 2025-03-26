@@ -8,7 +8,9 @@ import { User } from '../user';
 })
 export class LoginComponent implements OnInit {
   form = new User();
-  constructor() { }
+  constructor() {
+    
+  }
 
   ngOnInit(): void {
   }
