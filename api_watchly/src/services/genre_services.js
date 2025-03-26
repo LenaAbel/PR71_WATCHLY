@@ -1,5 +1,4 @@
 
-// const { getTrending, getID, getTrailer } = require('../../database/src/tmdb/tmdb_api');
 const chalk = require('chalk');
 const sequelize = require('../../database/src/database'); 
 const Show = require('../../database/src/models/shows');
