@@ -7,13 +7,11 @@ import { ContentCardComponent } from './content-card/content-card.component';
 import { ContentSectionComponent } from './content-section/content-section.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
-<<<<<<< Updated upstream
 import { TrailerBannerComponent } from './trailer-banner/trailer-banner.component';
 import { HeaderComponent } from './header/header.component';
 import { ShowPageComponent } from './show-page/show-page.component';
-=======
 import { ActorCardComponent } from './actor-card/actor-card.component';
->>>>>>> Stashed changes
+import { NewShowBannerComponent } from './new-show-banner/new-show-banner.component';
 
 @NgModule({
   declarations: [
@@ -22,13 +20,11 @@ import { ActorCardComponent } from './actor-card/actor-card.component';
     ContentSectionComponent,
     RegisterComponent,
     LoginComponent,
-<<<<<<< Updated upstream
     TrailerBannerComponent,
     HeaderComponent,
-    ShowPageComponent
-=======
-    ActorCardComponent
->>>>>>> Stashed changes
+    ShowPageComponent,
+    ActorCardComponent,
+    NewShowBannerComponent
   ],
   imports: [
     BrowserModule,
