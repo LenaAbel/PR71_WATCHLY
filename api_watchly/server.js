@@ -37,6 +37,7 @@ const castingRoutes = require('./src/router/casting_router');
 const episodeRoutes = require('./src/router/episode_router'); 
 const genreRoutes = require('./src/router/genre_router');
 const pictureRoutes = require('./src/router/picture_router');
+const personRoutes = require('./src/router/person_router');
 
 // CONTROLLERS / SERVICES
 const showsServices = require('./src/services/shows_services');
@@ -45,6 +46,7 @@ const episodeServices = require('./src/services/episode_services');
 const castingServices = require('./src/services/casting_services');
 const genreController = require('./src/controllers/genre_controller');
 const pictureServices = require('./src/services/picture_services');
+const personController = require('./src/controllers/person_controller');
 
 // MIDDLEWARES
 server.use(express.json());
@@ -56,6 +58,7 @@ server.use('/api/casting', castingRoutes);
 server.use('/api/episodes', episodeRoutes); 
 server.use('/api/pictures', pictureRoutes);
 server.use('/api/genres', genreRoutes);
+server.use('/api/persons', personRoutes);
 
 // Swagger route
 server.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
@@ -97,9 +100,10 @@ const Show = require('./database/src/models/shows');
             await pictureServices.addImagesToAllShows();
             console.log(chalk.green('[DB] Images added to all shows'));
 
-            /*console.log(chalk.cyan('[DB] Adding users...'));
-            await addUsers();
-
+            console.log(chalk.cyan('[DB] Adding users...'));
+            await personController.addUsers();
+            console.log(chalk.green('[DB] Users added'));
+            /*
             console.log(chalk.cyan('[DB] Adding favorites...'));
             await addFavorites();
             */

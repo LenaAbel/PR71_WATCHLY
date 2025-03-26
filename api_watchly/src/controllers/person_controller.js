@@ -1,40 +1,36 @@
 const Person = require('../../database/src/models/person');
 const chalk = require('chalk');
 const bcrypt = require('bcrypt');
-
+const personService = require('../services/person_services');
 
 
 async function addUsers(){
-    const users = [
-        ['jdoe', 'John', 'Doe', 0, 'jdoe@example.com', 'password123'],
-        ['asmith', 'Alice', 'Smith', 1, 'asmith@example.com', 'adminpass'],
-        ['bwayne', 'Bruce', 'Wayne', 1, 'bwayne@example.com', 'batman123'],
-        ['ckent', 'Clark', 'Kent', 0, 'ckent@example.com', 'superman'],
-        ['pparker', 'Peter', 'Parker', 0, 'pparker@example.com', 'spidey'],
-        ['tsmith', 'Tony', 'Stark', 1, 'tstark@example.com', 'ironman'],
-        ['nromanoff', 'Natasha', 'Romanoff', 0, 'nromanoff@example.com', 'blackwidow'],
-        ['sdiaz', 'Sara', 'Diaz', 0, 'sdiaz@example.com', 'mypassword'],
-    ];
-
-    for (const user of users) {
-        await addPerson(user);
+    try {
+        await personService.createUsers();
     }
-} 
-
-
-async function addPerson(data){
-const hashedPassword = await bcrypt.hash(data[5], 10);
-const person = Person.build({
-    username: data[0],
-    name: data[1],
-    surname: data[2],
-    is_admin: data[3],
-    mail: data[4],
-    password: hashedPassword,
-});
-person.save().then(() => console.log(chalk.green(`User ${data[0]} added`)));
+    catch (err) {
+        console.error(chalk.red(`❌ Failed to add users: ${err.message}`));
+    }
 }
 
+async function getPersonByUsername(username){
+    return await Person.findOne({ where: { username } });
+}
 
+async function getPersonById(id){
+    return await Person.findByPk(id);
+}
 
-module.exports = { addUsers };
+async function getPersonByEmail(mail){
+    return await Person.findOne({ where: { mail } });
+}
+
+async function getAdmins(){
+    return await Person.findAll({ where: { is_admin: 1 } });
+}
+
+async function getAllUsers(){
+    return await Person.findAll();
+}
+
+module.exports = { addUsers , getPersonByUsername, getPersonById, getPersonByEmail, getAdmins, getAllUsers };
