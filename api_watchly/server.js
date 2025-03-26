@@ -1,20 +1,48 @@
 const express = require('express');
 const chalk = require('chalk');
 const cors = require('cors');
+const swaggerUi = require('swagger-ui-express');
+const swaggerJsdoc = require('swagger-jsdoc');
 
 const server = express();
 const port = process.env.PORT || 3000;
+
+// Swagger configuration
+const swaggerOptions = {
+    definition: {
+        openapi: '3.0.0',
+        info: {
+            title: 'Watchly API Documentation',
+            version: '1.0.0',
+            description: 'Documentation for the Watchly API endpoints',
+        },
+        servers: [
+            {
+                url: `http://localhost:${port}`,
+                description: 'Development server',
+            },
+        ],
+    },
+    apis: ['./src/router/*.js'], // Path to the API routes
+};
+
+const swaggerSpec = swaggerJsdoc(swaggerOptions);
+
+// Load model associations
+require('./database/src/models/associations');
 
 // ROUTES
 const showsRoutes = require('./src/router/shows_router');
 const castingRoutes = require('./src/router/casting_router');
 const episodeRoutes = require('./src/router/episode_router'); 
+const pictureRoutes = require('./src/router/picture_router');
 
 // CONTROLLERS / SERVICES
 const showsServices = require('./src/services/shows_services');
 const showsController = require('./src/controllers/shows_controller');
 const episodeServices = require('./src/services/episode_services'); 
 const castingServices = require('./src/services/casting_services');
+const pictureServices = require('./src/services/picture_services');
 
 // MIDDLEWARES
 server.use(express.json());
@@ -24,6 +52,10 @@ server.use(cors());
 server.use('/api/shows', showsRoutes);
 server.use('/api/casting', castingRoutes);
 server.use('/api/episodes', episodeRoutes); 
+server.use('/api/pictures', pictureRoutes);
+
+// Swagger route
+server.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Basic routes
 server.get('/', (req, res) => {
@@ -56,12 +88,13 @@ const Show = require('./database/src/models/shows');
 
             /*
             console.log(chalk.cyan('[DB] Adding genres...'));
-            await addGenresToAllShows();
+            await addGenresToAllShows();*/
 
             console.log(chalk.cyan('[DB] Adding images...'));
-            await addImagesToAllShows();
+            await pictureServices.addImagesToAllShows();
+            console.log(chalk.green('[DB] Images added to all shows'));
 
-            console.log(chalk.cyan('[DB] Adding users...'));
+            /*console.log(chalk.cyan('[DB] Adding users...'));
             await addUsers();
 
             console.log(chalk.cyan('[DB] Adding favorites...'));

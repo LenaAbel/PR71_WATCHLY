@@ -26,6 +26,23 @@ async function createSeason(seasonNumber, tmdbId, showId) {
     }
 }
 
+/**
+ * Create a TV show and its episodes
+ * @param {} show 
+ */
+async function createTv(show) {
+    let showRecord = await showsServices.getShowIdFromDB(show);
+    if (!showRecord) {
+        const sh = await showsController.createTv(show);
+        await showsController.saveShow(sh);
+        showRecord = await showsServices.getShowIdFromDB(show);
+    }
+    const show_id = showRecord.dataValues.show_id;
+    for (let i = 1; i <= show.number_of_seasons; i++) {
+        await createSeason(i, show.id, show_id);
+    }
+}
+
 // ============================
 // Database Related Functions 
 // ============================
