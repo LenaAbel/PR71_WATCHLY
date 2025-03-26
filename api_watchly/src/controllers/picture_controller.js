@@ -17,7 +17,7 @@ async function addImagesToAllShows() {
 
         console.log(chalk.cyan(`🖼️ Adding images for "${show.name}"...`));
 
-        for (const backdrop of imageData.backdrops.slice(0, 3)) { // Limite à 3 images par show
+        for (const backdrop of imageData.backdrops) {
             try {
                 const fullUrl = `https://image.tmdb.org/t/p/original${backdrop.file_path}`;
 
