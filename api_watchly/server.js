@@ -7,16 +7,17 @@ const port = process.env.PORT || 3000;
 
 const showsRoutes = require('./src/router/shows_router');
 
+const showsServices = require('./src/services/shows_services');
 
 const { addsShowsDB } = require('./src/controllers/shows_controller');
 const { addEpisodes } = require('./src/controllers/episode_controller');
 
-const { addCastingForAllShows } = require('./src/controllers/casting_controller');
-/*const { addGenresToAllShows } = require('./src/controllers/genre_controller');
+/*const { addCastingForAllShows } = require('./src/controllers/casting_controller');
+const { addGenresToAllShows } = require('./src/controllers/genre_controller');
 const { addImagesToAllShows } = require('./src/controllers/picture_controller');
+const { addUsers } = require('./src/controllers/person_controller');
+const { addFavorites } = require('./src/controllers/favorite_controller');
 */
-
-const showsServices = require('./src/services/shows_services');
 
 // Middlewares
 server.use(express.json());
@@ -69,6 +70,14 @@ const Show = require('./database/src/models/shows');
             await addImagesToAllShows();
             console.log(chalk.green('[DB] Images added to all shows'));
             */
+
+            console.log(chalk.cyan('[DB] Adding users...'));
+            await addUsers();
+            console.log(chalk.green('[DB] Users added'));
+
+            console.log(chalk.cyan('[DB] Adding favorites...'));
+            await addFavorites();
+            console.log(chalk.green('[DB] Favorites added'));
 
             console.log(chalk.green('[DB] Database population complete'));
         } else {

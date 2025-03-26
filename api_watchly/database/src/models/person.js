@@ -1,11 +1,5 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../database');
-const path = require('path');
-
-const sequelize = new Sequelize({
-    dialect: 'sqlite',
-    storage: path.resolve(__dirname, '../../data/watchlyDB'),
-});
 
 
 class Person extends Model {}
@@ -46,15 +40,3 @@ Person.init(
 );
 
 module.exports = Person;
-
-// create a person example
-const person = Person.build({
-    person_id: 1,
-    username: 'username',
-    name: 'name',
-    surname: 'surname',
-    is_admin: true,
-    mail: 'mail',
-    password: 'password',
-});
-person.save().then(() => console.log('Person created'));
