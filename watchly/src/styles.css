@@ -35,8 +35,16 @@
     font-family: 'Lexend', sans-serif;
 }
 
+p::-webkit-scrollbar {
+    display: none;
+}
+
 .banner-gradient {
     background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 100%);
+}
+
+.swiper-wrapper {
+    display: flex;
 }
 
 @media (prefers-color-scheme: dark){

@@ -19,6 +19,10 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { CastSectionComponent } from './cast-section/cast-section.component';
 import { CastPageComponent } from './cast-page/cast-page.component';
 import { ReturnBtnComponent } from './return-btn/return-btn.component';
+import { EpisodesSectionComponent } from './episodes-section/episodes-section.component';
+import { SeasonDropdownComponent } from './season-dropdown/season-dropdown.component';
+import Swiper from 'swiper';
+import { SwiperModule } from 'swiper/angular';
 
 @NgModule({
   declarations: [
@@ -35,13 +39,16 @@ import { ReturnBtnComponent } from './return-btn/return-btn.component';
     HomePageComponent,
     CastSectionComponent,
     CastPageComponent,
-    ReturnBtnComponent
+    ReturnBtnComponent,
+    EpisodesSectionComponent,
+    SeasonDropdownComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    SwiperModule
   ],
   providers: [AuthenticationService, AuthInterceptor
   ],
