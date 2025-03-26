@@ -43,6 +43,10 @@
     *:focus {
         outline : var(--color-main-dark) auto;
     }
+
+    line {
+        stroke: var(--font-color-dark);
+    }
 }
 
 @media (prefers-color-scheme: light) {
@@ -52,5 +56,9 @@
 
     .banner-gradient {
         background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 100%);
+    }
+
+    line {
+        stroke: var(--font-color-light);
     }
 }

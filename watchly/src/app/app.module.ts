@@ -18,6 +18,7 @@ import { NewShowBannerComponent } from './new-show-banner/new-show-banner.compon
 import { HomePageComponent } from './home-page/home-page.component';
 import { CastSectionComponent } from './cast-section/cast-section.component';
 import { CastPageComponent } from './cast-page/cast-page.component';
+import { ReturnBtnComponent } from './return-btn/return-btn.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { CastPageComponent } from './cast-page/cast-page.component';
     NewShowBannerComponent,
     HomePageComponent,
     CastSectionComponent,
-    CastPageComponent
+    CastPageComponent,
+    ReturnBtnComponent
   ],
   imports: [
     BrowserModule,
