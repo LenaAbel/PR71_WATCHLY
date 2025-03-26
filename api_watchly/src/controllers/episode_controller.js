@@ -1,93 +1,40 @@
-const showsServices = require('../services/shows_services.js');
-const apiServices = require('../../database/src/tmdb/tmdb_api.js');
-const ShowController = require('./shows_controller.js');
-const chalk = require('chalk');
-const Episode = require('../../database/src/models/episode.js');
-const { Sequelize } = require('sequelize');
-const path = require('path');
+const episodeServices = require('../services/episode_services');
 
-const sequelize = new Sequelize({
-    dialect: 'sqlite',
-    storage: path.resolve(__dirname, '../../database/data/watchlyDB'),
-});
-
-
-/**
- * Add all the episodes of a show to the database
- * @param {object} tvs
- */
-async function addEpisodes(tvs) {
+async function getEpisodesByShow(req, res) {
     try {
-        console.log(chalk.cyan(`📺 Processing episodes for ${tvs.length} TV shows...`));
-        for (let i = 0; i < tvs.length; i++) {
-            console.log(chalk.yellow(`\n🎬 Processing show ${i + 1}/${tvs.length}: "${tvs[i].name}"`));
-            await createTv(tvs[i]);
-        }
-    } catch (error) {
-        console.error(chalk.red('Error in addEpisodes:', error));
+        const episodes = await episodeServices.getEpisodesByShowId(req.params.showId);
+        res.status(200).json(episodes);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
     }
 }
 
-async function createTv(s) {
+async function getEpisodesBySeason(req, res) {
     try {
-        let show_id = await showsServices.getShowIdFromDB(s);
-        if (show_id === null) {
-            const sh = await ShowController.createTv(s);
-            await ShowController.saveShow(sh);
-            show_id = await showsServices.getShowIdFromDB(s);
-        }
-        show_id = show_id.dataValues.show_id;
-        for (let i = 1; i < s.number_of_seasons + 1; i++) {
-            await createSeason(i, s.id, show_id);
-        }
-    } catch (error) {
-        console.error(chalk.red(`Error creating TV show: ${error}`));
+        const { showId, season } = req.params;
+        const episodes = await episodeServices.getEpisodesBySeason(showId, season);
+        res.status(200).json(episodes);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
     }
 }
 
-/**
- * 
- * @param {int} nbSeason the season number
- * @param {int} id the show id
- */
-async function createSeason(nbSeason, id, show_id) {
+async function getSeasonsByShow(req, res) {
     try {
-        let s = await apiServices.getSeason(id, nbSeason);
-        console.log(chalk.cyan(`[DB] Season ${nbSeason}: ${s.episodes.length} episodes`));
-        for (let i = 0; i < s.episodes.length; i++) {
-            const e = createEpisode(s.episodes[i], show_id);
-            if (e) {
-                await e.save();
-            }
-        }
-    } catch (error) {
-        console.error(chalk.red(`[Error] Season ${nbSeason} failed:`, error));
+        const seasons = await episodeServices.getSeasonsByShowId(req.params.showId);
+        res.status(200).json(seasons);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
     }
 }
 
-
-/**
- * Create an episode object
- * @param {object} episode
- * @returns the episode object
- */
-function createEpisode(e, show_id) {
-    try {
-        return Episode.build({
-            name: e.name,
-            description: e.overview || '',
-            duration: e.runtime || 0,
-            show_id: show_id,
-            season: e.season_number || 0,
-            episode_number: e.episode_number || 0,
-            release_date: e.air_date || null,
-        });
-    } catch (error) {
-        console.error(chalk.red('Error creating episode:', error));
-        return null;
-    }
+async function addEpisodes(tvShows) {
+    return await episodeServices.addEpisodes(tvShows);
 }
 
 module.exports = {
-    addEpisodes
+    addEpisodes,
+    getEpisodesByShow,
+    getEpisodesBySeason,
+    getSeasonsByShow
 };
