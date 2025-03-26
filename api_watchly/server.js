@@ -5,26 +5,24 @@ const cors = require('cors');
 const server = express();
 const port = process.env.PORT || 3000;
 
+// ROUTES
 const showsRoutes = require('./src/router/shows_router');
+const castingRoutes = require('./src/router/casting_router');
 
+// CONTROLLERS / SERVICES
 const showsServices = require('./src/services/shows_services');
+const showsController = require('./src/controllers/shows_controller');
+const episodeController = require('./src/controllers/episode_controller');
 
-const { addsShowsDB } = require('./src/controllers/shows_controller');
-const { addEpisodes } = require('./src/controllers/episode_controller');
+const castingServices = require('./src/services/casting_services');
 
-/*const { addCastingForAllShows } = require('./src/controllers/casting_controller');
-const { addGenresToAllShows } = require('./src/controllers/genre_controller');
-const { addImagesToAllShows } = require('./src/controllers/picture_controller');
-const { addUsers } = require('./src/controllers/person_controller');
-const { addFavorites } = require('./src/controllers/favorite_controller');
-*/
-
-// Middlewares
+// MIDDLEWARES
 server.use(express.json());
 server.use(cors());
 
-// Routes
+// ROUTING
 server.use('/api/shows', showsRoutes);
+server.use('/api/casting', castingRoutes);
 
 // Basic routes
 server.get('/', (req, res) => {
@@ -35,13 +33,8 @@ server.get('/api', (req, res) => {
     res.json({ message: 'Welcome to Watchly API' });
 });
 
-// Error handler (must be last)
-server.use((err, req, res, next) => {
-    console.error(chalk.red('Unhandled server error:', err.stack || err.message));
-    res.status(500).json({ error: 'An unexpected error occurred' });
-});
 
-// --- ✅ Auto populate DB from TMDB if empty ---
+// Auto populate DB from TMDB if empty 
 const Show = require('./database/src/models/shows');
 
 (async () => {
@@ -49,20 +42,19 @@ const Show = require('./database/src/models/shows');
         const count = await Show.count();
         if (count === 0) {
             console.log(chalk.cyan('[DB] Initializing database...'));
-            await addsShowsDB('week');
+            await showsController.addsShowsDB('week');
             const newCount = await Show.count();
             console.log(chalk.cyan(`[DB] Added ${newCount} shows`));
 
             console.log(chalk.cyan('[DB] Adding episodes...'));
             const shows = await showsServices.getShows('tv', 'week');
-            await addEpisodes(shows);
+            await episodeController.addEpisodes(shows);
 
-            /*
             console.log(chalk.cyan('[DB] Adding casting...'));
-            await addCastingForAllShows();
+            await castingServices.addCastingForAllShows();
             console.log(chalk.green('[DB] Casting added to all shows'));
 
-            console.log(chalk.cyan('[DB] Adding genres...'));
+            /*console.log(chalk.cyan('[DB] Adding genres...'));
             await addGenresToAllShows();
             console.log(chalk.green('[DB] Genres added to all shows'));
 
@@ -91,3 +83,9 @@ const Show = require('./database/src/models/shows');
         console.log(chalk.cyan.bold(`Server is running on port ${port}`));
     });
 })();
+
+// Error handler (must be last)
+server.use((err, req, res, next) => {
+    console.error(chalk.red('Unhandled server error:', err.stack || err.message));
+    res.status(500).json({ error: 'An unexpected error occurred' });
+});

@@ -95,4 +95,15 @@ async function getTmdbIdFromTitle(title, mediaType) {
     }
 }
 
-module.exports = { getID, getTitle, getCast, getComments, getImage, getTrailer, getTrending, getSeason, getTmdbIdFromTitle };
+/**
+ * Get aggregated credits for a TV show's season
+ * @param {int} showId 
+ * @param {int} seasonNumber 
+ * @returns the API response
+ */
+function getAggregateCredits(showId, seasonNumber) {
+    return fetchTMDB(`tv/${showId}/season/${seasonNumber}/aggregate_credits`, 'aggregate_credits');
+}
+
+
+module.exports = { getID, getTitle, getCast, getComments, getImage, getTrailer, getTrending, getSeason, getTmdbIdFromTitle, getAggregateCredits };

@@ -1,56 +1,49 @@
-const Show = require('../../database/src/models/shows');
-const Casting = require('../../database/src/models/casting');
-const Play = require('../../database/src/models/play');
-const { getCast, getTitle, getTmdbIdFromTitle } = require('../../database/src/tmdb/tmdb_api');
-const chalk = require('chalk');
+const castingServices = require('../services/casting_services');
 
-// 👇 Cette fonction à créer une fois dans ton fichier :
-function splitFullName(fullName) {
-    const parts = fullName.trim().split(' ');
-    const surname = parts.pop();
-    const name = parts.join(' ') || surname; // fallback if only one name
-    return { name, surname };
-}
-
-async function addCastingForAllShows() {
-    const shows = await Show.findAll();
-
-    for (const show of shows) {
-        const mediaType = show.is_movie ? 'movie' : 'tv';
-        const tmdbId = await getTmdbIdFromTitle(show.name, mediaType);
-        if (!tmdbId) continue;
-
-        const castData = await getCast(tmdbId, mediaType);
-        if (!castData?.cast) continue;
-
-        console.log(chalk.cyan(`🎭 Adding cast for "${show.name}"...`));
-
-        for (const member of castData.cast.slice(0, 10)) {
-            try {
-                const { name, surname } = splitFullName(member.name);
-
-                const [cast] = await Casting.findOrCreate({
-                    where: { name, surname, is_actor: true },
-                });
-
-                await Play.findOrCreate({
-                    where: {
-                        cast_id: cast.cast_id,
-                        show_id: show.show_id,
-                    },
-                    defaults: {
-                        role: member.character || 'Unknown',
-                    }
-                });
-
-            } catch (err) {
-                console.error(chalk.red(`❌ Failed to add cast "${member.name}" for "${show.name}": ${err.message}`));
-            }
-        }
+async function getAll(req, res) {
+    try {
+        const castings = await castingServices.getAllCastings();
+        res.status(200).json(castings);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
     }
-
-    console.log(chalk.green('✅ Casting + Play associations completed for all shows.'));
 }
 
+async function getById(req, res) {
+    try {
+        const casting = await castingServices.getCastingById(req.params.id);
+        if (!casting) return res.status(404).json({ message: "Casting not found" });
+        res.status(200).json(casting);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+}
 
-module.exports = { addCastingForAllShows };
+// get actors by internal show ID
+async function getActorsByShowId(req, res) {
+    try {
+        const showId = req.params.id;
+        const actors = await castingServices.getActorsFromShowId(showId);
+        res.status(200).json(actors);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+}
+
+// get full cast by internal show ID
+async function getFullCastingByShowId(req, res) {
+    try {
+        const showId = req.params.id;
+        const casting = await castingServices.getFullCastingFromShowId(showId);
+        res.status(200).json(casting);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+}
+
+module.exports = {
+    getAll,
+    getById,
+    getActorsByShowId,
+    getFullCastingByShowId
+};
