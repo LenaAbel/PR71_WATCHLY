@@ -10,7 +10,7 @@ const { addEpisodes } = require('./src/controllers/episode_controller');
 const { addCastingForAllShows } = require('./src/controllers/casting_controller');
 const { addGenresToAllShows } = require('./src/controllers/genre_controller');
 const { addImagesToAllShows } = require('./src/controllers/picture_controller');
-
+const { addUsers } = require('./src/controllers/person_controller');
 
 const showsServices = require('./src/services/shows_services');
 
@@ -63,6 +63,10 @@ const Show = require('./database/src/models/shows');
             console.log(chalk.cyan('[DB] Adding images...'));
             await addImagesToAllShows();
             console.log(chalk.green('[DB] Images added to all shows'));
+
+            console.log(chalk.cyan('[DB] Adding users...'));
+            await addUsers();
+            console.log(chalk.green('[DB] Users added'));
 
             console.log(chalk.green('[DB] Database population complete'));
 
