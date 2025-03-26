@@ -2,18 +2,61 @@ const express = require('express');
 const router = express.Router();
 const showsController = require('../controllers/shows_controller');
 
-// GET all shows
+/**
+ * @swagger
+ * /api/shows:
+ *   get:
+ *     summary: Get all shows
+ *     tags: [Shows]
+ *     responses:
+ *       200:
+ *         description: List of all shows
+ */
 router.get('/', showsController.getAll);
 
-// GET only movies
-router.get('/movies', showsController.getMovies); // important à mettre AVANT l'id parce que express est bete
+/**
+ * @swagger
+ * /api/shows/movies:
+ *   get:
+ *     summary: Get all movies
+ *     tags: [Shows]
+ *     responses:
+ *       200:
+ *         description: List of all movies
+ */
+router.get('/movies', showsController.getMovies);
 
-// GET only TV shows
+/**
+ * @swagger
+ * /api/shows/tv:
+ *   get:
+ *     summary: Get all TV shows
+ *     tags: [Shows]
+ *     responses:
+ *       200:
+ *         description: List of all TV shows
+ */
 router.get('/tv', showsController.getTV);
 
-
-// GET one show by ID
+/**
+ * @swagger
+ * /api/shows/{id}:
+ *   get:
+ *     summary: Get a show by ID
+ *     tags: [Shows]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: Show ID
+ *     responses:
+ *       200:
+ *         description: Show details
+ *       404:
+ *         description: Show not found
+ */
 router.get('/:id', showsController.getById);
-
 
 module.exports = router;
