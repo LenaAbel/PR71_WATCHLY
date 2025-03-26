@@ -1,14 +1,6 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../database');
 
-const path = require('path');
-
-const sequelize = new Sequelize({
-    dialect: 'sqlite',
-    storage: path.resolve(__dirname, '../../data/watchlyDB'),
-});
-
-
 class Favorite extends Model {}
 
 Favorite.init(
@@ -53,11 +45,11 @@ Favorite.init(
 
 module.exports = Favorite;
 
-// create a fav example
-const fav  = Favorite.build({
-    show_id: 1,
-    person_id: 1,
-    rating: 10,
-    is_watched: true,
-});
-fav.save().then(() => console.log('fav created'));
+// // create a fav example
+// const fav  = Favorite.build({
+//     show_id: 1,
+//     person_id: 1,
+//     rating: 10,
+//     is_watched: true,
+// });
+// fav.save().then(() => console.log('fav created'));
