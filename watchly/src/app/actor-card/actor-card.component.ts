@@ -7,5 +7,22 @@ import { Actor } from '../actor';
   styleUrls: ['./actor-card.component.css']
 })
 export class ActorCardComponent {
-  @Input() actor!: Actor;
+  @Input() pageTitle: string = '';
+  
+  actor: Actor = {
+    name: '',
+    lastName: '',
+    characterName: '',
+    imgSrc: ''
+  };
+
+  constructor() { 
+  }
+
+  ngOnInit() {
+    this.actor.name = 'Kevin';
+    this.actor.lastName = 'Alejandro';
+    this.actor.characterName = 'Jayce';
+    this.actor.imgSrc = 'assets/img/jayce.jpg';
+  }
 }

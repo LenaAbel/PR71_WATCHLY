@@ -1,7 +1,7 @@
-<div class="card">
-  <img [src]="actor.imgSrc" alt="{{ actor.characterName }} image">
+<div class="w-fit h-fit flex flex-col items-center gap-2">
+  <img [src]="actor.imgSrc" alt="{{ actor.characterName }} image" class="w-[5vw]" [ngClass]="{'h-[5vw] object-cover rounded-full': pageTitle ==='home'}">
   <div class="card-body">
-    <h2>{{ actor.characterName }}</h2>
-    <h3>Played by: {{ actor.actorName }}</h3>
+    <p class="font-bold">{{ actor.characterName }}</p>
+    <p>{{ actor.name }} {{actor.lastName}}</p>
   </div>
 </div>
