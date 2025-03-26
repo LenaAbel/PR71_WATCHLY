@@ -11,6 +11,7 @@ const { addCastingForAllShows } = require('./src/controllers/casting_controller'
 const { addGenresToAllShows } = require('./src/controllers/genre_controller');
 const { addImagesToAllShows } = require('./src/controllers/picture_controller');
 
+const userRouter = require('./src/router/userRouter');
 
 const showsServices = require('./src/services/shows_services');
 
@@ -29,7 +30,7 @@ server.get('/', (req, res) => {
 server.get('/api', (req, res) => {
     res.json({ message: 'Welcome to Watchly API' });
 });
-
+server.use('/api/users', userRouter);
 // Error handling middleware (should be last)
 server.use((err, req, res, next) => {
     console.error(chalk.red('Unhandled server error:', err.stack || err.message));

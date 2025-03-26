@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
-import { User } from '../user';
-import { log } from 'console';
-import { last } from 'rxjs';
+import { AuthenticationService } from '../services/authentification.service';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -10,26 +9,28 @@ import { last } from 'rxjs';
 })
 export class RegisterComponent implements OnInit {
   form = {
-    name: '',
-    surname: '',
-    username: '',
-    email: '',
-    password: ''
-  }
+    name: 'aze',
+    surname: 'aze',
+    username: 'aze',
+    email: 'aze@aze.aze',
+    password: 'aze'
+  };
 
-  constructor() { }
+  constructor(private authService: AuthenticationService, private router: Router) {}
 
   onSubmit() {
-    console.log('Form submitted');
+    console.log('Submitting form', this.form);
 
-    /*if (JSON.stringify(this.form) === JSON.stringify(new User())) {
-      console.log('Form is empty');
-      return;
-    }
-    console.log(this.form);*/
+    this.authService.register(this.form).subscribe(
+      response => {
+        console.log('User registered successfully!', response);
+        this.router.navigate(['/login']); // Redirect to login page after registration
+      },
+      error => {
+        console.error('Error registering user:', error);
+      }
+    );
   }
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }
