@@ -9,12 +9,15 @@ const port = process.env.PORT || 3000;
 const showsRoutes = require('./src/router/shows_router');
 const castingRoutes = require('./src/router/casting_router');
 const episodeRoutes = require('./src/router/episode_router'); 
+const genreRoutes = require('./src/router/genre_router');
 
 // CONTROLLERS / SERVICES
 const showsServices = require('./src/services/shows_services');
 const showsController = require('./src/controllers/shows_controller');
 const episodeServices = require('./src/services/episode_services'); 
 const castingServices = require('./src/services/casting_services');
+const genreServices = require('./src/services/genre_services');
+const genreController = require('./src/controllers/genre_controller');
 
 // MIDDLEWARES
 server.use(express.json());
@@ -24,6 +27,7 @@ server.use(cors());
 server.use('/api/shows', showsRoutes);
 server.use('/api/casting', castingRoutes);
 server.use('/api/episodes', episodeRoutes); 
+server.use('/api/genres', genreRoutes);
 
 // Basic routes
 server.get('/', (req, res) => {
@@ -54,10 +58,10 @@ const Show = require('./database/src/models/shows');
             await castingServices.addCastingForAllShows();
             console.log(chalk.green('[DB] Casting added to all shows'));
 
-            /*
+            
             console.log(chalk.cyan('[DB] Adding genres...'));
-            await addGenresToAllShows();
-
+            await genreController.addGenresToAllShows();
+            /*
             console.log(chalk.cyan('[DB] Adding images...'));
             await addImagesToAllShows();
 
