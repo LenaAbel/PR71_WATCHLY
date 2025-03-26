@@ -5,12 +5,16 @@ const cors = require('cors');
 const server = express();
 const port = process.env.PORT || 3000;
 
+const showsRoutes = require('./src/router/shows_router');
+
+
 const { addsShowsDB } = require('./src/controllers/shows_controller');
 const { addEpisodes } = require('./src/controllers/episode_controller');
-const { addCastingForAllShows } = require('./src/controllers/casting_controller');
-const { addGenresToAllShows } = require('./src/controllers/genre_controller');
-const { addImagesToAllShows } = require('./src/controllers/picture_controller');
 
+const { addCastingForAllShows } = require('./src/controllers/casting_controller');
+/*const { addGenresToAllShows } = require('./src/controllers/genre_controller');
+const { addImagesToAllShows } = require('./src/controllers/picture_controller');
+*/
 
 const showsServices = require('./src/services/shows_services');
 
@@ -19,9 +23,9 @@ server.use(express.json());
 server.use(cors());
 
 // Routes
+server.use('/api/shows', showsRoutes);
 
-
-// Basic route
+// Basic routes
 server.get('/', (req, res) => {
     res.json({ message: 'Welcome to Watchly API' });
 });
@@ -30,7 +34,7 @@ server.get('/api', (req, res) => {
     res.json({ message: 'Welcome to Watchly API' });
 });
 
-// Error handling middleware (should be last)
+// Error handler (must be last)
 server.use((err, req, res, next) => {
     console.error(chalk.red('Unhandled server error:', err.stack || err.message));
     res.status(500).json({ error: 'An unexpected error occurred' });
@@ -52,6 +56,7 @@ const Show = require('./database/src/models/shows');
             const shows = await showsServices.getShows('tv', 'week');
             await addEpisodes(shows);
 
+            /*
             console.log(chalk.cyan('[DB] Adding casting...'));
             await addCastingForAllShows();
             console.log(chalk.green('[DB] Casting added to all shows'));
@@ -63,18 +68,17 @@ const Show = require('./database/src/models/shows');
             console.log(chalk.cyan('[DB] Adding images...'));
             await addImagesToAllShows();
             console.log(chalk.green('[DB] Images added to all shows'));
+            */
 
             console.log(chalk.green('[DB] Database population complete'));
-
         } else {
             console.log(chalk.blue(`[DB] Database ready: ${count} shows`));
         }
     } catch (error) {
-        console.error(chalk.red('[Error] Database initialization failed:', error));
+        console.error(chalk.red('[Error] Database initialization failed:'), error);
     }
 
     server.listen(port, () => {
         console.log(chalk.cyan.bold(`Server is running on port ${port}`));
     });
 })();
-
