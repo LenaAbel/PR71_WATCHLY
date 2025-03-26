@@ -69,7 +69,7 @@ const Show = require('./database/src/models/shows');
             console.log(chalk.cyan('[DB] Adding images...'));
             await addImagesToAllShows();
             console.log(chalk.green('[DB] Images added to all shows'));
-            */
+            
 
             console.log(chalk.cyan('[DB] Adding users...'));
             await addUsers();
@@ -77,7 +77,7 @@ const Show = require('./database/src/models/shows');
 
             console.log(chalk.cyan('[DB] Adding favorites...'));
             await addFavorites();
-            console.log(chalk.green('[DB] Favorites added'));
+            console.log(chalk.green('[DB] Favorites added'));*/
 
             console.log(chalk.green('[DB] Database population complete'));
         } else {
