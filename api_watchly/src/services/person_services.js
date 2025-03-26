@@ -1,7 +1,10 @@
 const Person = require('../../database/src/models/person');
+const Favorite = require('../../database/src/models/favorite');
+
 const chalk = require('chalk');
 const bcrypt = require('bcrypt');
 
+Person.hasMany(Favorite, { foreignKey: 'person_id', as: 'favorites' });
 
 
 async function createUsers(){
@@ -15,7 +18,8 @@ async function createUsers(){
         ['nromanoff', 'Natasha', 'Romanoff', 0, 'nromanoff@example.com', 'blackwidow'],
         ['sdiaz', 'Sara', 'Diaz', 0, 'sdiaz@example.com', 'mypassword'],
     ];
-
+        console.log(chalk.cyan(`\n 👤 Processing ${users.length} users...`));
+     
     for (const user of users) {
         await addPerson(user);
     }

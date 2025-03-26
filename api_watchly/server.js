@@ -39,6 +39,7 @@ const genreRoutes = require('./src/router/genre_router');
 const pictureRoutes = require('./src/router/picture_router');
 const personRoutes = require('./src/router/person_router');
 
+
 // CONTROLLERS / SERVICES
 const showsServices = require('./src/services/shows_services');
 const showsController = require('./src/controllers/shows_controller');
@@ -47,6 +48,7 @@ const castingServices = require('./src/services/casting_services');
 const genreController = require('./src/controllers/genre_controller');
 const pictureServices = require('./src/services/picture_services');
 const personController = require('./src/controllers/person_controller');
+const favoriteController = require('./src/controllers/favorite_controller');
 
 // MIDDLEWARES
 server.use(express.json());
@@ -103,10 +105,10 @@ const Show = require('./database/src/models/shows');
             console.log(chalk.cyan('[DB] Adding users...'));
             await personController.addUsers();
             console.log(chalk.green('[DB] Users added'));
-            /*
+            
             console.log(chalk.cyan('[DB] Adding favorites...'));
-            await addFavorites();
-            */
+            await favoriteController.addFavorites();
+            console.log(chalk.green('[DB] Favorites added'));
 
             console.log(chalk.green('[DB] Database population complete'));
         } else {

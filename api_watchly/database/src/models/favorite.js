@@ -44,12 +44,3 @@ Favorite.init(
 });
 
 module.exports = Favorite;
-
-// // create a fav example
-// const fav  = Favorite.build({
-//     show_id: 1,
-//     person_id: 1,
-//     rating: 10,
-//     is_watched: true,
-// });
-// fav.save().then(() => console.log('fav created'));

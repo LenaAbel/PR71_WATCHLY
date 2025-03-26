@@ -64,4 +64,18 @@ router.get('/id/:id', async (req, res) => {
     }
 });
 
+// GET by ID with favorites
+router.get('/id/:id/favorites', async (req, res) => {
+    try {
+        const user = await personController.getPersonByIdWithFavorites(req.params.id);
+        if (user) {
+            res.json(user);
+        } else {
+            res.status(404).json({ error: 'User not found' });
+        }
+    } catch (err) {
+        res.status(500).json({ error: 'Failed to fetch user by ID with favorites' });
+    }
+});
+
 module.exports = router;

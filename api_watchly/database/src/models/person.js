@@ -1,9 +1,9 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../database');
+const Favorite = require('./favorite');
 
 
 class Person extends Model {}
-
 Person.init(
     {
         person_id: {
