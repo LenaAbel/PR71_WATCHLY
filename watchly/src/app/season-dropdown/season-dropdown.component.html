@@ -1,0 +1,35 @@
+<div class="max-w-5xl my-6 px-6 rounded-sm border-l-4 border-(--color-main-light) dark:border-(--color-main-dark)">
+    <div class="flex items-center space-x-2 mb-4" (click)="toggleSeasonDropdown()">
+        <h3 class="text-xl font-semibold">Season 1</h3>
+        <svg width="20" height="20" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg" *ngIf="!active">
+            <line x1="10" y1="15" x2="25" y2="35" stroke-width="4" stroke-linecap="round"/>
+            <line x1="40" y1="15" x2="25" y2="35" stroke-width="4" stroke-linecap="round"/>
+        </svg>
+        <svg width="20" height="20" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg" *ngIf="active">
+            <line x1="10" y1="35" x2="25" y2="15" stroke-width="4" stroke-linecap="round"/>
+            <line x1="40" y1="35" x2="25" y2="15" stroke-width="4" stroke-linecap="round"/>
+        </svg>
+    </div>
+
+    <div class="w-full overflow-hidden pb-15 pr-15" *ngIf="active">
+        <swiper
+            [slidesPerView]="3"
+            [spaceBetween]="40"
+            [navigation]="false"
+            [keyboard]="true"
+        >
+            <ng-template *ngFor="let episode of episodes" swiperSlide>
+                <div class="w-3xs h-80 bg-(--bg-surface-1-light) dark:bg-(--bg-surface-1-dark) dark:shadow-(--shadow-dark) shadow-(--shadow-light) rounded-(--radius-outer)">
+                    <img [src]="episode.image" alt="Episode image"
+                        class="rounded-t-xl w-full h-40 object-cover">
+                    
+                    <div class="p-4">
+                        <h3 class="font-bold text-sm">{{ episode.title }}</h3>
+                        <p class="text-xs pt-1">{{ episode.episode }}</p>
+                        <p class="h-15 overflow-scroll text-sm mt-2">{{ episode.description }}</p>
+                    </div>
+                </div>
+            </ng-template>
+        </swiper>
+    </div>
+</div>

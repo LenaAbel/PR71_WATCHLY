@@ -39,6 +39,7 @@ const genreRoutes = require('./src/router/genre_router');
 const pictureRoutes = require('./src/router/picture_router');
 const personRoutes = require('./src/router/person_router');
 
+const userRouter = require('./src/router/userRouter');
 
 // CONTROLLERS / SERVICES
 const showsServices = require('./src/services/shows_services');
@@ -75,6 +76,9 @@ server.get('/api', (req, res) => {
 });
 
 // Auto populate DB from TMDB if empty 
+server.use('/api/users', userRouter);
+
+// --- ✅ Auto populate DB from TMDB if empty ---
 const Show = require('./database/src/models/shows');
 
 (async () => {

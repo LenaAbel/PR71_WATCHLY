@@ -1,0 +1,8 @@
+<div class="max-w-full">
+    <app-trailer-banner></app-trailer-banner>
+    <app-return-btn></app-return-btn>
+    <h2 class="p-6 text-5xl font-bold text-(--color-main-light) dark:text-(--color-main-dark) w-fit">Casting</h2>
+    <div class="p-6 flex mx-auto flex-wrap items-center gap-10 mt-4">
+        <app-actor-card *ngFor="let i of [0, 1, 2, 3, 4, 5, 6, 7, 8]" [pageTitle]="'cast'" class="w-1/11"></app-actor-card>
+    </div>
+</div>

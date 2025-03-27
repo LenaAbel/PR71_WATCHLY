@@ -1,6 +1,7 @@
 export class Actor {
   constructor(
-    public actorName: string,
+    public name: string,
+    public lastName: string,
     public characterName: string,
     public imgSrc: string
   ) {}
