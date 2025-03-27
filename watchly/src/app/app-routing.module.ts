@@ -6,6 +6,7 @@ import { ShowPageComponent } from './show-page/show-page.component';
 import { NewShowBannerComponent } from './new-show-banner/new-show-banner.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { CastPageComponent } from './cast-page/cast-page.component';
+import { EpisodePageComponent } from './episode-page/episode-page.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -13,7 +14,8 @@ const routes: Routes = [
   {path: 'series/:id', component: ShowPageComponent},
   {path: 'movies/:id', component: ShowPageComponent},
   {path: '', component: HomePageComponent},
-  {path: ':id/casting', component: CastPageComponent}
+  {path: ':id/casting', component: CastPageComponent},
+  {path: ':id/episodes', component: EpisodePageComponent}
 ];
 
 @NgModule({

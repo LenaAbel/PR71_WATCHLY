@@ -23,6 +23,8 @@ import { EpisodesSectionComponent } from './episodes-section/episodes-section.co
 import { SeasonDropdownComponent } from './season-dropdown/season-dropdown.component';
 import Swiper from 'swiper';
 import { SwiperModule } from 'swiper/angular';
+import { EpisodeCardComponent } from './episode-card/episode-card.component';
+import { EpisodePageComponent } from './episode-page/episode-page.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +43,9 @@ import { SwiperModule } from 'swiper/angular';
     CastPageComponent,
     ReturnBtnComponent,
     EpisodesSectionComponent,
-    SeasonDropdownComponent
+    SeasonDropdownComponent,
+    EpisodeCardComponent,
+    EpisodePageComponent
   ],
   imports: [
     BrowserModule,

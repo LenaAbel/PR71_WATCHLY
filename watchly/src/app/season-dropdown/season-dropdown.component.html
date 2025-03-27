@@ -1,4 +1,4 @@
-<div class="max-w-5xl my-6 px-6 rounded-sm border-l-4 border-(--color-main-light) dark:border-(--color-main-dark)">
+<div class="my-6 px-6 rounded-sm border-l-4 border-(--color-main-light) dark:border-(--color-main-dark)" [ngClass]="{'w-full': page === 'episodes', 'max-w-5xl': page === 'show'}">
     <div class="flex items-center space-x-2 mb-4" (click)="toggleSeasonDropdown()">
         <h3 class="text-xl font-semibold">Season 1</h3>
         <svg width="20" height="20" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg" *ngIf="!active">
@@ -11,7 +11,7 @@
         </svg>
     </div>
 
-    <div class="w-full overflow-hidden pb-15 pr-15" *ngIf="active">
+    <div class="w-full overflow-hidden pb-15 pr-15" *ngIf="active && page === 'show'">
         <swiper
             [slidesPerView]="3"
             [spaceBetween]="40"
@@ -19,17 +19,14 @@
             [keyboard]="true"
         >
             <ng-template *ngFor="let episode of episodes" swiperSlide>
-                <div class="w-3xs h-80 bg-(--bg-surface-1-light) dark:bg-(--bg-surface-1-dark) dark:shadow-(--shadow-dark) shadow-(--shadow-light) rounded-(--radius-outer)">
-                    <img [src]="episode.image" alt="Episode image"
-                        class="rounded-t-xl w-full h-40 object-cover">
-                    
-                    <div class="p-4">
-                        <h3 class="font-bold text-sm">{{ episode.title }}</h3>
-                        <p class="text-xs pt-1">{{ episode.episode }}</p>
-                        <p class="h-15 overflow-scroll text-sm mt-2">{{ episode.description }}</p>
-                    </div>
-                </div>
+                <app-episode-card [episode]="episode"></app-episode-card>  
             </ng-template>
         </swiper>
+    </div>
+
+    <div class="w-full flex flex-wrap overflow-hidden gap-8 pb-15 pr-15" *ngIf="active && page !== 'show'">
+        <div *ngFor="let episode of episodes">
+            <app-episode-card [episode]="episode"></app-episode-card>  
+        </div>
     </div>
 </div>

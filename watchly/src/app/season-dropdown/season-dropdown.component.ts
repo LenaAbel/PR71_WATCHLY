@@ -12,6 +12,7 @@ Swiper.use([Navigation, Pagination, Keyboard]);
 export class SeasonDropdownComponent implements OnInit {
 
   @Input() active !: boolean;
+  @Input() page !: any;
 
   @ViewChild(SwiperComponent, { static: false }) swiper?: SwiperComponent;
 
@@ -30,6 +31,40 @@ export class SeasonDropdownComponent implements OnInit {
       image: 'assets/img/wQEW3xLrQAThu1GvqpsKQyejrYS.jpg',
     },
     {
+      title: 'The Base Violence Necessary for Change',
+      episode: 'E3 - 40 min',
+      description: 'An epic showdown between old rivals results in a fateful moment...',
+      image: 'assets/img/wQEW3xLrQAThu1GvqpsKQyejrYS.jpg',
+    },
+    {
+      title: 'The Base Violence Necessary for Change',
+      episode: 'E4 - 40 min',
+      description: 'An epic showdown between old rivals results in a fateful moment...',
+      image: 'assets/img/wQEW3xLrQAThu1GvqpsKQyejrYS.jpg',
+    },
+    {
+      title: 'The Base Violence Necessary for Change',
+      episode: 'E5 - 40 min',
+      description: 'An epic showdown between old rivals results in a fateful moment...An epic showdown between old rivals results in a fateful moment...',
+      image: 'assets/img/wQEW3xLrQAThu1GvqpsKQyejrYS.jpg',
+    },{
+      title: 'The Base Violence Necessary for Change',
+      episode: 'E3 - 40 min',
+      description: 'An epic showdown between old rivals results in a fateful moment...',
+      image: 'assets/img/wQEW3xLrQAThu1GvqpsKQyejrYS.jpg',
+    },
+    {
+      title: 'The Base Violence Necessary for Change',
+      episode: 'E4 - 40 min',
+      description: 'An epic showdown between old rivals results in a fateful moment...',
+      image: 'assets/img/wQEW3xLrQAThu1GvqpsKQyejrYS.jpg',
+    },
+    {
+      title: 'The Base Violence Necessary for Change',
+      episode: 'E5 - 40 min',
+      description: 'An epic showdown between old rivals results in a fateful moment...An epic showdown between old rivals results in a fateful moment...',
+      image: 'assets/img/wQEW3xLrQAThu1GvqpsKQyejrYS.jpg',
+    },{
       title: 'The Base Violence Necessary for Change',
       episode: 'E3 - 40 min',
       description: 'An epic showdown between old rivals results in a fateful moment...',
