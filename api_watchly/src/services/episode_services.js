@@ -1,7 +1,6 @@
 const Episode = require('../../database/src/models/episode');
 const apiServices = require('../../database/src/tmdb/tmdb_api');
 const showsServices = require('./shows_services');
-const showsController = require('../controllers/shows_controller');
 const chalk = require('chalk');
 
 // ============================
@@ -33,8 +32,8 @@ async function createSeason(seasonNumber, tmdbId, showId) {
 async function createTv(show) {
     let showRecord = await showsServices.getShowIdFromDB(show);
     if (!showRecord) {
-        const sh = await showsController.createTv(show);
-        await showsController.saveShow(sh);
+        const sh = await showsServices.createTv(show);
+        await showsServices.saveShow(sh);
         showRecord = await showsServices.getShowIdFromDB(show);
     }
     const show_id = showRecord.dataValues.show_id;
@@ -120,8 +119,8 @@ async function addEpisodes(tvShows) {
 async function createTv(show) {
     let showRecord = await showsServices.getShowIdFromDB(show);
     if (!showRecord) {
-        const sh = await showsController.createTv(show);
-        await showsController.saveShow(sh);
+        const sh = await showsServices.createTv(show);
+        await showsServices.saveShow(sh);
         showRecord = await showsServices.getShowIdFromDB(show);
     }
     const show_id = showRecord.dataValues.show_id;
