@@ -15,15 +15,8 @@ const routes: Routes = [
   {path: 'movies/:id', component: ShowPageComponent},
   {path: '', component: HomePageComponent},
   {path: ':id/casting', component: CastPageComponent},
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-  {path: ':id/episodes', component: EpisodePageComponent}
-=======
+  {path: ':id/episodes', component: EpisodePageComponent},
   {path: 'profile', component: LoginComponent}, // to change
->>>>>>> Stashed changes
-=======
-  {path: 'profile', component: LoginComponent}, // to change
->>>>>>> Stashed changes
 ];
 
 @NgModule({
