@@ -4,21 +4,32 @@ const chalk = require('chalk');
 const sequelize = require('../../database/src/database'); 
 
 // --- TMDB Fetching ---
-async function getIds(name, time) {
-    const data = await getTrending(name, time);
-    return data.results.map(result => result.id);
+async function getIds(name, time, pages = process.env.TMDB_PAGES) {
+    const ids = [];
+
+    for (let page = 1; page <= pages; page++) {
+        const data = await getTrending(name, time, page);
+        if (data?.results?.length) {
+            const newIds = data.results.map(result => result.id);
+            ids.push(...newIds);
+        }
+    }
+
+    return [...new Set(ids)];
 }
 
-async function getShows(name, time) {
-    const ids = await getIds(name, time);
+
+async function getShows(name, time, pages = process.env.TMDB_PAGES) {
+    const ids = await getIds(name, time, pages);
     const shows = [];
 
     for (let id of ids) {
         const show = await getID(id, name);
-        shows.push(show);
+        if (show) shows.push(show);
     }
     return shows;
 }
+
 
 // --- DB Queries ---
 function getShowIdFromDB(show) {

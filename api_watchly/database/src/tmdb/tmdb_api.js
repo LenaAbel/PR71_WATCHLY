@@ -69,8 +69,8 @@ function getTrailer(id, name) {
  * @param {string} time "day" or "week"
  * @returns the API response
  */
-function getTrending(name, time) {
-    return fetchTMDB('trending/'+name+'/'+time,'trending');
+function getTrending(name, time, page = 1) {
+    return fetchTMDB(`trending/${name}/${time}?page=${page}`, 'trending');
 }
 
 function getSeason(id, number) {

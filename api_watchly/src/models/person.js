@@ -41,14 +41,3 @@ Person.init(
 );
 
 module.exports = Person;
-
-// create a person example
-const person = Person.build({
-    username: 'username',
-    name: 'name',
-    surname: 'surname',
-    is_admin: true,
-    mail: 'mail',
-    password: 'password',
-});
-person.save().then(() => console.log('Person created'));

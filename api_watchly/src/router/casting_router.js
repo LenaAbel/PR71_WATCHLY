@@ -73,4 +73,23 @@ router.get('/show/:id/actors', castingController.getActorsByShowId);
  */
 router.get('/show/:id/full', castingController.getFullCastingByShowId);
 
+/**
+ * @swagger
+ * /api/casting/show/{id}/directors:
+ *   get:
+ *     summary: Get directors of a show by ID
+ *     tags: [Casting]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: Show ID
+ *     responses:
+ *       200:
+ *         description: List of directors for the show
+ */
+router.get('/show/:id/directors', castingController.getDirectorsByShowId);
+
 module.exports = router;

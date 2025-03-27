@@ -11,13 +11,13 @@ const sequelize = new Sequelize({
 async function initializeDatabase() {
     try {
         await sequelize.authenticate();
-        console.log(chalk.green('Database connection established successfully.'));
-        
-        await sequelize.sync({ force: true });
-        console.log(chalk.green('Database synchronized successfully.'));
-        
+        console.log(chalk.green('✅ Database connection established successfully.'));
+
+        // DON'T force sync unless you really want to reset the schema
+        await sequelize.sync(); 
+        console.log(chalk.green('✅ Database synchronized successfully.'));
     } catch (error) {
-        console.error(chalk.red('Unable to connect to the database:'), error);
+        console.error(chalk.red('❌ Unable to connect to the database:'), error);
     }
 }
 
