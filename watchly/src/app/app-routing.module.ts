@@ -15,7 +15,8 @@ const routes: Routes = [
   {path: 'movies/:id', component: ShowPageComponent},
   {path: '', component: HomePageComponent},
   {path: ':id/casting', component: CastPageComponent},
-  {path: ':id/episodes', component: EpisodePageComponent}
+  {path: ':id/episodes', component: EpisodePageComponent},
+  {path: 'profile', component: LoginComponent}, // to change
 ];
 
 @NgModule({
