@@ -43,5 +43,4 @@ Thumbs.db
 
 watchly/node_modules
 api_watchly/node_modules
-package-lock.json
-./api_watchly/package-lock.json
+api_watchly/database/data/watchlyDB
