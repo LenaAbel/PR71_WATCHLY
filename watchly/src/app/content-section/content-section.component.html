@@ -1,17 +1,16 @@
 <div class="max-w-5xl overflow-hidden p-6">
   <div class="flex justify-between items-center">
-    <h2 class="text-5xl font-bold text-(--color-main-light) dark:text-(--color-main-dark) w-fit">{{ content.title }}</h2>
+    <h2 class="text-5xl font-bold text-(--color-main-light) dark:text-(--color-main-dark) w-fit">{{ content.name }}</h2>
     <button class="bg-(--color-main-light) dark:bg-(--color-main-dark) text-sm font-bold px-4 py-1 rounded-full text-white"><span class="pr-2">+</span> Your rating</button>
   </div>
   <div class="flex justify-between items-end">
     <div class="infos">
       <span class="pr-1" *ngIf="type == 'series'">{{ content.status }}</span>
-      <span class="pr-1">{{ content.year }}</span>
-      <span class="pr-1" *ngIf="type == 'movies'">{{ content.director }}</span>
+      <span class="pr-1">{{ content.released_date }}</span>
       <span class="pr-1" *ngIf="type == 'series'">{{ content.seasons }} seasons</span>
       <span class="pr-1" *ngIf="type == 'series'">{{ content.episodes }} episodes</span>
-      <span class="pr-1">{{ content.duration }}</span>
-      <span class="pr-1">{{ content.language }}</span>
+      <span class="pr-1">{{ content.duration }} mins</span>
+      <span class="pr-1">{{ content.nationality }}</span>
     </div>
     <div class="flex flex-col">
       <div class="ml-auto">

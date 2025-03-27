@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-cast-section',
@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./cast-section.component.css']
 })
 export class CastSectionComponent implements OnInit {
-
+  @Input() cast!: any;
   constructor() { }
 
   ngOnInit(): void {
