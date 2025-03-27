@@ -1,11 +1,16 @@
-import { Component, OnInit, ElementRef, ViewChildren, QueryList, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-poster-section',
-  templateUrl: './poster-section.component.html',
-  styleUrls: ['./poster-section.component.css']
+  selector: 'app-poster-page',
+  templateUrl: './poster-page.component.html',
+  styleUrls: ['./poster-page.component.css']
 })
-export class PosterSectionComponent {
+export class PosterPageComponent implements OnInit {
+
+  constructor() { }
+
+  ngOnInit(): void {
+  }
 
   urls: string[] = [
     'https://pbs.twimg.com/media/GPEwE3nXwAAw6l6.jpg:large',
@@ -17,5 +22,4 @@ export class PosterSectionComponent {
     
   ];
 
-  
 }

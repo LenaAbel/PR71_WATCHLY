@@ -25,6 +25,8 @@ import { SwiperModule } from 'swiper/angular';
 import { EpisodeCardComponent } from './episode-card/episode-card.component';
 import { EpisodePageComponent } from './episode-page/episode-page.component';
 import { PosterSectionComponent } from './poster-section/poster-section.component';
+import { PosterPageComponent } from './poster-page/poster-page.component';
+import { PosterGridComponent } from './poster-grid/poster-grid.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +48,9 @@ import { PosterSectionComponent } from './poster-section/poster-section.componen
     SeasonDropdownComponent,
     EpisodeCardComponent,
     EpisodePageComponent,
-    PosterSectionComponent
+    PosterSectionComponent,
+    PosterPageComponent,
+    PosterGridComponent
   ],
   imports: [
     BrowserModule,

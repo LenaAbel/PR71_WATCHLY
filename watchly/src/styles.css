@@ -48,7 +48,7 @@ p::-webkit-scrollbar {
 }
 
 @media (prefers-color-scheme: dark){
-    *:focus {
+    input:focus {
         outline : var(--color-main-dark) auto;
     }
 
@@ -58,7 +58,7 @@ p::-webkit-scrollbar {
 }
 
 @media (prefers-color-scheme: light) {
-    *:focus {
+    input:focus {
         outline: var(--color-main-light) auto;
     }
 

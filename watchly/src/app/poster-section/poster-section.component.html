@@ -1,18 +1,4 @@
 <div class="max-w-5xl p-6">
     <h3 class="text-3xl font-bold mb-6">Posters & pictures</h3>
-    <div class="grid-container grid grid-cols-4 gap-2">
-      <div 
-        *ngFor="let url of urls" 
-        #imageContainer
-        class="relative flex justify-center items-center overflow-hidden"
-      >
-        <img 
-          [src]="url" 
-          alt="Poster" 
-          (load)="onImageLoad()"
-          class="image w-full h-auto object-cover border-2 border-(--color-main-light) dark:border-(--color-main-dark)"
-          loading="lazy"
-        >
-      </div>
-    </div>
+    <app-poster-grid [urls]="urls" [page]="'shows'"></app-poster-grid>
 </div>
