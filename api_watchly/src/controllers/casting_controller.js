@@ -41,9 +41,20 @@ async function getFullCastingByShowId(req, res) {
     }
 }
 
+async function getDirectorsByShowId(req, res) {
+    try {
+        const showId = req.params.id;
+        const directors = await castingServices.getDirectorsFromShowId(showId);
+        res.status(200).json(directors);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+}
+
 module.exports = {
     getAll,
     getById,
     getActorsByShowId,
-    getFullCastingByShowId
+    getFullCastingByShowId,
+    getDirectorsByShowId
 };

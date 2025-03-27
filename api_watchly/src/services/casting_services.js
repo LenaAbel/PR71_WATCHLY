@@ -90,8 +90,22 @@ async function getFullCastingFromShowId(showId) {
     const tmdbId = await getTmdbIdFromTitle(show.name, mediaType);
     if (!tmdbId) throw new Error('TMDB ID not found');
 
-    return await getCast(tmdbId, mediaType);
+    const fullCast = await getCast(tmdbId, mediaType);
+    
+    // Add image URLs to cast and crew
+    const addProfileUrl = person => ({
+        ...person,
+        image_url: person.profile_path 
+            ? `https://image.tmdb.org/t/p/w500${person.profile_path}`
+            : null
+    });
+
+    return {
+        cast: fullCast.cast?.map(addProfileUrl) || [],
+        crew: fullCast.crew?.map(addProfileUrl) || [],
+    };
 }
+
 
 // ============================
 // Main Processing Functions
@@ -138,6 +152,31 @@ async function addCastingForAllShows() {
     console.log(chalk.green('✅ Casting + Play associations completed for all shows.'));
 }
 
+/**
+ * Get director(s) from a show using internal DB ID
+ */
+async function getDirectorsFromShowId(showId) {
+    const show = await Show.findByPk(showId);
+    if (!show) throw new Error('Show not found');
+
+    const mediaType = show.is_movie ? 'movie' : 'tv';
+    const tmdbId = await getTmdbIdFromTitle(show.name, mediaType);
+    if (!tmdbId) throw new Error('TMDB ID not found');
+
+    const fullCast = await getCast(tmdbId, mediaType);
+
+    return (fullCast.crew || [])
+        .filter(member => member.job === 'Director')
+        .map(member => ({
+            name: member.name,
+            job: member.job,
+            image_url: member.profile_path
+                ? `https://image.tmdb.org/t/p/w500${member.profile_path}`
+                : null
+        }));
+}
+
+
 module.exports = {
     addCastingForAllShows,
     getAllCastings,
@@ -145,5 +184,6 @@ module.exports = {
     getActorsFromShow,
     getActorsFromShowId,
     getFullCasting,
-    getFullCastingFromShowId
+    getFullCastingFromShowId,
+    getDirectorsFromShowId,
 };
