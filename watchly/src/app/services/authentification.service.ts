@@ -19,7 +19,7 @@ export class AuthenticationService {
       .pipe(
             tap(response => {
                 if (response.token) {
-                    localStorage.setItem('auth_token', response.token);
+                    localStorage.setItem('authToken', response.token);
                     console.log('Token stored:', response.token);
                 } else {
                     console.error("Token not found in response");
