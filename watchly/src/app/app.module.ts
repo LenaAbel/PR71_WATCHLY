@@ -30,6 +30,7 @@ import { PosterGridComponent } from './poster-grid/poster-grid.component';
 import { UserPageComponent } from './user-page/user-page.component';
 import { CommentComponent } from './comment/comment.component';
 import { CommentPageComponent } from './comment-page/comment-page.component';
+import { CommentSectionComponent } from './comment-section/comment-section.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import { CommentPageComponent } from './comment-page/comment-page.component';
     PosterGridComponent,
     UserPageComponent,
     CommentComponent,
-    CommentPageComponent
+    CommentPageComponent,
+    CommentSectionComponent
   ],
   imports: [
     BrowserModule,

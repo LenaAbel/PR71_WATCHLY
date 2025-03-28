@@ -1,0 +1,20 @@
+<div class="max-w-full p-6 bg-(--bg-surface-1-light) dark:bg-(--bg-surface-1-dark) rounded-(--radius-outer) shadow-(--shadow-light) dark:shadow-(--shadow-dark)">
+    <h3 class="text-3xl font-bold">Comments</h3>
+    <div class="flex mt-4 mb-8 gap-4">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10 bg-(--color-main-light) dark:bg-(--color-main-dark) text-white rounded-full p-1">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 7.5A3.75 3.75 0 1112 3.75 3.75 3.75 0 0115.75 7.5z" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 20.25a8.25 8.25 0 0116.5 0" />
+        </svg>
+        <input
+            type="text"
+            placeholder="What are you looking for ?"
+            class="w-full px-4 py-1.5 rounded-full bg-(--bg-surface-2-light) dark:bg-(--bg-surface-2-dark) border border-(--bg-surface-3-light) dark:border-(--bg-surface-3-dark) max-w-[90%] "
+        />
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-[40px] h-[40px] cursor-pointer stroke-(--color-main-light) dark:stroke-(--color-main-dark) fill-none scale-x-[-1] -rotate-45 mx-4" stroke-width="1.5">
+            <polygon points="3 12 21 3 14 12 21 21 3 12"/>
+        </svg>
+    </div>
+    <app-comment [page]="'show'" [spoiler]="false" [isPage]="false"></app-comment>
+    <app-comment [page]="'show'" [spoiler]="true" [isPage]="false"></app-comment>
+    <app-comment [page]="'show'" [spoiler]="false" [isPage]="false"></app-comment>
+</div>
