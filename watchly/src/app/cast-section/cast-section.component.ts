@@ -10,6 +10,10 @@ export class CastSectionComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    console.log('CastSectionComponent initialized');
+
+    console.log('Cast:', this.cast);
+
   }
 
 }

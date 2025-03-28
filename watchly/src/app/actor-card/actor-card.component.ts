@@ -7,21 +7,12 @@ import { Actor } from '../models/actor';
   styleUrls: ['./actor-card.component.css']
 })
 export class ActorCardComponent {
-  @Input() pageTitle: string = '';
+  @Input() pageTitle!: any;
+  @Input() actor!: Actor;
 
-  actor: Actor = {
-    name: '',
-    character: '',
-    profile_path: ''
-  };
-
-  constructor() {
-  }
-
-  ngOnInit() {
-    /*this.actor.name = 'Kevin';
-    this.actor.lastName = 'Alejandro';
-    this.actor.characterName = 'Jayce';
-    this.actor.imgSrc = 'assets/img/jayce.jpg';*/
+  get imageUrl(): string {
+    return this.actor.profile_path
+      ? `https://image.tmdb.org/t/p/w200${this.actor.profile_path}`
+      : 'assets/images/default-profile.jpg'; // fallback
   }
 }
