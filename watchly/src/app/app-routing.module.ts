@@ -15,6 +15,7 @@ const routes: Routes = [
   {path: 'register', component: RegisterComponent},
   {path: 'series/:id', component: ShowPageComponent},
   {path: 'movies/:id', component: ShowPageComponent},
+  {path: 'series/:id/episode/:episodeId', component: ShowPageComponent},
   {path: '', component: HomePageComponent},
   {path: ':id/casting', component: CastPageComponent},
   {path: ':id/episodes', component: EpisodePageComponent},

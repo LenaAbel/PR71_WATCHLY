@@ -14,7 +14,9 @@ export class ShowPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.showId = Number(this.route.snapshot.paramMap.get('id'));
-    this.type = this.route.snapshot.url[0].path;
+    this.type = this.route.snapshot.url.some(segment => segment.path === 'episode') 
+      ? 'episode' 
+      : this.route.snapshot.url[0].path;
   }
 
 }

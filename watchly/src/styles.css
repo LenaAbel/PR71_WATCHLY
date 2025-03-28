@@ -35,6 +35,10 @@
     font-family: 'Lexend', sans-serif;
 }
 
+.main{
+    overflow-x: hidden;
+}
+
 p::-webkit-scrollbar {
     display: none;
 }
