@@ -3,3 +3,5 @@
 <app-episodes-section *ngIf="type == 'series'"></app-episodes-section>
 <app-poster-section></app-poster-section>
 <app-cast-section></app-cast-section>
+<app-comment [page]="'show'" [spoiler]="false"></app-comment>
+<app-comment [page]="'show'" [spoiler]="true"></app-comment>

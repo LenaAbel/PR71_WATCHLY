@@ -27,6 +27,8 @@ import { EpisodePageComponent } from './episode-page/episode-page.component';
 import { PosterSectionComponent } from './poster-section/poster-section.component';
 import { PosterPageComponent } from './poster-page/poster-page.component';
 import { PosterGridComponent } from './poster-grid/poster-grid.component';
+import { UserPageComponent } from './user-page/user-page.component';
+import { CommentComponent } from './comment/comment.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +52,9 @@ import { PosterGridComponent } from './poster-grid/poster-grid.component';
     EpisodePageComponent,
     PosterSectionComponent,
     PosterPageComponent,
-    PosterGridComponent
+    PosterGridComponent,
+    UserPageComponent,
+    CommentComponent
   ],
   imports: [
     BrowserModule,
