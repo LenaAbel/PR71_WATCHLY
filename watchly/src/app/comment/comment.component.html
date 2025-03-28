@@ -1,4 +1,4 @@
-<div class="w-full  text-sm p-4 mt-6 rounded-(--radius-inner)" [ngClass]="{'bg-(--bg-surface-2-light) dark:bg-(--bg-surface-2-dark)': page === 'show', 'bg-(--bg-surface-1-light) dark:bg-(--bg-surface-1-dark) shadow-(--shadow-light) dark:shadow-(--shadow-dark)': page !== 'show'}">
+<div class="w-full  text-sm p-4 mt-6 rounded-(--radius-inner)" [ngClass]="{'bg-(--bg-surface-2-light) dark:bg-(--bg-surface-2-dark)': page === 'show' && isPage === false, 'bg-(--bg-surface-1-light) dark:bg-(--bg-surface-1-dark) shadow-(--shadow-light) dark:shadow-(--shadow-dark)': page !== 'show' || isPage === true}">
     <div class="flex gap-2" *ngIf="page !== 'show'">
         <p class="font-bold text-(--color-main-light) dark:text-(--color-main-dark)">Arcane</p>
         <p>· Season 1 E1</p>

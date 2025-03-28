@@ -9,6 +9,7 @@ export class CommentComponent implements OnInit {
 
   @Input() page!: string;
   @Input() spoiler!: boolean;
+  @Input() isPage!: boolean;
 
   constructor() { }
 

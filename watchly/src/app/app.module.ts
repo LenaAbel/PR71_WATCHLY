@@ -29,6 +29,7 @@ import { PosterPageComponent } from './poster-page/poster-page.component';
 import { PosterGridComponent } from './poster-grid/poster-grid.component';
 import { UserPageComponent } from './user-page/user-page.component';
 import { CommentComponent } from './comment/comment.component';
+import { CommentPageComponent } from './comment-page/comment-page.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { CommentComponent } from './comment/comment.component';
     PosterPageComponent,
     PosterGridComponent,
     UserPageComponent,
-    CommentComponent
+    CommentComponent,
+    CommentPageComponent
   ],
   imports: [
     BrowserModule,
