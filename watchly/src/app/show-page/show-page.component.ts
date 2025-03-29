@@ -16,15 +16,14 @@ export class ShowPageComponent implements OnInit {
   constructor(private route: ActivatedRoute, private http: HttpClient) {}
 
   ngOnInit(): void {
-    this.route.url.subscribe((segments: UrlSegment[]) => {
-      if (segments.length > 0) {
-        this.type = segments[0].path; // "movies" or "series"
-        this.showId = Number(this.route.snapshot.paramMap.get('id'));
-
-        this.getShow(this.type, this.showId);
-        this.getCast(this.showId);
-      }
-    });
+    this.showId = Number(this.route.snapshot.paramMap.get('id'));
+    this.type = this.route.snapshot.url.some(segment => segment.path === 'episode') 
+      ? 'episode' 
+      : this.route.snapshot.url[0].path;
+    if (this.type !== 'episode') {
+      this.getShow(this.type, this.showId);
+      this.getCast(this.showId);
+    }
   }
 
   getShow(type: string, id: number): void {

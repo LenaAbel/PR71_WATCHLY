@@ -4,8 +4,8 @@
       Welcome back !
     </h2>
 
-    <form name="form" #f="ngForm" (ngSubmit)="onSubmit()" class="flex flex-col text-(--color-main-light) dark:text-(--color-main-dark)">
-      <label>E-mail</label>
+    <form name="form" #f="ngForm" (ngSubmit)="onSubmit()" class="flex flex-col">
+      <label class="text-(--color-main-light) dark:text-(--color-main-dark)">E-mail</label>
       <input
         type="email"
         class="form-control border border-(--bg-surface-3-light) dark:border-(--bg-surface-3-dark) rounded-(--radius-inner) p-2 w-full mt-2 bg-(--bg-surface-2-light) dark:bg-(--bg-surface-2-dark)"
@@ -14,7 +14,7 @@
         required
       />
 
-      <label class="mt-4">Password</label>
+      <label class="mt-4 text-(--color-main-light) dark:text-(--color-main-dark)">Password</label>
       <input
         type="password"
         class="form-control border border-(--bg-surface-3-light) dark:border-(--bg-surface-3-dark) rounded-(--radius-inner) p-2 w-full mt-2 bg-(--bg-surface-2-light) dark:bg-(--bg-surface-2-dark)"

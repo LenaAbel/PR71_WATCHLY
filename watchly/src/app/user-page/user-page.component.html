@@ -1,0 +1,33 @@
+<div class="w-full p-8">
+    <div class="flex gap-15 mt-12 p-6">
+        <div class="w-1/5 flex flex-col items-center gap-4">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-full bg-(--color-main-light) dark:bg-(--color-main-dark) text-white rounded-full p-1">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 7.5A3.75 3.75 0 1112 3.75 3.75 3.75 0 0115.75 7.5z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 20.25a8.25 8.25 0 0116.5 0" />
+            </svg>
+            <a class="underline cursor-pointer">Parameters</a>
+            <p class="font-bold text-red-500 cursor-pointer">Logout</p>
+        </div>
+        <div class="w-4/5 flex flex-col gap-4">
+            <p class="text-4xl font-bold">Ululusse</p>
+            <div class="w-full overflow-hidden mt-8 pb-15">
+                <h2 class="text-3xl font-bold text-(--color-main-light) dark:text-(--color-main-dark)">Favorite shows</h2>
+
+                <swiper
+                    [slidesPerView]="3"
+                    [spaceBetween]="40"
+                    [navigation]="false"
+                    [keyboard]="true"
+                >
+                    <ng-template *ngFor="let i of [0, 1, 2, 3, 4, 5]" swiperSlide>
+                        <app-content-card [type]="'series'"></app-content-card>
+                    </ng-template>
+                </swiper>
+            </div>
+        </div>
+    </div>
+    <div class="px-6">
+        <h2 class="text-3xl font-bold">All comments</h2>
+        <app-comment [page]="'profile'" [spoiler]="false"></app-comment>
+    </div>
+</div>

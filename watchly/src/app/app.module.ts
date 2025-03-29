@@ -21,10 +21,16 @@ import { CastPageComponent } from './cast-page/cast-page.component';
 import { ReturnBtnComponent } from './return-btn/return-btn.component';
 import { EpisodesSectionComponent } from './episodes-section/episodes-section.component';
 import { SeasonDropdownComponent } from './season-dropdown/season-dropdown.component';
-import Swiper from 'swiper';
 import { SwiperModule } from 'swiper/angular';
 import { EpisodeCardComponent } from './episode-card/episode-card.component';
 import { EpisodePageComponent } from './episode-page/episode-page.component';
+import { PosterSectionComponent } from './poster-section/poster-section.component';
+import { PosterPageComponent } from './poster-page/poster-page.component';
+import { PosterGridComponent } from './poster-grid/poster-grid.component';
+import { UserPageComponent } from './user-page/user-page.component';
+import { CommentComponent } from './comment/comment.component';
+import { CommentPageComponent } from './comment-page/comment-page.component';
+import { CommentSectionComponent } from './comment-section/comment-section.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +51,14 @@ import { EpisodePageComponent } from './episode-page/episode-page.component';
     EpisodesSectionComponent,
     SeasonDropdownComponent,
     EpisodeCardComponent,
-    EpisodePageComponent
+    EpisodePageComponent,
+    PosterSectionComponent,
+    PosterPageComponent,
+    PosterGridComponent,
+    UserPageComponent,
+    CommentComponent,
+    CommentPageComponent,
+    CommentSectionComponent
   ],
   imports: [
     BrowserModule,
