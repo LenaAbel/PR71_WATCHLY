@@ -9,15 +9,6 @@ export class TrailerBannerComponent implements OnInit {
 
   constructor() { }
 
-  controls(e : Event): void {
-    const video = e.target as HTMLVideoElement;
-    if (video && video.paused) {
-      video.play();
-    } else if (video) {
-      video.pause();
-    }
-  }
-
   ngOnInit(): void {
   }
 
