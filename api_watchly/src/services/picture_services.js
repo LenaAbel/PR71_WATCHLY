@@ -1,7 +1,8 @@
 const Show = require('../../database/src/models/shows');
+const Episode = require('../../database/src/models/episode');
 const Picture = require('../../database/src/models/picture');
 const Illustrated = require('../../database/src/models/illustrated');
-const { getImage, getTmdbIdFromTitle } = require('../../database/src/tmdb/tmdb_api');
+const { getImage, getTmdbIdFromTitle, getSeason } = require('../../database/src/tmdb/tmdb_api');
 const chalk = require('chalk');
 
 /**
@@ -18,7 +19,7 @@ async function addImagesToAllShows() {
         const imageData = await getImage(tmdbId, mediaType);
         if (!imageData?.backdrops || imageData.backdrops.length === 0) continue;
 
-        console.log(chalk.cyan(`\uD83D\uDDBC️ Adding images for "${show.name}"...`));
+        console.log(chalk.cyan(`🖼️ Adding images for "${show.name}"...`));
 
         for (const backdrop of imageData.backdrops) {
             try {
@@ -30,12 +31,48 @@ async function addImagesToAllShows() {
                     picture_id: picture.picture_id
                 });
             } catch (err) {
-                console.error(chalk.red(`\u274C Failed to add image for "${show.name}": ${err.message}`));
+                console.error(chalk.red(`❌ Failed to add image for "${show.name}": ${err.message}`));
             }
         }
     }
 
     console.log(chalk.green('✅ Images added to all shows.'));
+}
+
+/**
+ * Add images to episodes based on TMDB stills
+ */
+async function addEpisodeImages() {
+    const episodes = await Episode.findAll();
+
+    for (const ep of episodes) {
+        const show = await Show.findByPk(ep.show_id);
+        if (!show) continue;
+
+        const mediaType = show.is_movie ? 'movie' : 'tv';
+        const tmdbId = await getTmdbIdFromTitle(show.name, mediaType);
+        if (!tmdbId) continue;
+
+        try {
+            const seasonData = await getSeason(tmdbId, ep.season);
+            const episodeData = seasonData.episodes.find(e => e.episode_number === ep.episode_number);
+            if (!episodeData?.still_path) continue;
+
+            const fullUrl = `https://image.tmdb.org/t/p/original${episodeData.still_path}`;
+            const picture = await Picture.create({ link: fullUrl });
+
+            await Illustrated.create({
+                episode_id: ep.episode_id,
+                picture_id: picture.picture_id
+            });
+
+            console.log(`🖼️ Added image for episode "${ep.name}"`);
+        } catch (err) {
+            console.error(`❌ Error adding image to episode ${ep.name}:`, err.message);
+        }
+    }
+
+    console.log(chalk.green('✅ Episode images added.'));
 }
 
 /**
@@ -58,8 +95,25 @@ async function getPicturesForShow(showId) {
     });
 }
 
+/**
+ * Get all pictures for an episode by its ID
+ * @param {*} episodeId
+ * @returns array of picture links
+ */
+async function getPicturesForEpisode(episodeId) {
+    const illustrated = await Illustrated.findAll({
+        where: { episode_id: episodeId },
+        include: [Picture]
+    });
+
+    return illustrated.map(i => i.Picture?.link).filter(Boolean);
+}
+
+
 module.exports = {
     addImagesToAllShows,
+    addEpisodeImages,
     getAllPictures,
-    getPicturesForShow
+    getPicturesForShow,
+    getPicturesForEpisode
 };

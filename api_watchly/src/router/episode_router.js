@@ -65,4 +65,35 @@ router.get('/:showId/season/:season/episodes', episodeController.getEpisodesBySe
  */
 router.get('/:showId/seasons', episodeController.getSeasonsByShow);
 
+/**
+ * @swagger
+ * /api/episodes/{showId}/season/{season}/episode/{number}/pictures:
+ *   get:
+ *     summary: Get all pictures for a specific episode
+ *     tags: [Episodes]
+ *     parameters:
+ *       - in: path
+ *         name: showId
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: Show ID
+ *       - in: path
+ *         name: season
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: Season number
+ *       - in: path
+ *         name: number
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: Episode number
+ *     responses:
+ *       200:
+ *         description: List of picture links for the episode
+ */
+router.get('/:showId/season/:season/episode/:number/pictures', episodeController.getPicturesByEpisode);
+
 module.exports = router;
