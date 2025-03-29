@@ -4,7 +4,7 @@
     <app-cast-section class="row-span-3" *ngIf="type === 'episode'" [cast]="cast"></app-cast-section>
     <app-content-section [type]="type" [content]="show"></app-content-section>
     <app-cast-section class="row-span-3" *ngIf="type !== 'episode'" [cast]="cast"></app-cast-section>
-    <app-episodes-section *ngIf="type == 'series'"></app-episodes-section>
-    <app-poster-section></app-poster-section>
+    <app-episodes-section *ngIf="type == 'series'" [groupedSeasons]="groupedSeasons"></app-episodes-section>
+    <app-poster-section [images]="images"></app-poster-section>
     <app-comment-section></app-comment-section>
 </div>

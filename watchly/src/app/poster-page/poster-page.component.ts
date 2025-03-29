@@ -12,7 +12,7 @@ export class PosterPageComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  urls: string[] = [
+  images: string[] = [
     'https://pbs.twimg.com/media/GPEwE3nXwAAw6l6.jpg:large',
     'https://img.leboncoin.fr/api/v1/lbcpb1/images/c6/a4/35/c6a43554b89bc45b177f9446b3349b8e90021061.jpg?rule=ad-large',
     'https://resizing.flixster.com/-jxaZlh_JULgQR8RMNl_8p8lSa8=/fit-in/705x460/v2/https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p20738391_b_v8_ah.jpg',

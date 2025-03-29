@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-episodes-section',
@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./episodes-section.component.css']
 })
 export class EpisodesSectionComponent implements OnInit {
-
+  @Input() groupedSeasons !: any[];
   constructor() { }
 
   ngOnInit(): void {

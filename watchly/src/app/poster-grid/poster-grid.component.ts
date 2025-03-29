@@ -7,7 +7,7 @@ import { Component, Input, OnInit, OnDestroy, ViewChildren, QueryList, ElementRe
 })
 export class PosterGridComponent implements OnInit, OnDestroy {
 
-  @Input() urls: string[] = [];
+  @Input() images: any[] = [];
   @Input() page!: string;
   @ViewChildren('imageContainer') imageContainers!: QueryList<ElementRef>;
 
