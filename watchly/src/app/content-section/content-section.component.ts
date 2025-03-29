@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Content } from '../models/content';
 
 @Component({
   selector: 'app-content-section',
@@ -7,7 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class ContentSectionComponent implements OnInit {
   @Input() type!: string;
-  @Input() content!: any;
+  @Input() content!: Content;
 
   constructor() {}
 

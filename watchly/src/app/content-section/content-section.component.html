@@ -6,7 +6,9 @@
   <div class="flex justify-between items-end">
     <div class="infos">
       <span class="pr-1" *ngIf="type == 'series'">{{ content.status }}</span>
-      <span class="pr-1">{{ content.released_date }}</span>
+      <span class="pr-1" >{{ content.released_date }}</span>
+      <span class="pr-1" *ngIf="type == 'episode'">Season {{ content.season }}</span>
+      <span class="pr-1" *ngIf="type == 'episode'">Episode {{ content.number }}</span>
       <span class="pr-1" *ngIf="type == 'series'">{{ content.seasons }} seasons</span>
       <span class="pr-1" *ngIf="type == 'series'">{{ content.episodes }} episodes</span>
       <span class="pr-1">{{ content.duration }} mins</span>
@@ -22,9 +24,4 @@
     </div>
   </div>
   <p class="mt-5 text-justify">{{ content.description }}</p>
-  <div class="flex flex-wrap gap-5 mt-4">
-    <span *ngFor="let genre of content.genres" class="border border-(--color-main-light) dark:border-(--color-main-dark) text-sm px-3 py-1 rounded-full">
-      {{ genre }}
-    </span>
-  </div>
 </div>

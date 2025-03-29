@@ -4,6 +4,25 @@ const episodeController = require('../controllers/episode_controller');
 
 /**
  * @swagger
+ * /api/episodes:
+ * get:
+ *     summary: Get an episode
+ *     tags: [Episodes]
+ *     parameters:
+ *       - in: path
+ *         name: showId
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: Episode ID
+ *     responses:
+ *       200:
+ *         description: The episode object
+ */
+router.get('/:episodeId', episodeController.getEpisodesById);
+
+/**
+ * @swagger
  * /api/episodes/{showId}/episodes:
  *   get:
  *     summary: Get all episodes for a show
@@ -95,5 +114,7 @@ router.get('/:showId/seasons', episodeController.getSeasonsByShow);
  *         description: List of picture links for the episode
  */
 router.get('/:showId/season/:season/episode/:number/pictures', episodeController.getPicturesByEpisode);
+
+
 
 module.exports = router;

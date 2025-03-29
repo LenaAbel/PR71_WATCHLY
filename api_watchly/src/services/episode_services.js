@@ -51,6 +51,20 @@ async function createTv(show) {
 // ============================
 
 /**
+ * Get an episode by ID
+ */
+async function getEpisodeById(id) {
+    const episode = await Episode.findOne({
+        where: { episode_id: id },
+        include: [{ model: Illustrated, include: [Picture] }]
+    });
+
+    if (!episode) return null;
+
+    return formatEpisode(episode);
+}
+
+/**
  * Get all episodes for a show
  */
 async function getEpisodesByShowId(showId) {
@@ -121,7 +135,8 @@ function formatEpisode(ep) {
         duration: typeof ep.duration === 'string' ? parseInt(ep.duration.split(':')[1]) : ep.duration,
         season: ep.season,
         number: ep.episode_number,
-        releaseDate: ep.release_date,
+        released_date: ep.release_date,
+        show_id: ep.show_id,
         thumbnail: ep.Illustrateds?.[0]?.Picture?.link || null
     };
 }
@@ -178,4 +193,5 @@ module.exports = {
     getEpisodesBySeason,
     getSeasonsByShowId,
     getPicturesForEpisode,
+    getEpisodeById,
 };

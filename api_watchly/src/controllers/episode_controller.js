@@ -10,6 +10,15 @@ async function getEpisodesByShow(req, res) {
     }
 }
 
+async function getEpisodesById(req, res) {
+    try {
+        const episode = await episodeServices.getEpisodeById(req.params.episodeId);
+        res.status(200).json(episode);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+}
+
 async function getEpisodesBySeason(req, res) {
     try {
         const { showId, season } = req.params;
@@ -48,5 +57,6 @@ module.exports = {
     getEpisodesByShow,
     getEpisodesBySeason,
     getSeasonsByShow,
-    getPicturesByEpisode
+    getPicturesByEpisode,
+    getEpisodesById,
 };

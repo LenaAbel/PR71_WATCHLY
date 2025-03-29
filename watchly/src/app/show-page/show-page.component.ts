@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, UrlSegment } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Actor } from '../models/actor';
+import { Content } from '../models/content';
 @Component({
   selector: 'app-show-page',
   templateUrl: './show-page.component.html',
@@ -10,7 +11,7 @@ import { Actor } from '../models/actor';
 export class ShowPageComponent implements OnInit {
   showId!: number;
   type!: string;
-  show: any;
+  show!: Content;
   cast: any;
   episodes!: any[];
   groupedSeasons!: any[];
@@ -25,7 +26,9 @@ export class ShowPageComponent implements OnInit {
       : this.route.snapshot.url[0].path;
     this.showId = Number(this.route.snapshot.paramMap.get('id'));
     if (this.type !== 'episode') {
-    this.getShow(this.type, this.showId);
+      this.getShow(this.type, this.showId);
+    } else {
+      this.getEpisode(Number(this.route.snapshot.paramMap.get('episodeId')));
     }
     this.getCast(this.showId);
     
@@ -40,7 +43,7 @@ export class ShowPageComponent implements OnInit {
     const endpoint = `http://localhost:3000/api/shows/${id}`;
     this.http.get(endpoint).subscribe({
       next: (data) => {
-        this.show = data;
+        this.show = data as Content;
         console.log(`Fetched ${type} with id ${id}:`, data);
       },
       error: (err) => {
@@ -109,6 +112,19 @@ export class ShowPageComponent implements OnInit {
       next: (data: any[]) => {
         this.images = data;
         console.log(`Fetched with id ${id}:`, data);
+      },
+      error: (err) => {
+        console.error(`Error fetching with id ${id}:`, err);
+      }
+    });
+  }
+
+  getEpisode(id: number): void {
+    const endpoint = `http://localhost:3000/api/episodes/${id}`;
+    this.http.get(endpoint).subscribe({
+      next: (data) => {
+        this.show = data as Content;
+        console.log(`Fetched  with id ${id}:`, data);
       },
       error: (err) => {
         console.error(`Error fetching with id ${id}:`, err);
