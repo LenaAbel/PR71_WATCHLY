@@ -9,6 +9,7 @@ import { EpisodePageComponent } from './episode-page/episode-page.component';
 import { PosterPageComponent } from './poster-page/poster-page.component';
 import { UserPageComponent } from './user-page/user-page.component';
 import { CommentPageComponent } from './comment-page/comment-page.component';
+import { AdminPageComponent } from './admin-page/admin-page.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -23,7 +24,8 @@ const routes: Routes = [
   {path: 'profile', component: LoginComponent},
   {path: ':id/posters', component:PosterPageComponent}, // to change
   {path: 'user/:id', component: UserPageComponent},
-  {path: 'user/:id/comments', component: CommentPageComponent}
+  {path: 'user/:id/comments', component: CommentPageComponent},
+  {path: 'admin', component: AdminPageComponent}
 ];
 
 @NgModule({

@@ -31,6 +31,7 @@ import { UserPageComponent } from './user-page/user-page.component';
 import { CommentComponent } from './comment/comment.component';
 import { CommentPageComponent } from './comment-page/comment-page.component';
 import { CommentSectionComponent } from './comment-section/comment-section.component';
+import { AdminPageComponent } from './admin-page/admin-page.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import { CommentSectionComponent } from './comment-section/comment-section.compo
     UserPageComponent,
     CommentComponent,
     CommentPageComponent,
-    CommentSectionComponent
+    CommentSectionComponent,
+    AdminPageComponent
   ],
   imports: [
     BrowserModule,
