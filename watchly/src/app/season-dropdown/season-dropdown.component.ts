@@ -18,6 +18,8 @@ export class SeasonDropdownComponent implements OnInit {
   seasonNumber !: number;
   @ViewChild(SwiperComponent, { static: false }) swiper?: SwiperComponent;
 
+  swiperRef: Swiper | undefined;
+
   slideNext() {
     this.swiper?.swiperRef.slideNext();
   }
@@ -33,6 +35,10 @@ export class SeasonDropdownComponent implements OnInit {
     else {
       this.active = true;
     }
+  }
+
+  onSwiper(swiper: Swiper) {
+    this.swiperRef = swiper;
   }
 
   constructor() { }
