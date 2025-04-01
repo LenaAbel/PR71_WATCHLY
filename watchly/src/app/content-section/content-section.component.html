@@ -6,7 +6,7 @@
   <div class="flex justify-between items-end">
     <div class="infos">
       <span class="pr-1" *ngIf="type == 'series'">{{ content.status }}</span>
-      <span class="pr-1" >{{ content.released_date }}</span>
+      <span class="pr-1">{{ content.released_date | date:'mediumDate' }}</span>
       <span class="pr-1" *ngIf="type == 'episode'">Season {{ content.season }}</span>
       <span class="pr-1" *ngIf="type == 'episode'">Episode {{ content.number }}</span>
       <span class="pr-1" *ngIf="type == 'series'">{{ content.seasons }} seasons</span>
