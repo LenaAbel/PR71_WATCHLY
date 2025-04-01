@@ -21,7 +21,7 @@ async function addImagesToAllShows() {
 
         console.log(chalk.cyan(`🖼️ Adding images for "${show.name}"...`));
 
-        for (const backdrop of imageData.backdrops) {
+        for (const backdrop of imageData.backdrops.slice(0, 10)) {
             try {
                 const fullUrl = `https://image.tmdb.org/t/p/original${backdrop.file_path}`;
 
@@ -56,24 +56,34 @@ async function addEpisodeImages() {
         try {
             const seasonData = await getSeason(tmdbId, ep.season);
             const episodeData = seasonData.episodes.find(e => e.episode_number === ep.episode_number);
+
+            const existingCount = await Illustrated.count({ where: { episode_id: ep.episode_id } });
+            if (existingCount >= 10) continue;
+
             if (!episodeData?.still_path) continue;
 
-            const fullUrl = `https://image.tmdb.org/t/p/original${episodeData.still_path}`;
-            const picture = await Picture.create({ link: fullUrl });
+            const stills = [episodeData.still_path]; 
 
-            await Illustrated.create({
-                episode_id: ep.episode_id,
-                picture_id: picture.picture_id
-            });
+            for (const still of stills.slice(0, 10 - existingCount)) {
+                const fullUrl = `https://image.tmdb.org/t/p/original${still}`;
+                const picture = await Picture.create({ link: fullUrl });
 
-            console.log(`🖼️ Added image for episode "${ep.name}"`);
+                await Illustrated.create({
+                    episode_id: ep.episode_id,
+                    picture_id: picture.picture_id
+                });
+
+                console.log(`🖼️ Added image for episode "${ep.name}"`);
+            }
+
         } catch (err) {
             console.error(`❌ Error adding image to episode ${ep.name}:`, err.message);
         }
     }
 
-    console.log(chalk.green('✅ Episode images added.'));
+    console.log(chalk.green('✅ Episode images added (max 10 each).'));
 }
+
 
 /**
  * Get all pictures

@@ -111,7 +111,8 @@ async function getPicturesForEpisode(showId, season, number) {
         where: { show_id: showId, season, episode_number: number },
         include: [{
             model: Illustrated,
-            include: [Picture]
+            include: [Picture],
+            limit: 10 // Limit to 10 pictures
         }]
     });
 
@@ -128,6 +129,11 @@ async function getPicturesForEpisode(showId, season, number) {
  * Format an episode for clean API output
  */
 function formatEpisode(ep) {
+    const pictures = (ep.Illustrateds || [])
+        .slice(0, 10) // Limit to 10 pictures
+        .map(i => i.Picture?.link)
+        .filter(Boolean); // remove nulls
+
     return {
         id: ep.episode_id,
         name: ep.name,
@@ -135,11 +141,11 @@ function formatEpisode(ep) {
         duration: typeof ep.duration === 'string' ? parseInt(ep.duration.split(':')[1]) : ep.duration,
         season: ep.season,
         number: ep.episode_number,
-        released_date: ep.release_date,
-        show_id: ep.show_id,
-        thumbnail: ep.Illustrateds?.[0]?.Picture?.link || null
+        releaseDate: ep.release_date,
+        thumbnails: pictures // this will be an array of links, max 10
     };
 }
+
 
 /**
  * Create an episode object
