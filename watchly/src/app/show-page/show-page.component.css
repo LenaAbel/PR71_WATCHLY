@@ -1,6 +1,6 @@
 .grid-container {
   display: grid;
-  grid-template-columns: 60vw 36.5vw;
+  grid-template-columns: 70vw 26.5vw;
   grid-auto-rows: min-content;
   column-gap: 3vw;
 }
