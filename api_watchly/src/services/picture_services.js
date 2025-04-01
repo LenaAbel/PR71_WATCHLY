@@ -16,15 +16,23 @@ async function addImagesToAllShows() {
         const tmdbId = await getTmdbIdFromTitle(show.name, mediaType);
         if (!tmdbId) continue;
 
+        // Check existing images count
+        const existingCount = await Illustrated.count({ where: { show_id: show.show_id } });
+        if (existingCount >= 10) {
+            console.log(chalk.yellow(`⚠️ Show "${show.name}" already has ${existingCount} images, skipping...`));
+            continue;
+        }
+
         const imageData = await getImage(tmdbId, mediaType);
         if (!imageData?.backdrops || imageData.backdrops.length === 0) continue;
 
         console.log(chalk.cyan(`🖼️ Adding images for "${show.name}"...`));
 
-        for (const backdrop of imageData.backdrops.slice(0, 10)) {
+        // Only add remaining images up to 10 total
+        const remainingSlots = 10 - existingCount;
+        for (const backdrop of imageData.backdrops.slice(0, remainingSlots)) {
             try {
                 const fullUrl = `https://image.tmdb.org/t/p/original${backdrop.file_path}`;
-
                 const picture = await Picture.create({ link: fullUrl });
                 await Illustrated.create({
                     show_id: show.show_id,
@@ -36,7 +44,7 @@ async function addImagesToAllShows() {
         }
     }
 
-    console.log(chalk.green('✅ Images added to all shows.'));
+    console.log(chalk.green('✅ Images added to all shows (max 10 each).'));
 }
 
 /**
@@ -113,7 +121,8 @@ async function getPicturesForShow(showId) {
 async function getPicturesForEpisode(episodeId) {
     const illustrated = await Illustrated.findAll({
         where: { episode_id: episodeId },
-        include: [Picture]
+        include: [Picture],
+        limit: 10
     });
 
     return illustrated.map(i => i.Picture?.link).filter(Boolean);

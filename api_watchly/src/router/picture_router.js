@@ -6,20 +6,25 @@ const pictureController = require('../controllers/picture_controller');
  * @swagger
  * /api/pictures:
  *   get:
- *     summary: Get a limited number of pictures
+ *     summary: Get all pictures
  *     tags: [Pictures]
- *     parameters:
- *       - in: query
- *         name: limit
- *         schema:
- *           type: integer
- *         required: false
- *         description: Number of pictures to retrieve (default is 10)
  *     responses:
  *       200:
- *         description: A list of pictures
+ *         description: List of all pictures
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: integer
+ *                   url:
+ *                     type: string
+ *                   showId:
+ *                     type: integer
  */
-
 router.get('/', pictureController.getAll);
 
 /**
