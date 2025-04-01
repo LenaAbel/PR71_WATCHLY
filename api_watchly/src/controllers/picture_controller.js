@@ -11,7 +11,7 @@ async function populatePictures(req, res) {
 
 async function getAll(req, res) {
     try {
-        const pictures = await pictureServices.getAllPictures();
+        const pictures = await pictureServices.getAllPictures(10);
         res.status(200).json(pictures);
     } catch (err) {
         res.status(500).json({ error: err.message });

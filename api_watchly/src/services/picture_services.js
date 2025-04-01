@@ -79,8 +79,8 @@ async function addEpisodeImages() {
  * Get all pictures
  * @returns 
  */
-async function getAllPictures() {
-    return await Picture.findAll();
+async function getAllPictures(limit = 10) {
+    return await Picture.findAll({ limit });
 }
 
 /**
