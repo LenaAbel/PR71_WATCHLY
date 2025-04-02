@@ -36,8 +36,6 @@ export class CastPageComponent implements OnInit {
           actor.character,
           actor.profile_path
         ));
-
-        console.log(`Fetched cast with id ${id}:`, this.cast);
       },
       error: (err) => {
         console.error(`Error fetching cast with id ${id}:`, err);

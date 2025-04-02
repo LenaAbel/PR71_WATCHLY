@@ -6,14 +6,12 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./cast-section.component.css']
 })
 export class CastSectionComponent implements OnInit {
-  @Input() cast!: any;
+  @Input() cast: any[] = []; 
   constructor() { }
 
   ngOnInit(): void {
     console.log('CastSectionComponent initialized');
-
     console.log('Cast:', this.cast);
-
   }
 
 }
