@@ -22,8 +22,7 @@
         </button>
     </div>
 
-    <p class="mt-2 max-h-[200px] overflow-y-auto pr-2" *ngIf="!comment.is_spoiler || showSpoilerContent">
-        {{comment.comment_text}}
+    <p class="mt-2 max-h-[200px] overflow-y-auto pr-2 prose dark:prose-invert" *ngIf="!comment.is_spoiler || showSpoilerContent" [innerHTML]="parsedComment">
     </p>
 
     <div *ngIf="comment.is_spoiler && !showSpoilerContent" (click)="toggleSpoiler()" class="w-full mt-2 h-[5vh] bg-(--bg-surface-4-light) dark:bg-(--bg-surface-1-dark) rounded-[5px] flex items-center justify-center">

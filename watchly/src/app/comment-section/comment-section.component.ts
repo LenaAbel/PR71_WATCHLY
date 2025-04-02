@@ -46,6 +46,29 @@ export class CommentSectionComponent implements OnInit {
     }
   }
 
+  addMarkdown(markup: string) {
+    const textarea = document.querySelector('textarea[name="comment_text"]') as HTMLTextAreaElement;
+    if (!textarea) return;
+
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const text = this.newComment.comment_text || '';
+    
+    const before = text.substring(0, start);
+    const selection = text.substring(start, end);
+    const after = text.substring(end);
+
+    const content = selection || 'text';
+    this.newComment.comment_text = before + markup + content + markup + after;
+    
+    // Reset cursor position
+    setTimeout(() => {
+      textarea.focus();
+      const newCursorPos = start + markup.length + content.length;
+      textarea.setSelectionRange(newCursorPos, newCursorPos);
+    }, 0);
+  }
+
   onSubmitComment() {
     this.errorMessage = null;
     this.successMessage = null;
