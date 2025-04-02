@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Comment } from '../models/comment';
 
 @Component({
@@ -10,6 +10,8 @@ export class CommentComponent implements OnInit {
   @Input() page!: string;
   @Input() isPage!: boolean;
   @Input() comment!: Comment;
+  @Input() canDelete: boolean = false;
+  @Output() deleteComment = new EventEmitter<number>();
 
   showSpoilerContent = false;
 
@@ -20,5 +22,11 @@ export class CommentComponent implements OnInit {
 
   toggleSpoiler() {
     this.showSpoilerContent = !this.showSpoilerContent;
+  }
+
+  onDelete() {
+    if (this.comment.comment_id) {
+      this.deleteComment.emit(this.comment.comment_id);
+    }
   }
 }

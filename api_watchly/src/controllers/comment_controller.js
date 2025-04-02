@@ -19,31 +19,55 @@ async function getByEpisode(req, res) {
 
 async function create(req, res) {
     try {
-        if (!req.body.show_id || !req.body.person_id || !req.body.comment_text) {
-            return res.status(400).json({ 
+        // Validate required fields
+        const { show_id, person_id, comment_text } = req.body;
+        if (!show_id || !person_id || !comment_text) {
+            return res.status(400).json({
                 error: 'Missing required fields',
                 required: ['show_id', 'person_id', 'comment_text'],
-                received: req.body 
+                received: req.body
             });
         }
 
+        // Create comment
         const newComment = await commentService.addComment(req.body);
+        
+        // Send response
         res.status(201).json(newComment);
     } catch (err) {
         console.error('Error creating comment:', err);
-        res.status(500).json({ 
+        res.status(500).json({
             error: 'Failed to create comment',
-            details: err.message 
+            details: err.message
         });
     }
 }
 
 async function remove(req, res) {
     try {
-        await commentService.deleteComment(req.params.commentId);
+        const { commentId } = req.params;
+        const result = await commentService.deleteComment(commentId);
+        if (!result) {
+            return res.status(404).json({ error: 'Comment not found' });
+        }
         res.status(204).send();
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        console.error('Error deleting comment:', err);
+        res.status(500).json({ 
+            error: 'Failed to delete comment',
+            details: err.message 
+        });
+    }
+}
+
+async function getByUser(req, res) {
+    try {
+        const { userId } = req.params;
+        const comments = await commentService.getCommentsByUserId(userId);
+        res.status(200).json(comments);
+    } catch (error) {
+        console.error('Error getting user comments:', error);
+        res.status(500).json({ error: 'Failed to fetch user comments' });
     }
 }
 
@@ -52,5 +76,6 @@ module.exports = {
     getByShow,
     getByEpisode,
     create,
-    remove
+    remove,
+    getByUser
 };

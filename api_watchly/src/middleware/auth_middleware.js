@@ -49,6 +49,7 @@ async function login(req, res) {
             message: 'Login successful', 
             token,
             user: {
+                id: person.person_id, 
                 username: person.username,
                 firstname: person.name,
                 lastname: person.surname,

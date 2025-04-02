@@ -1,4 +1,5 @@
 export class Show {
+  show_id!: number; 
   title!: string;
   status?: string;       // for series
   year!: number;

@@ -42,4 +42,12 @@ router.post('/', commentController.create);
  */
 router.delete('/:commentId', commentController.remove);
 
-module.exports = router;g
+/**
+ * @swagger
+ * /api/comments/user/{userId}:
+ *   get:
+ *     summary: Get comments by user ID
+ */
+router.get('/user/:userId', commentController.getByUser);
+
+module.exports = router;

@@ -26,6 +26,9 @@ Genre.belongsToMany(Show, { through: 'Has', foreignKey: 'genre_id' });
 Comments.belongsTo(Person, { foreignKey: 'person_id', as: 'person' });
 Person.hasMany(Comments, { foreignKey: 'person_id', as: 'comments' });
 
+Comments.belongsTo(Show, { foreignKey: 'show_id' });
+Show.hasMany(Comments, { foreignKey: 'show_id' });
+
 module.exports = {
   Picture,
   Illustrated,

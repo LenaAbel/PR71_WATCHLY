@@ -104,11 +104,85 @@ async function getCommentsByEpisodeId(episodeId) {
 
 /**
  * Get comments by user ID
+ * @param {*} userId 
+ * @returns 
+ */
+async function getCommentsByUserId(userId) {
+    try {
+        const comments = await Comments.findAll({ 
+            where: { person_id: userId },
+            order: [['comment_date', 'DESC']],
+            include: [
+                {
+                    model: Person,
+                    as: 'person',
+                    attributes: ['username']
+                },
+                {
+                    model: Show,
+                    attributes: ['name', 'show_id', 'is_movie']  // Add is_movie
+                }
+            ]
+        });
+        
+        const mappedComments = comments.map(comment => {
+            const plain = comment.get({ plain: true });
+            return {
+                ...plain,
+                username: plain.person ? plain.person.username : 'Anonymous',
+                show_name: plain.Show ? plain.Show.name : 'Unknown Show',
+                show_id: plain.Show ? plain.Show.show_id : null,
+                is_movie: plain.Show ? plain.Show.is_movie : false
+            };
+        });
+        return mappedComments;
+    } catch (error) {
+        console.error('Error fetching user comments:', error);
+        throw error;
+    }
+}
+
+/**
+ * Add a comment
  * @param {*} data 
  * @returns 
  */
 async function addComment(data) {
-    return await Comment.create(data);
+    try {
+        // Create the comment
+        const comment = await Comments.create({
+            show_id: data.show_id,
+            person_id: data.person_id,
+            comment_text: data.comment_text,
+            comment_date: data.comment_date || new Date(),
+            is_watched: data.is_watched || true,
+            is_spoiler: data.is_spoiler || false
+        });
+
+        // Fetch the created comment with person info
+        const commentWithPerson = await Comments.findOne({
+            where: { comment_id: comment.comment_id },
+            include: [{
+                model: Person,
+                as: 'person',
+                attributes: ['username']
+            }]
+        });
+
+        if (!commentWithPerson) {
+            throw new Error('Failed to fetch created comment');
+        }
+
+        // Format the response
+        const plain = commentWithPerson.get({ plain: true });
+        return {
+            ...plain,
+            username: plain.person ? plain.person.username : 'Anonymous'
+        };
+    } catch (error) {
+        console.error('Error in addComment:', error);
+        throw new Error(`Failed to create comment: ${error.message}`);
+    }
 }
 
 /**
@@ -117,7 +191,20 @@ async function addComment(data) {
  * @returns 
  */
 async function deleteComment(commentId) {
-    return await Comment.destroy({ where: { comment_id: commentId } });
+    try {
+        const result = await Comments.destroy({ 
+            where: { 
+                comment_id: commentId 
+            }
+        });
+        if (result === 0) {
+            throw new Error('Comment not found');
+        }
+        return result;
+    } catch (error) {
+        console.error('Error deleting comment:', error);
+        throw error;
+    }
 }
 
 module.exports = {
@@ -125,6 +212,7 @@ module.exports = {
     getAllComments,
     getCommentsByShowId,
     getCommentsByEpisodeId,
+    getCommentsByUserId,
     addComment,
     deleteComment
 };

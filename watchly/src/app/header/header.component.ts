@@ -20,7 +20,6 @@ export class HeaderComponent implements OnInit {
     this.token = localStorage.getItem('authToken');
     if (this.token) {
       const userData = localStorage.getItem('userData');
-      console.log('userData in ngOnChanges:', userData);
       try {
         if (userData) {
           const user: User = JSON.parse(userData);

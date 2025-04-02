@@ -8,4 +8,6 @@ export interface Comment {
     is_watched: boolean;
     is_spoiler: boolean;
     username?: string; 
+    show_name?: string;
+    is_movie?: boolean; 
 }

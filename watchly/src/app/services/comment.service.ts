@@ -25,4 +25,8 @@ export class CommentService {
   addComment(comment: Partial<Comment>): Observable<Comment> {
     return this.http.post<Comment>(`${this.apiUrl}`, comment);
   }
+
+  deleteComment(commentId: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${commentId}`);
+  }
 }
