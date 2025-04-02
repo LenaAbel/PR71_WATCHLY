@@ -10,6 +10,7 @@ import { PosterPageComponent } from './poster-page/poster-page.component';
 import { UserPageComponent } from './user-page/user-page.component';
 import { CommentPageComponent } from './comment-page/comment-page.component';
 import { AdminPageComponent } from './admin-page/admin-page.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -22,10 +23,12 @@ const routes: Routes = [
   {path: ':id/episodes', component: EpisodePageComponent},
   {path: ':id/comments', component: CommentPageComponent},
   {path: 'profile', component: LoginComponent},
-  {path: ':id/posters', component:PosterPageComponent}, // to change
+  {path: ':id/posters', component: PosterPageComponent},
   {path: 'user/:id', component: UserPageComponent},
   {path: 'user/:id/comments', component: CommentPageComponent},
-  {path: 'admin', component: AdminPageComponent}
+  {path: 'admin', component: AdminPageComponent},
+  {path: '404', component: NotFoundComponent},
+  {path: '**', redirectTo: '404'}
 ];
 
 @NgModule({

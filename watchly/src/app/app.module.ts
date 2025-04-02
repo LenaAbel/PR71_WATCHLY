@@ -33,6 +33,7 @@ import { CommentPageComponent } from './comment-page/comment-page.component';
 import { CommentSectionComponent } from './comment-section/comment-section.component';
 import { AdminPageComponent } from './admin-page/admin-page.component';
 import { ActorNameFormatPipe } from './pipes/actor-name-format.pipe';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,8 @@ import { ActorNameFormatPipe } from './pipes/actor-name-format.pipe';
     CommentPageComponent,
     CommentSectionComponent,
     AdminPageComponent,
-    ActorNameFormatPipe
+    ActorNameFormatPipe,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
