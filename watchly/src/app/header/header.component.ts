@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 export class HeaderComponent implements OnInit {
 
   @Input() route!: string;
+  searchQuery: string = '';
 
   token: string | null = null;
 
@@ -22,5 +23,9 @@ export class HeaderComponent implements OnInit {
     console.log(this.token);
 
     this.route = this.router.url.split('/')[1]; // e.g. "login", "register"
+  }
+
+  goToResearch() {
+    this.router.navigate(['/research'], { queryParams: { q: this.searchQuery } });
   }
 }
