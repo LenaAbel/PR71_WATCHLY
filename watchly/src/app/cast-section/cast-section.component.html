@@ -1,9 +1,9 @@
 <div class="max-w-[23vw] bg-(--bg-surface-1-light) dark:bg-(--bg-surface-1-dark) p-6 shadow-(--shadow-light) dark:shadow-(--shadow-dark) rounded-(--radius-outer) overflow-hidden mt-10">
     <h2 class="font-bold text-3xl">Casting</h2>
     <div class="grid grid-cols-2 gap-4 mt-4">
-        <ng-container *ngIf="cast.length >= 6">
+        <ng-container>
             <app-actor-card 
-                *ngFor="let actor of cast | slice:0:6" 
+                *ngFor="let actor of (cast.length >= 6 ? (cast | slice:0:6) : cast)" 
                 [pageTitle]="'home'" 
                 [actor]="actor | actorNameFormat">
             </app-actor-card>
