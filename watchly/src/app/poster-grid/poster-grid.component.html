@@ -1,0 +1,15 @@
+<div class="grid-container grid grid-cols-4 gap-2" [ngClass]="{'grid-cols-8 px-6': page === 'poster'}">
+    <div 
+      *ngFor="let image of images" 
+      #imageContainer
+      class="relative flex justify-center items-center overflow-hidden"
+    >
+      <img 
+        [src]="image.Picture.link" 
+        alt="Poster" 
+        (load)="onImageLoad()"
+        class="image w-full h-auto object-cover border-2 border-(--color-main-light) dark:border-(--color-main-dark)"
+        loading="lazy"
+      >
+    </div>
+  </div>

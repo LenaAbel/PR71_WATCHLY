@@ -116,7 +116,8 @@ async function isDatabasePopulated() {
 
             console.log(chalk.cyan('[DB] Adding images...'));
             await pictureServices.addImagesToAllShows();
-
+            await pictureServices.addEpisodeImages();
+            
             console.log(chalk.cyan('[DB] Adding users...'));
             await personController.addUsers();
 
@@ -137,6 +138,35 @@ async function isDatabasePopulated() {
     }
 })();
 
+
+//Error handler for .env API_KEYS
+if(!process.env.API_KEYS) {
+    console.error(
+        "\x1b[31m%s\x1b[0m",
+        "\n[ENV ERROR] Missing API_KEYS in your .env file. Please add it like so:\nAPI_KEY=eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4OWY3NWRmNjMxZTg1MjQxOTdlNmUxYjE4Yzc0MmIyZiIsIm5iZiI6MTc0MDQ3MzUxMy45NzksInN1YiI6IjY3YmQ4NGE5YjQxZTk1ZDMyYzU5OWFlMCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.PS9jWtoxQ7gWwrmRisQG11KA8jPClD8KBxzhFU_7L1w\n Since I am very nice I am giving you my API key since it's free and I am avoiding you to make an account on TMDB just for it lol."
+    );
+}
+
+// Error handler for .env JWT_SECRET
+if(!process.env.JWT_SECRET) {
+    console.error(
+        "\x1b[31m%s\x1b[0m", 
+        "\n[ENV ERROR] Missing JWT_SECRET in your .env file. Please add it like so:\nJWT_SECRET=your_secret_key"
+    );
+}
+
+// Error handler for .env
+if (!process.env.TMDB_PAGES) {
+    console.error(
+        "\x1b[31m%s\x1b[0m", 
+        "\n[ENV ERROR] Missing TMDB_PAGES in your .env file. Please add it like so:\nTMDB_PAGES=1"
+    );
+}
+
+// Error handler for 404 Not Found
+server.use((req, res, next) => {
+    res.status(404).json({ message: 'Endpoint not found' });
+});
 
 // Error handler (must be last)
 server.use((err, req, res, next) => {

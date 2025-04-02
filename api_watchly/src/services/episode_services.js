@@ -1,5 +1,9 @@
 const Episode = require('../../database/src/models/episode');
+const Illustrated = require('../../database/src/models/illustrated');
+const Picture = require('../../database/src/models/picture');
+
 const apiServices = require('../../database/src/tmdb/tmdb_api');
+const { get } = require('../router/shows_router');
 const showsServices = require('./shows_services');
 const chalk = require('chalk');
 
@@ -47,23 +51,47 @@ async function createTv(show) {
 // ============================
 
 /**
+ * Get an episode by ID
+ */
+async function getEpisodeById(id) {
+    const episode = await Episode.findOne({
+        where: { episode_id: id },
+        include: [{ model: Illustrated, include: [Picture] }]
+    });
+
+    if (!episode) return null;
+
+    return formatEpisode(episode);
+}
+
+
+/**
  * Get all episodes for a show
  */
 async function getEpisodesByShowId(showId) {
-    return await Episode.findAll({ where: { show_id: showId } });
+    const episodes = await Episode.findAll({
+        where: { show_id: showId },
+        include: [{ model: Illustrated, include: [Picture] }],
+        order: [['season', 'ASC'], ['episode_number', 'ASC']]
+    });
+
+    return episodes.map(ep => formatEpisode(ep));
 }
 
 /**
  * Get all episodes for a given season
  */
 async function getEpisodesBySeason(showId, seasonNumber) {
-    return await Episode.findAll({
+    const episodes = await Episode.findAll({
         where: {
             show_id: showId,
             season: seasonNumber
         },
+        include: [{ model: Illustrated, include: [Picture] }],
         order: [['episode_number', 'ASC']]
     });
+
+    return episodes.map(ep => formatEpisode(ep));
 }
 
 /**
@@ -79,9 +107,40 @@ async function getSeasonsByShowId(showId) {
     return seasons.map(s => s.season);
 }
 
+async function getPicturesForEpisode(showId, season, number) {
+    const episode = await Episode.findOne({
+        where: { show_id: showId, season, episode_number: number },
+        include: [{
+            model: Illustrated,
+            include: [Picture]
+        }]
+    });
+
+    if (!episode) return [];
+
+    return episode.Illustrateds?.map(i => i.Picture?.link).filter(Boolean) || [];
+}
+
 // ============================
 // Data Processing Functions
 // ============================
+
+/**
+ * Format an episode for clean API output
+ */
+function formatEpisode(ep) {
+    return {
+        id: ep.episode_id,
+        name: ep.name,
+        description: ep.description,
+        duration: typeof ep.duration === 'string' ? parseInt(ep.duration.split(':')[1]) : ep.duration,
+        season: ep.season,
+        number: ep.episode_number,
+        released_date: ep.release_date,
+        show_id: ep.show_id,
+        thumbnail: ep.Illustrateds?.[0]?.Picture?.link || null
+    };
+}
 
 /**
  * Create an episode object
@@ -133,5 +192,7 @@ module.exports = {
     addEpisodes,
     getEpisodesByShowId,
     getEpisodesBySeason,
-    getSeasonsByShowId
+    getSeasonsByShowId,
+    getPicturesForEpisode,
+    getEpisodeById,
 };

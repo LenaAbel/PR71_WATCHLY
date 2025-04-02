@@ -1,8 +1,6 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../database');
 
-const path = require('path');
-
 class Illustrated extends Model {}
 
 Illustrated.init(
@@ -52,6 +50,5 @@ Illustrated.init(
         timestamps: false,
     }
 );
-
 
 module.exports = Illustrated;

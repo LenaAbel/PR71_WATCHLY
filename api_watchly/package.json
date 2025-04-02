@@ -10,18 +10,15 @@
   "dependencies": {
     "axios": "^1.8.3",
     "bcrypt": "^5.1.1",
-    "body-parser": "^1.20.2",
     "chalk": "^4.1.2",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
-    "i": "^0.3.7",
     "jsonwebtoken": "^9.0.2",
     "nodemon": "^3.1.9",
     "npm": "^11.2.0",
     "sequelize": "^6.37.5",
     "sqlite3": "^5.1.6",
-    "swagger": "^0.0.1",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1"
   }

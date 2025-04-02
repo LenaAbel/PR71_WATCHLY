@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Actor } from '../actor';
+import { Actor } from '../models/actor';
 
 @Component({
   selector: 'app-actor-card',
@@ -7,22 +7,12 @@ import { Actor } from '../actor';
   styleUrls: ['./actor-card.component.css']
 })
 export class ActorCardComponent {
-  @Input() pageTitle: string = '';
-  
-  actor: Actor = {
-    name: '',
-    lastName: '',
-    characterName: '',
-    imgSrc: ''
-  };
+  @Input() pageTitle!: any;
+  @Input() actor!: Actor;
 
-  constructor() { 
-  }
-
-  ngOnInit() {
-    this.actor.name = 'Kevin';
-    this.actor.lastName = 'Alejandro';
-    this.actor.characterName = 'Jayce';
-    this.actor.imgSrc = 'assets/img/jayce.jpg';
+  get imageUrl(): string {
+    return this.actor.profile_path
+      ? `https://image.tmdb.org/t/p/w200${this.actor.profile_path}`
+      : 'assets/img/default-person.jpg';
   }
 }

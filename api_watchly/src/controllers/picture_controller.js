@@ -27,8 +27,9 @@ async function getByShow(req, res) {
     }
 }
 
+
 module.exports = {
     populatePictures,
     getAll,
-    getByShow
+    getByShow,
 };

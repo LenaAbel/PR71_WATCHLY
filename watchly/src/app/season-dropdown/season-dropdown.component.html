@@ -1,25 +1,39 @@
-<div class="my-6 px-6 rounded-sm border-l-4 border-(--color-main-light) dark:border-(--color-main-dark)" [ngClass]="{'w-full': page === 'episodes', 'max-w-5xl': page === 'show'}">
+<div class="my-6 px-6 rounded-sm border-l-4 border-(--color-main-light) dark:border-(--color-main-dark)" [ngClass]="{'w-full': page === 'episodes', 'max-w-[70vw]': page === 'show'}">
     <div class="flex items-center space-x-2 mb-4" (click)="toggleSeasonDropdown()">
-        <h3 class="text-xl font-semibold">Season 1</h3>
+        <h3 class="text-xl font-semibold">Season {{seasonNumber }}</h3>
         <svg width="20" height="20" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg" *ngIf="!active">
-            <line x1="10" y1="15" x2="25" y2="35" stroke-width="4" stroke-linecap="round"/>
-            <line x1="40" y1="15" x2="25" y2="35" stroke-width="4" stroke-linecap="round"/>
+            <line x1="10" y1="15" x2="25" y2="35" stroke="var(--color-main-light)" dark:stroke="var(--color-main-dark)" stroke-width="4" stroke-linecap="round"/>
+            <line x1="40" y1="15" x2="25" y2="35" stroke="var(--color-main-light)" dark:stroke="var(--color-main-dark)" stroke-width="4" stroke-linecap="round"/>
         </svg>
         <svg width="20" height="20" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg" *ngIf="active">
-            <line x1="10" y1="35" x2="25" y2="15" stroke-width="4" stroke-linecap="round"/>
-            <line x1="40" y1="35" x2="25" y2="15" stroke-width="4" stroke-linecap="round"/>
+            <line x1="10" y1="35" x2="25" y2="15" stroke="var(--color-main-light)" dark:stroke="var(--color-main-dark)" stroke-width="4" stroke-linecap="round"/>
+            <line x1="40" y1="35" x2="25" y2="15" stroke="var(--color-main-light)" dark:stroke="var(--color-main-dark)" stroke-width="4" stroke-linecap="round"/>
         </svg>
     </div>
 
-    <div class="w-full overflow-hidden pb-15 pr-15" *ngIf="active && page === 'show'">
+    <div class="w-full overflow-hidden pb-15 pr-15 relative" *ngIf="active && page === 'show'">
+        <button class="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-(--bg-surface-2-light) dark:bg-(--bg-surface-2-dark) rounded-full p-2" (click)="swiperRef?.slidePrev()">
+            <svg width="20" height="20" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg" class="text-(--color-main-light) dark:text-(--color-main-dark)">
+                <line x1="35" y1="10" x2="15" y2="25" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+                <line x1="35" y1="40" x2="15" y2="25" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+            </svg>
+        </button>
+        <button class="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-(--bg-surface-2-light) dark:bg-(--bg-surface-2-dark) rounded-full p-2" (click)="swiperRef?.slideNext()">
+            <svg width="20" height="20" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg" class="text-(--color-main-light) dark:text-(--color-main-dark)">
+                <line x1="15" y1="10" x2="35" y2="25" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+                <line x1="15" y1="40" x2="35" y2="25" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+            </svg>
+        </button>
         <swiper
             [slidesPerView]="3"
-            [spaceBetween]="40"
-            [navigation]="false"
+            [spaceBetween]="20"
             [keyboard]="true"
+            (swiper)="onSwiper($event)"
         >
             <ng-template *ngFor="let episode of episodes" swiperSlide>
-                <app-episode-card [episode]="episode"></app-episode-card>  
+                <div class="py-8">
+                    <app-episode-card [episode]="episode"></app-episode-card>
+                </div>
             </ng-template>
         </swiper>
     </div>
