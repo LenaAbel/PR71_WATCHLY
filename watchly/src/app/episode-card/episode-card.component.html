@@ -1,4 +1,4 @@
-<div class="w-3xs h-80 bg-(--bg-surface-1-light) dark:bg-(--bg-surface-1-dark) dark:shadow-(--shadow-dark) shadow-(--shadow-light) rounded-(--radius-outer) transition-all duration-200 hover:scale-105 hover:shadow-lg cursor-pointer" routerLink="/series/{{episode.show_id}}/episode/{{episode.id}}">
+<div class="w-[220px] h-80 bg-(--bg-surface-1-light) dark:bg-(--bg-surface-1-dark) dark:shadow-(--shadow-dark) shadow-(--shadow-light) rounded-(--radius-outer) transition-all duration-200 hover:scale-105 hover:shadow-lg cursor-pointer" routerLink="/series/{{episode.show_id}}/episode/{{episode.id}}">
     <img [src]="getImageUrl()" 
          (error)="episode.thumbnail = defaultImage"
          alt="Episode image"
@@ -6,7 +6,7 @@
     
     <div class="p-4">
         <h3 class="font-bold text-sm">{{ episode.name }}</h3>
-        <p class="text-xs pt-1">{{ episode.number }}</p>
+        <p class="text-xs pt-1">E {{ episode.number }}</p>
         <p class="h-15 overflow-scroll text-sm mt-2">{{ episode.description }}</p>
     </div>
 </div>

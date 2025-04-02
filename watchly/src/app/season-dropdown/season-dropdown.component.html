@@ -26,12 +26,12 @@
         </button>
         <swiper
             [slidesPerView]="3"
-            [spaceBetween]="100"
+            [spaceBetween]="20"
             [keyboard]="true"
             (swiper)="onSwiper($event)"
         >
             <ng-template *ngFor="let episode of episodes" swiperSlide>
-                <div class="px-8">
+                <div class="py-8">
                     <app-episode-card [episode]="episode"></app-episode-card>
                 </div>
             </ng-template>
