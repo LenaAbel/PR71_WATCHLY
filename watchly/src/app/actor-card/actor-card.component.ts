@@ -13,6 +13,6 @@ export class ActorCardComponent {
   get imageUrl(): string {
     return this.actor.profile_path
       ? `https://image.tmdb.org/t/p/w200${this.actor.profile_path}`
-      : 'assets/images/default-profile.jpg'; // fallback
+      : 'assets/img/default-person.jpg';
   }
 }

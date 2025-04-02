@@ -8,10 +8,15 @@ import { Component, OnInit, Input } from '@angular/core';
 export class EpisodeCardComponent implements OnInit {
 
   @Input() episode: any;
+  defaultImage = 'assets/img/default-episode.jpg';  
 
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  getImageUrl(): string {
+    return this.episode?.thumbnail || this.defaultImage;
   }
 
 }
