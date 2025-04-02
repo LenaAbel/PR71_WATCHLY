@@ -2,30 +2,39 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 
+interface LoginResponse {
+  token: string;
+  user: {
+    username: string;
+    firstname: string;
+    lastname: string;
+    email: string;
+  };
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
-  private apiUrl = 'http://localhost:3000/api/users'; // Adjust to match your API
-
+  private apiUrl = 'http://localhost:3000/api/users'; 
+  
   constructor(private http: HttpClient) {}
 
   register(user: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/register`, user);
   }
 
-  login(credentials: any): Observable<{ token: string }> {
-    return this.http.post<{ token: string }>(`${this.apiUrl}/login`, credentials)
+  login(credentials: any): Observable<LoginResponse> {
+    return this.http.post<LoginResponse>(`${this.apiUrl}/login`, credentials)
       .pipe(
-            tap(response => {
-                if (response.token) {
-                    localStorage.setItem('authToken', response.token);
-                    console.log('Token stored:', response.token);
-                } else {
-                    console.error("Token not found in response");
-                }
-            })
-        );
+        tap(response => {
+          if (response.token) {
+            localStorage.setItem('authToken', response.token);
+            localStorage.setItem('userData', JSON.stringify(response.user));
+            console.log('Token and user data stored:', response);
+          }
+        })
+      );
   }
 
   saveToken(token: string): void {
@@ -44,5 +53,6 @@ export class AuthenticationService {
   // Log out the user
   logout(): void {
     localStorage.removeItem('authToken');
+    localStorage.removeItem('userData');
   }
 }

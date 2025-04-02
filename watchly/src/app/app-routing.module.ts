@@ -11,24 +11,28 @@ import { UserPageComponent } from './user-page/user-page.component';
 import { CommentPageComponent } from './comment-page/comment-page.component';
 import { AdminPageComponent } from './admin-page/admin-page.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { ResearchPageComponent } from './research-page/research-page.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
-  {path: ':id', component: ShowPageComponent},
-  {path: ':id/episode/:episodeId', component: ShowPageComponent},
+  {path: 'series/:id', component: ShowPageComponent},
+  {path: 'movies/:id', component: ShowPageComponent},
+  {path: 'series/:id/episode/:episodeId', component: ShowPageComponent},
   {path: '', component: HomePageComponent},
   {path: ':id/casting', component: CastPageComponent},
   {path: ':id/episodes', component: EpisodePageComponent},
   {path: ':id/comments', component: CommentPageComponent},
-  {path: 'profile', component: LoginComponent},
+  {path: 'profile', component: UserPageComponent},
   {path: ':id/posters', component: PosterPageComponent},
   {path: 'user/:id', component: UserPageComponent},
   {path: 'user/:id/comments', component: CommentPageComponent},
   {path: 'admin', component: AdminPageComponent},
-  {path: 'error/404', component: NotFoundComponent},
-  {path: '**', redirectTo: '404'}
+  {path: '404', component: NotFoundComponent},
+  {path: '**', redirectTo: '404'},
+  {path: 'research', component: ResearchPageComponent}, //le query params sera donnée dans la route no worries
 ];
+
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

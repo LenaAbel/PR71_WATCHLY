@@ -1,0 +1,28 @@
+<div class="p-6"> <!--mettre un if pour display que si c'est log in -->
+    <h2 class="text-3xl font-bold text-(--color-main-light) dark:text-(--color-main-dark)">Your shows</h2>
+    <div class="flex gap-4 p-4">
+        <p [ngClass]="{'text-(--bg-surface-5-light) dark:text-(--bg-surface-5-dark)' : !isSelected('movies')}" (click)="selectTab('movies')" class="cursor-pointer">
+            Movies <span class="pl-4 text-(--bg-surface-5-light) dark:text-(--bg-surface-5-dark)">|</span>
+        </p>
+        <p [ngClass]="{'text-(--bg-surface-5-light) dark:text-(--bg-surface-5-dark)' : !isSelected('series')}" (click)="selectTab('series')" class="cursor-pointer">
+            Series
+        </p>
+    </div>
+
+    <div class="overflow-hidden px-4">
+        <app-slider [type]="selectedTab"></app-slider><!--si data vide afficher la div en dessous-->
+
+        <div class="flex flex-col items-center justify-center h-[25vh] w-full">
+            <p class="text-2xl font-bold text-(--color-main-light) dark:text-(--color-main-dark)">Oops :(</p>
+            <p class="text-(--bg-surface-5-light) dark:text-(--bg-surface-5-dark)">You haven't rated any show yet, start now by looking for your all time favorites</p>
+        </div>
+    </div>
+
+    <div> <!-- A afficher si pas login-->
+        <div class="flex flex-col items-center justify-center h-[25vh] w-full">
+            <p class="text-2xl font-bold text-(--color-main-light) dark:text-(--color-main-dark)">New here ?</p>
+            <p class="text-(--bg-surface-5-light) dark:text-(--bg-surface-5-dark)">Login or register right now !</p>
+            <button  routerLink="/login" class="bg-(--color-main-light) dark:bg-(--color-main-dark) text-(--bg-surface-1-light) dark:text-(--bg-surface-1-dark) px-4 py-2 rounded-(--radius-inner) mt-4">Go to login !</button>
+        </div>
+    </div>
+</div>
