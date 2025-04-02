@@ -34,6 +34,7 @@ import { CommentSectionComponent } from './comment-section/comment-section.compo
 import { AdminPageComponent } from './admin-page/admin-page.component';
 import { ActorNameFormatPipe } from './pipes/actor-name-format.pipe';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
