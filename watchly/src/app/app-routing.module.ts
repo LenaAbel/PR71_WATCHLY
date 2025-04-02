@@ -26,7 +26,7 @@ const routes: Routes = [
   {path: 'user/:id', component: UserPageComponent},
   {path: 'user/:id/comments', component: CommentPageComponent},
   {path: 'admin', component: AdminPageComponent},
-  {path: '404', component: NotFoundComponent},
+  {path: 'error/404', component: NotFoundComponent},
   {path: '**', redirectTo: '404'}
 ];
 
