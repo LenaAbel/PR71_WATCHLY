@@ -2,6 +2,8 @@ const { getTrending, getID, getTrailer } = require('../../database/src/tmdb/tmdb
 const Show = require('../../database/src/models/shows.js');
 const chalk = require('chalk');
 const sequelize = require('../../database/src/database'); 
+const Genre = require('../../database/src/models/genre.js');
+const Has = require('../../database/src/models/has.js');
 
 // --- TMDB Fetching ---
 async function getIds(name, time, pages = process.env.TMDB_PAGES) {
@@ -41,7 +43,13 @@ async function getAllShows() {
 }
 
 async function getShowById(id) {
-    return await Show.findByPk(id);
+    return await Show.findByPk(id, { include: [
+            {
+                model: Genre,
+                through: { model: Has }, 
+            }
+        ]}
+    );
 }
 
 async function getAllMovies() {

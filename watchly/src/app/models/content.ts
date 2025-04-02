@@ -8,7 +8,8 @@ export class Content {
   trailer_link!: string;
   status!: string;
   duration!: number;
-
+  is_movie!: boolean;
+  Genres!: any[];
   // Episode properties
   season!: number; // Season number for the episode
   number!: number; // Episode number
@@ -25,6 +26,7 @@ export class Content {
     trailer_link: string,
     status: string,
     duration: number,
+    is_movie: boolean,
     season: number,
     number: number,
     episodes: number,
@@ -40,7 +42,7 @@ export class Content {
     this.trailer_link = trailer_link;
     this.status = status;
     this.duration = duration;
-
+    this.is_movie = is_movie;
     // Episode properties
     this.season = season;
     this.number = number;
