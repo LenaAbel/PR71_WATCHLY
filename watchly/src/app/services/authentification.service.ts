@@ -2,6 +2,16 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 
+interface LoginResponse {
+  token: string;
+  user: {
+    username: string;
+    firstname: string;
+    lastname: string;
+    email: string;
+  };
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -14,23 +24,18 @@ export class AuthenticationService {
     return this.http.post(`${this.apiUrl}/register`, user);
   }
 
-  login(credentials: any): Observable<{ token: string; is_admin?: boolean }> {
-    return this.http.post<{ token: string; is_admin?: boolean }>(`${this.apiUrl}/login`, credentials)
+
+  login(credentials: any): Observable<LoginResponse> {
+    return this.http.post<LoginResponse>(`${this.apiUrl}/login`, credentials)
       .pipe(
-            tap(response => {
-              console.log('Login response:', response);
-                if (response.token) {
-                    localStorage.setItem('authToken', response.token);
-                    console.log('Token stored:', response.token);
-                } else {
-                    console.error("Token not found in response");
-                }
-                if (response.is_admin !== undefined){
-                    localStorage.setItem('isAdmin', response.is_admin.toString());
-                    console.log('isAdmin stored:', response.is_admin);
-                }
-            })
-        );
+        tap(response => {
+          if (response.token) {
+            localStorage.setItem('authToken', response.token);
+            localStorage.setItem('userData', JSON.stringify(response.user));
+            console.log('Token and user data stored:', response);
+          }
+        })
+      );
   }
 
   saveToken(token: string): void {
@@ -49,5 +54,6 @@ export class AuthenticationService {
   // Log out the user
   logout(): void {
     localStorage.removeItem('authToken');
+    localStorage.removeItem('userData');
   }
 }

@@ -21,33 +21,38 @@ export class ShowPageComponent implements OnInit {
   constructor(private route: ActivatedRoute, private http: HttpClient) {}
 
   ngOnInit(): void {
-    this.type = this.route.snapshot.url.some(segment => segment.path === 'episode') 
-      ? 'episode' 
+    this.type = this.route.snapshot.url.some(segment => segment.path === 'episode')
+      ? 'episode'
       : this.route.snapshot.url[0].path;
     this.showId = Number(this.route.snapshot.paramMap.get('id'));
     if (this.type !== 'episode') {
-      this.getShow(this.type, this.showId);
+      this.getShow(this.showId);
     } else {
       this.getEpisode(Number(this.route.snapshot.paramMap.get('episodeId')));
     }
     this.getCast(this.showId);
-    
-    if (this.type == 'series') {
-      this.getEpisodes(this.showId);
-    }
+
 
     this.getImages(this.showId);
   }
 
-  getShow(type: string, id: number): void {
+  getShow(id: number): void {
     const endpoint = `http://localhost:3000/api/shows/${id}`;
     this.http.get(endpoint).subscribe({
       next: (data) => {
         this.show = data as Content;
-        console.log(`Fetched ${type} with id ${id}:`, data);
+        console.log(`Fetched with id ${id}:`, data);
+        console.log(this.show);
+        if (this.show.is_movie) {
+        this.type = 'movie';
+        } else {
+          this.type = 'series';
+          this.getEpisodes(this.showId);
+        }
+
       },
       error: (err) => {
-        console.error(`Error fetching ${type} with id ${id}:`, err);
+        console.error(`Error fetching with id ${id}:`, err);
       }
     });
   }
@@ -90,20 +95,20 @@ export class ShowPageComponent implements OnInit {
   groupSeasons(): void {
     const seasonGroups = this.episodes.reduce((acc: any, episode: any) => {
       const seasonNumber = episode.season;
-  
+
       if (!acc[seasonNumber]) {
         acc[seasonNumber] = [];
       }
-  
+
       acc[seasonNumber].push(episode);
       return acc;
     }, {});
-  
+
     this.groupedSeasons = Object.keys(seasonGroups).map(seasonNumber => ({
       seasonNumber: Number(seasonNumber),
       episodes: seasonGroups[seasonNumber],
     }));
-    this.show.seasons = Math.max(...this.groupedSeasons.map(season => Number(season.seasonNumber))); 
+    this.show.seasons = Math.max(...this.groupedSeasons.map(season => Number(season.seasonNumber)));
   }
 
   getImages(id: number): void {

@@ -1,7 +1,8 @@
-import { Component, OnInit,ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { SwiperComponent } from 'swiper/angular';
 import Swiper, { Navigation, Pagination, Keyboard } from 'swiper';
-
+import { Router } from '@angular/router';
+import { AuthenticationService } from '../services/authentification.service';
 
 @Component({
   selector: 'app-user-page',
@@ -9,12 +10,24 @@ import Swiper, { Navigation, Pagination, Keyboard } from 'swiper';
   styleUrls: ['./user-page.component.css']
 })
 export class UserPageComponent implements OnInit {
-
   @ViewChild(SwiperComponent, { static: false }) swiper?: SwiperComponent;
+  firstname: string = '';
+  lastname: string = '';
+  username: string = '';
 
-  constructor() { }
+  constructor(
+    private authService: AuthenticationService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
+    const userData = localStorage.getItem('userData');
+    if (userData) {
+      const user = JSON.parse(userData);
+      this.firstname = user.firstname;
+      this.lastname = user.lastname;
+      this.username = user.username;
+    }
   }
 
   slideNext() {
@@ -25,4 +38,8 @@ export class UserPageComponent implements OnInit {
     this.swiper?.swiperRef.slidePrev();
   }
 
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/']);
+  }
 }

@@ -2,57 +2,62 @@
   <div class="max-w-lg mx-auto bg-(--bg-surface-1-light) dark:bg-(--bg-surface-1-dark) p-6 rounded-[25px] shadow-(--shadow-light) dark:shadow-(--shadow-dark) p-6 ">
     <h2 class="text-xl font-bold text-center text-(--color-main-light) dark:text-(--color-main-dark) mb-4">Create an account !</h2>
 
-    <form name="form" #f="ngForm" (ngSubmit)="onSubmit()" class="text-(--color-main-light) dark:text-(--color-main-dark) flex flex-col gap-4">
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="text-(--color-main-light) dark:text-(--color-main-dark) flex flex-col gap-4">
       <div class="flex gap-8">
         <label>Name
           <input
-          type="text"
-          class="form-control border border-(--bg-surface-3-light) dark:border-(--bg-surface-3-dark) rounded-(--radius-inner) p-2 rounded w-full mt-2 bg-(--bg-surface-2-light) dark:bg-(--bg-surface-2-dark)"
-          name="name"
-          [(ngModel)]="form.name"
-          required
-        />
+            type="text"
+            class="form-control border border-(--bg-surface-3-light) dark:border-(--bg-surface-3-dark) rounded-(--radius-inner) p-2 rounded w-full mt-2 bg-(--bg-surface-2-light) dark:bg-(--bg-surface-2-dark)"
+            formControlName="name"
+          />
+          <div *ngIf="registerForm.get('name')?.invalid && registerForm.get('name')?.touched">
+            Name is required (Min 3 characters)
+          </div>
         </label>
-        
+
         <label>Surname
           <input
             type="text"
             class="form-control border border-(--bg-surface-3-light) dark:border-(--bg-surface-3-dark) rounded-(--radius-inner) p-2 rounded w-full mt-2 bg-(--bg-surface-2-light) dark:bg-(--bg-surface-2-dark)"
-            [(ngModel)]="form.surname"
-            required
-            name="surname"
+            formControlName="surname"
           />
+          <div *ngIf="registerForm.get('surname')?.invalid && registerForm.get('surname')?.touched">
+            Surname is required (Min 3 characters)
+          </div>
         </label>
       </div>
 
       <label>Username
         <input
-            type="text"
-            class="form-control border border-(--bg-surface-3-light) dark:border-(--bg-surface-3-dark) rounded-(--radius-inner) p-2 rounded w-full mt-2 bg-(--bg-surface-2-light) dark:bg-(--bg-surface-2-dark)"
-            name="username"
-            [(ngModel)]="form.username"
-            required
-          />
+          type="text"
+          class="form-control border border-(--bg-surface-3-light) dark:border-(--bg-surface-3-dark) rounded-(--radius-inner) p-2 rounded w-full mt-2 bg-(--bg-surface-2-light) dark:bg-(--bg-surface-2-dark)"
+          formControlName="username"
+        />
+        <div *ngIf="registerForm.get('username')?.invalid && registerForm.get('username')?.touched">
+          Username is required (Min 3 characters)
+        </div>
       </label>
 
       <label>E-mail
         <input
-            type="email"
-            class="form-control border border-(--bg-surface-3-light) dark:border-(--bg-surface-3-dark) rounded-(--radius-inner) p-2 rounded w-full mt-2 bg-(--bg-surface-2-light) dark:bg-(--bg-surface-2-dark)"
-            name="email"
-            [(ngModel)]="form.email"
-            required
+          type="email"
+          class="form-control border border-(--bg-surface-3-light) dark:border-(--bg-surface-3-dark) rounded-(--radius-inner) p-2 rounded w-full mt-2 bg-(--bg-surface-2-light) dark:bg-(--bg-surface-2-dark)"
+          formControlName="email"
         />
+        <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+          Enter a valid email
+        </div>
       </label>
-      
+
       <label>Password
         <input
-            type="password"
-            class="form-control border border-(--bg-surface-3-light) dark:border-(--bg-surface-3-dark) rounded-(--radius-inner) p-2 rounded w-full mt-2 bg-(--bg-surface-2-light) dark:bg-(--bg-surface-2-dark)"
-            name="password"
-            [(ngModel)]="form.password"
-            required
+          type="password"
+          class="form-control border border-(--bg-surface-3-light) dark:border-(--bg-surface-3-dark) rounded-(--radius-inner) p-2 rounded w-full mt-2 bg-(--bg-surface-2-light) dark:bg-(--bg-surface-2-dark)"
+          formControlName="password"
         />
+        <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
+          Password is required (Min 6 characters)
+        </div>
       </label>
 
       <button type="submit" class="hover:cursor-pointer mt-6 bg-(--color-main-light) dark:bg-(--color-main-dark) font-bold text-white p-2 rounded-(--radius-inner) mx-auto w-2/5">

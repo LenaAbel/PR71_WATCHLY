@@ -32,13 +32,7 @@ async function register(req, res) {
 
 async function login(req, res) {
     try {
-        console.log(req.body);
-        
         const { email, password } = req.body;
-        console.log('Login request');
-
-        console.log(email, password);
-        
         const person = await Person.findOne({ where: {mail: email} });
         if (!person) {
             return res.status(400).json({ message: 'Invalid credentials' });
@@ -50,7 +44,17 @@ async function login(req, res) {
         }
         
         const token = jwt.sign({ id: person.person_id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-        res.status(200).json({ message: 'Login successful', token , is_admin: person.is_admin });
+
+        res.status(200).json({ 
+            message: 'Login successful', 
+            token,
+            user: {
+                username: person.username,
+                firstname: person.name,
+                lastname: person.surname,
+                email: person.mail
+            }
+        });
     } catch (error) {
         res.status(500).json({ message: 'Server error', error });
     }

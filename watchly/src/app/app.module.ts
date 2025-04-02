@@ -34,6 +34,10 @@ import { CommentSectionComponent } from './comment-section/comment-section.compo
 import { AdminPageComponent } from './admin-page/admin-page.component';
 import { ActorNameFormatPipe } from './pipes/actor-name-format.pipe';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { SliderComponent } from './slider/slider.component';
+import { YourShowsSectionComponent } from './your-shows-section/your-shows-section.component';
+import { ResearchPageComponent } from './research-page/research-page.component';
 
 @NgModule({
   declarations: [
@@ -64,14 +68,18 @@ import { NotFoundComponent } from './not-found/not-found.component';
     CommentSectionComponent,
     AdminPageComponent,
     ActorNameFormatPipe,
-    NotFoundComponent
+    NotFoundComponent,
+    SliderComponent,
+    YourShowsSectionComponent,
+    ResearchPageComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    SwiperModule
+    SwiperModule,
+    ReactiveFormsModule
   ],
   providers: [AuthenticationService, AuthInterceptor
   ],
