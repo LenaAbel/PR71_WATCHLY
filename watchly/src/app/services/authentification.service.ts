@@ -6,7 +6,7 @@ import { Observable, tap } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthenticationService {
-  private apiUrl = 'http://localhost:3000/api/users'; // Adjust to match your API
+  private apiUrl = 'http://localhost:3000/api/users'; 
 
   constructor(private http: HttpClient) {}
 
@@ -14,15 +14,20 @@ export class AuthenticationService {
     return this.http.post(`${this.apiUrl}/register`, user);
   }
 
-  login(credentials: any): Observable<{ token: string }> {
-    return this.http.post<{ token: string }>(`${this.apiUrl}/login`, credentials)
+  login(credentials: any): Observable<{ token: string; is_admin?: boolean }> {
+    return this.http.post<{ token: string; is_admin?: boolean }>(`${this.apiUrl}/login`, credentials)
       .pipe(
             tap(response => {
+              console.log('Login response:', response);
                 if (response.token) {
                     localStorage.setItem('authToken', response.token);
                     console.log('Token stored:', response.token);
                 } else {
                     console.error("Token not found in response");
+                }
+                if (response.is_admin !== undefined){
+                    localStorage.setItem('isAdmin', response.is_admin.toString());
+                    console.log('isAdmin stored:', response.is_admin);
                 }
             })
         );
