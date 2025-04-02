@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { CommentService } from '../services/comment.service';
+import { Comment } from '../models/comment';
 
 @Component({
   selector: 'app-comment-page',
@@ -9,18 +11,29 @@ import { ActivatedRoute } from '@angular/router';
 export class CommentPageComponent implements OnInit {
   type!: string;
   showId!: number;
+  comments: Comment[] = [];
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(
+    private route: ActivatedRoute,
+    private commentService: CommentService
+  ) {}
 
   ngOnInit(): void {
-    console.log(this.route.snapshot.url);
-    if (this.route.snapshot.url[0].path !== 'user'){
+    if (this.route.snapshot.url[0].path !== 'user') {
       this.showId = Number(this.route.snapshot.paramMap.get('id'));
       this.type = 'show';
-    }
-    else{
+      this.loadComments();
+    } else {
       this.type = this.route.snapshot.url[0].path;
     }
   }
 
+  private loadComments() {
+    if (this.showId) {
+      this.commentService.getShowComments(this.showId).subscribe({
+        next: (comments) => this.comments = comments,
+        error: (error) => console.error('Error loading comments:', error)
+      });
+    }
+  }
 }

@@ -3,6 +3,8 @@ const Illustrated = require('./illustrated');
 const Episode = require('./episode');
 const Show = require('./shows'); // utile si tu veux aussi gérer show → illustrated
 const Genre = require('./genre');
+const Comments = require('./comments');
+const Person = require('./person');
 
 // === Associations ===
 
@@ -21,9 +23,15 @@ Illustrated.belongsTo(Show, { foreignKey: 'show_id' });
 Show.belongsToMany(Genre, { through: 'Has', foreignKey: 'show_id' });
 Genre.belongsToMany(Show, { through: 'Has', foreignKey: 'genre_id' });
 
+Comments.belongsTo(Person, { foreignKey: 'person_id', as: 'person' });
+Person.hasMany(Comments, { foreignKey: 'person_id', as: 'comments' });
+
 module.exports = {
   Picture,
   Illustrated,
   Episode,
-  Show
+  Show,
+  Genre,
+  Comments,
+  Person,
 };

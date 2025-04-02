@@ -1,20 +1,16 @@
-<div class="w-full  text-sm p-4 mt-6 rounded-(--radius-inner)" [ngClass]="{'bg-(--bg-surface-2-light) dark:bg-(--bg-surface-2-dark)': page === 'show' && isPage === false, 'bg-(--bg-surface-1-light) dark:bg-(--bg-surface-1-dark) shadow-(--shadow-light) dark:shadow-(--shadow-dark)': page !== 'show' || isPage === true}">
-    <div class="flex gap-2" *ngIf="page !== 'show'">
-        <p class="font-bold text-(--color-main-light) dark:text-(--color-main-dark)">Arcane</p>
-        <p>· Season 1 E1</p>
-        <p>· 17/03/2025</p>
-    </div>
-    <div class="flex gap-2" *ngIf="page === 'show'">
-        <p class="font-bold text-(--color-main-light) dark:text-(--color-main-dark)">Ululusse</p>
-        <p>· 17/03/2025</p>
+<div class="w-full text-sm p-4 mt-6 rounded-(--radius-inner) h-fit" [ngClass]="{'bg-(--bg-surface-2-light) dark:bg-(--bg-surface-2-dark)': page === 'show' && isPage === false, 'bg-(--bg-surface-1-light) dark:bg-(--bg-surface-1-dark) shadow-(--shadow-light) dark:shadow-(--shadow-dark)': page !== 'show' || isPage === true}">
+    <div class="flex gap-2">
+        <p class="font-bold text-(--color-main-light) dark:text-(--color-main-dark)">
+            User : {{ comment.username || 'Anonymous' }}
+        </p>
+        <p>· {{comment.comment_date | date:'dd/MM/yyyy'}}</p>
     </div>
 
-    <p class="mt-2" *ngIf="spoiler === false">
-        As someone who had never played the game before, this was a great introduction to its lore. The story was riveting and the pacing was perfect. And the amazing animation and soundtrack just enhanced the entire viewing experience. The VAs did an incredible job as well, particular the VA for Powder/Jinx.
-        As someone who had never played the game before, this was a great introduction to its lore. The story was riveting and the pacing was perfect. And the amazing animation and soundtrack just enhanced the entire viewing experience. The VAs did an incredible job as well, particular the VA for Powder/Jinx.
+    <p class="mt-2 max-h-[200px] overflow-y-auto pr-2" *ngIf="!comment.is_spoiler || showSpoilerContent">
+        {{comment.comment_text}}
     </p>
 
-    <div *ngIf="spoiler === true" class="w-full mt-2 h-[5vh] bg-(--bg-surface-4-light) dark:bg-(--bg-surface-1-dark) rounded-[5px] flex items-center justify-center" (click)="spoiler = false">
+    <div *ngIf="comment.is_spoiler && !showSpoilerContent" (click)="toggleSpoiler()" class="w-full mt-2 h-[5vh] bg-(--bg-surface-4-light) dark:bg-(--bg-surface-1-dark) rounded-[5px] flex items-center justify-center">
         <p class="font-bold text-(--color-main-light) dark:text-(--color-main-dark)">Show spoiler</p>
     </div>
 </div>

@@ -1,20 +1,45 @@
 <div class="max-w-full m-4 p-6 bg-(--bg-surface-1-light) dark:bg-(--bg-surface-1-dark) rounded-(--radius-outer) shadow-(--shadow-light) dark:shadow-(--shadow-dark)">
     <h3 class="text-3xl font-bold">Comments</h3>
+
+    <!-- Error Message -->
+    <div *ngIf="errorMessage" class="mt-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded relative" role="alert">
+        <span class="block sm:inline">{{ errorMessage }}</span>
+    </div>
+
+    <!-- Success Message -->
+    <div *ngIf="successMessage" class="mt-4 p-3 bg-green-100 border border-green-400 text-green-700 rounded relative" role="alert">
+        <span class="block sm:inline">{{ successMessage }}</span>
+    </div>
+
     <div class="flex justify-between mt-4 mb-8 gap-4">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10 bg-(--color-main-light) dark:bg-(--color-main-dark) text-white rounded-full p-1">
             <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 7.5A3.75 3.75 0 1112 3.75 3.75 3.75 0 0115.75 7.5z" />
             <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 20.25a8.25 8.25 0 0116.5 0" />
         </svg>
-        <input
-            type="text"
-            placeholder="What are you looking for ?"
-            class="w-full px-4 py-1.5 rounded-full bg-(--bg-surface-2-light) dark:bg-(--bg-surface-2-dark) border border-(--bg-surface-3-light) dark:border-(--bg-surface-3-dark) max-w-[80%] "
-        />
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-[35px] h-[35px] cursor-pointer stroke-(--color-main-light) dark:stroke-(--color-main-dark) fill-none scale-x-[-1] -rotate-45 mx-4" stroke-width="1.5">
+        <div class="flex-grow flex gap-2">
+            <input
+                [(ngModel)]="newComment.comment_text"
+                name="comment_text"
+                placeholder="Write your comment here..."
+                class="w-full px-4 py-1.5 rounded-full bg-(--bg-surface-2-light) dark:bg-(--bg-surface-2-dark) border border-(--bg-surface-3-light) dark:border-(--bg-surface-3-dark)"
+            />
+            <label class="flex items-center gap-2 text-sm">
+                <input type="checkbox" [(ngModel)]="newComment.is_spoiler" name="is_spoiler" class="accent-(--color-main-light) dark:accent-(--color-main-dark)">
+                Spoiler
+            </label>
+        </div>
+        <svg (click)="onSubmitComment()" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-[35px] h-[35px] cursor-pointer stroke-(--color-main-light) dark:stroke-(--color-main-dark) fill-none scale-x-[-1] -rotate-45 mx-4" stroke-width="1.5">
             <polygon points="3 12 21 3 14 12 21 21 3 12"/>
         </svg>
     </div>
-    <app-comment [page]="'show'" [spoiler]="false" [isPage]="false"></app-comment>
-    <app-comment [page]="'show'" [spoiler]="true" [isPage]="false"></app-comment>
-    <app-comment [page]="'show'" [spoiler]="false" [isPage]="false"></app-comment>
+    <div *ngIf="comments.length > 0; else noComments">
+        <app-comment *ngFor="let comment of comments"
+                    [page]="'show'"
+                    [comment]="comment"
+                    [isPage]="false">
+        </app-comment>
+    </div>
+    <ng-template #noComments>
+        <p class="text-center mt-4">No comments yet</p>
+    </ng-template>
 </div>
