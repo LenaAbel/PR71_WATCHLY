@@ -96,6 +96,26 @@ async function createFavorites(){
     }
 } 
 
+async function getAllFavorites() {
+    const favorites = await Favorite.findAll({
+        include: {
+            model: Person,
+            as: 'person',
+            attributes: ['id', 'name'],
+        },
+    });
+    return favorites;
+}
+
+async function addFavorite(show_id, user_id, rating, is_watched) {
+    const favorite = await Favorite.create({
+        show_id,
+        user_id,
+        rating,
+        is_watched,
+    });
+    return favorite;
+}
 
 async function addFav(data){
 const fav  = Favorite.build({

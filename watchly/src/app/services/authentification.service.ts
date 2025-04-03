@@ -25,7 +25,7 @@ export class AuthenticationService {
   }
 
   login(credentials: any): Observable<{ token: string; user?: any }> {
-    return this.http.post<{ token: string; is_admin?: boolean }>(`${this.apiUrl}/login`, credentials)
+    return this.http.post<{ token: string; user?: any }>(`${this.apiUrl}/login`, credentials)
       .pipe(
             tap(response => {
               console.log('Login response:', response);

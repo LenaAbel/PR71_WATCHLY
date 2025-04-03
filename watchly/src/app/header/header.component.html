@@ -16,17 +16,8 @@
         <line x1="14.95" y1="14.95" x2="19" y2="19" stroke-width="2" stroke-linecap="round"/>
       </svg>
     </div>
-  </div>
+  <!-- Affichez un autre bloc en fonction de la route -->
 
-    <!-- Affichez un autre bloc en fonction de la route -->
-    <div class="flex items-center space-x-2 cursor-pointer" *ngIf="token" routerLink="/profile">
-      <span>{{ username }}</span>
-      <div class="w-8 h-8 flex items-center justify-center rounded-full bg-(--color-main-light) dark:bg-(--color-main-dark) text-white">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 7.5A3.75 3.75 0 1112 3.75 3.75 3.75 0 0115.75 7.5z" />
-          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 20.25a8.25 8.25 0 0116.5 0" />
-        </svg>
-      </div>
   <!-- Admin panel button if logged in -->
   <div class="flex auto pr-10">
     <div *ngIf="token && isAdmin" class="text-sm cursor-pointer" routerLink="/admin">
@@ -34,18 +25,18 @@
     </div>
   </div>
   <!-- Affichez un autre bloc en fonction de la route -->
-  <div class="flex items-center space-x-2 cursor-pointer" *ngIf="token" routerLink="/profile">
-    <span>Ululusse</span>
-    <div class="w-8 h-8 flex items-center justify-center rounded-full bg-(--color-main-light) dark:bg-(--color-main-dark) text-white">
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 7.5A3.75 3.75 0 1112 3.75 3.75 3.75 0 0115.75 7.5z" />
-      <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 20.25a8.25 8.25 0 0116.5 0" />
-    </svg>
-    </div>
-  </div>
+   <div class="flex items-center space-x-2 cursor-pointer" *ngIf="token" routerLink="/profile">
+      <span>{{ username }}</span>
+      <div class="w-8 h-8 flex items-center justify-center rounded-full bg-(--color-main-light) dark:bg-(--color-main-dark) text-white">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 7.5A3.75 3.75 0 1112 3.75 3.75 3.75 0 0115.75 7.5z" />
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 20.25a8.25 8.25 0 0116.5 0" />
+        </svg>
+      </div>
 
     <!-- Login button if not logged in -->
     <div *ngIf="!token" class="text-sm font-semibold cursor-pointer" routerLink="/login">
       Login
     </div>
-  </header>
+    </div>
+</header>
