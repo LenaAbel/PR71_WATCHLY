@@ -75,8 +75,6 @@ server.use('/api/genres', genreRoutes);
 server.use('/api/persons', personRoutes);
 server.use('/api/users', userRouter);
 server.use('/api/comments', commentRoutes);
-
-
 server.use('/api/favorites', favoriteRoutes);
 // Swagger route
 server.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
