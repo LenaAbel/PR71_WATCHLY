@@ -9,6 +9,7 @@ export class Content {
   status!: string;
   duration!: number;
   is_movie!: boolean;
+  is_displayed!: boolean;
   Genres!: any[];
   // Episode properties
   season!: number; // Season number for the episode
@@ -31,7 +32,8 @@ export class Content {
     number: number,
     episodes: number,
     seasons: number,
-    thumbnail: string
+    thumbnail: string,
+    is_displayed: boolean = true,
   ) {
     // Show properties
     this.show_id = show_id;
@@ -43,6 +45,7 @@ export class Content {
     this.status = status;
     this.duration = duration;
     this.is_movie = is_movie;
+    this.is_displayed = is_displayed;
     // Episode properties
     this.season = season;
     this.number = number;
