@@ -24,7 +24,6 @@
     </div>
   </div>
   <p class="mt-5 text-justify">{{ content.description }}</p>
-  <span class=" text-base">IMDB rating</span>
   <div class="flex flex-wrap gap-5 mt-4">
     <span *ngFor="let genre of content.Genres" class="border border-(--color-main-light) dark:border-(--color-main-dark) text-sm px-3 py-1 rounded-full">
       {{ genre.name }}
