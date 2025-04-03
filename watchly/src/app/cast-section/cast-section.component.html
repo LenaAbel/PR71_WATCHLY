@@ -1,5 +1,12 @@
 <div class="max-w-[23vw] bg-(--bg-surface-1-light) dark:bg-(--bg-surface-1-dark) p-6 shadow-(--shadow-light) dark:shadow-(--shadow-dark) rounded-(--radius-outer) overflow-hidden mt-10">
     <h2 class="font-bold text-3xl">Casting</h2>
+    <div *ngIf="isLoading" class="grid grid-cols-2 gap-4 mt-4">
+        <div *ngFor="let i of [1,2,3,4,5,6]" class="animate-pulse flex flex-col items-center gap-2">
+            <div class="w-[5vw] h-[5vw] rounded-full bg-(--bg-surface-2-light) dark:bg-(--bg-surface-2-dark)"></div>
+            <div class="h-4 w-20 bg-(--bg-surface-2-light) dark:bg-(--bg-surface-2-dark) rounded"></div>
+            <div class="h-4 w-16 bg-(--bg-surface-2-light) dark:bg-(--bg-surface-2-dark) rounded"></div>
+        </div>
+    </div>
     <div *ngIf="cast && cast.length > 0; else noCast">
         <div class="grid grid-cols-2 gap-4 mt-4">
             <ng-container>

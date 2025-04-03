@@ -6,10 +6,15 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./cast-section.component.css']
 })
 export class CastSectionComponent implements OnInit {
-  @Input() cast: any[] = []; 
+  @Input() cast: any[] = [];
+  isLoading = true;
+
   constructor() { }
 
   ngOnInit(): void {
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 1000); // Simulate loading time
     console.log('CastSectionComponent initialized');
     console.log('Cast:', this.cast);
   }

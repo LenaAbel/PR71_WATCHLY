@@ -1,34 +1,41 @@
 <div class="max-w-[70vw] overflow-hidden p-6">
-  <div class="flex justify-between items-center">
-    <h2 class="text-5xl font-bold text-(--color-main-light) dark:text-(--color-main-dark) w-fit">{{ content.name }}</h2>
-    <button (click)="onOpenRating()" class="bg-(--color-main-light) dark:bg-(--color-main-dark) text-sm font-bold px-4 py-1 rounded-full text-white">
-      <span class="pr-2">+</span> Your rating
-    </button>
+  <div *ngIf="isLoading" class="animate-pulse">
+    <div class="h-12 bg-(--bg-surface-2-light) dark:bg-(--bg-surface-2-dark) w-3/4 rounded mb-4"></div>
+    <div class="h-4 bg-(--bg-surface-2-light) dark:bg-(--bg-surface-2-dark) w-1/2 rounded mb-4"></div>
+    <div class="h-20 bg-(--bg-surface-2-light) dark:bg-(--bg-surface-2-dark) w-full rounded"></div>
   </div>
-  <div class="flex justify-between items-end">
-    <div class="infos">
-      <span class="pr-1" *ngIf="type == 'series'">{{ content.status }}</span>
-      <span class="pr-1">{{ content.released_date | date:'mediumDate' }}</span>
-      <span class="pr-1" *ngIf="type == 'episode'">Season {{ content.season }}</span>
-      <span class="pr-1" *ngIf="type == 'episode'">Episode {{ content.number }}</span>
-      <span class="pr-1" *ngIf="type == 'series'">{{ content.seasons }} seasons</span>
-      <span class="pr-1" *ngIf="type == 'series'">{{ content.episodes }} episodes</span>
-      <span class="pr-1" *ngIf="content.duration">{{ content.duration }} mins</span>
-      <span class="pr-1">{{ content.nationality }}</span>
+  <div *ngIf="!isLoading">
+    <div class="flex justify-between items-center">
+      <h2 class="text-5xl font-bold text-(--color-main-light) dark:text-(--color-main-dark) w-fit">{{ content.name }}</h2>
+      <button *ngIf="isLoggedIn" (click)="onOpenRating()" class="bg-(--color-main-light) dark:bg-(--color-main-dark) text-sm font-bold px-4 py-1 rounded-full text-white">
+        <span class="pr-2">+</span> Your rating
+      </button>
     </div>
-    <div class="flex flex-col">
-      <div class="ml-auto">
-        <span class=" text-base">IMDB rating</span>
-        <div class=" text-lg">
-          <p class="text-(--color-main-light) dark:text-(--color-main-dark) text-2xl">&#9733; &#9733; &#9733; &#9733; &#9734;</p>
+    <div class="flex justify-between items-end">
+      <div class="infos">
+        <span class="pr-1" *ngIf="type == 'series'">{{ content.status }}</span>
+        <span class="pr-1">{{ content.released_date | date:'mediumDate' }}</span>
+        <span class="pr-1" *ngIf="type == 'episode'">Season {{ content.season }}</span>
+        <span class="pr-1" *ngIf="type == 'episode'">Episode {{ content.number }}</span>
+        <span class="pr-1" *ngIf="type == 'series'">{{ content.seasons }} seasons</span>
+        <span class="pr-1" *ngIf="type == 'series'">{{ content.episodes }} episodes</span>
+        <span class="pr-1" *ngIf="content.duration">{{ content.duration }} mins</span>
+        <span class="pr-1">{{ content.nationality }}</span>
+      </div>
+      <div class="flex flex-col">
+        <div class="ml-auto">
+          <span class=" text-base">IMDB rating</span>
+          <div class=" text-lg">
+            <p class="text-(--color-main-light) dark:text-(--color-main-dark) text-2xl">&#9733; &#9733; &#9733; &#9733; &#9734;</p>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <p class="mt-5 text-justify">{{ content.description }}</p>
-  <div class="flex flex-wrap gap-5 mt-4">
-    <span *ngFor="let genre of content.Genres" class="border border-(--color-main-light) dark:border-(--color-main-dark) text-sm px-3 py-1 rounded-full">
-      {{ genre.name }}
-    </span>
+    <p class="mt-5 text-justify">{{ content.description }}</p>
+    <div class="flex flex-wrap gap-5 mt-4">
+      <span *ngFor="let genre of content.Genres" class="border border-(--color-main-light) dark:border-(--color-main-dark) text-sm px-3 py-1 rounded-full">
+        {{ genre.name }}
+      </span>
+    </div>
   </div>
 </div>
