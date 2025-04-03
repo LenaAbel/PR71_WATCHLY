@@ -29,7 +29,7 @@
   </div>
 
   <!-- Login button if not logged in -->
-  <div *ngIf="!token" class="text-sm font-semibold cursor-pointer" routerLink="/login">
+  <div *ngIf="!token && route !== 'login' && route !== 'register'" class="text-sm font-semibold cursor-pointer" routerLink="/login">
     Login
   </div>
 </header>
