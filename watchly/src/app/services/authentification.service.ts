@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { Observable, tap, Subject } from 'rxjs';
 
 interface LoginResponse {
   token: string;
@@ -17,6 +17,8 @@ interface LoginResponse {
 })
 export class AuthenticationService {
   private apiUrl = 'http://localhost:3000/api/users';
+  private userDataSubject = new Subject<any>();
+  userData$ = this.userDataSubject.asObservable();
 
   constructor(private http: HttpClient) {}
 
@@ -69,5 +71,9 @@ export class AuthenticationService {
     return this.http.put(`${this.apiUrl}/profile`, userData, {
       headers: { Authorization: `Bearer ${token}` }
     });
+  }
+
+  updateUserData(userData: any) {
+    this.userDataSubject.next(userData);
   }
 }

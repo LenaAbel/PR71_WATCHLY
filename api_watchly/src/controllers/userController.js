@@ -2,6 +2,8 @@ const Person = require('../models/person');
 const auth = require('../middleware/auth_middleware');
 const bcrypt = require('bcrypt');
 
+// Remove multer related code as we won't need it anymore
+
 exports.getAllUsers = async (req, res) => {
     try {
         const users = await Person.findAll();
@@ -86,7 +88,11 @@ exports.updateProfile = async (req, res) => {
             mail: req.body.email,
         };
 
-        // Only hash and update password if provided
+        // Handle base64 image data
+        if (req.body.profile_picture && req.body.profile_picture !== user.profile_picture) {
+            updates.profile_picture = req.body.profile_picture;
+        }
+
         if (req.body.password && req.body.password.trim() !== '') {
             updates.password = await bcrypt.hash(req.body.password, 10);
         }
@@ -101,7 +107,8 @@ exports.updateProfile = async (req, res) => {
                 firstname: user.name,
                 lastname: user.surname,
                 email: user.mail,
-                is_admin: user.is_admin
+                is_admin: user.is_admin,
+                profile_picture: user.profile_picture
             }
         });
     } catch (error) {

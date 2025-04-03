@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthenticationService } from '../services/authentification.service';
 import { Router } from '@angular/router';
@@ -12,6 +12,10 @@ export class ParametersComponent implements OnInit {
   userForm: FormGroup;
   successMessage: string = '';
   errorMessage: string = '';
+  showPassword: boolean = false;
+  @ViewChild('fileInput') fileInput!: ElementRef;
+  profileImage: string = 'assets/img/default-person.jpg';
+  selectedFile: File | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -23,7 +27,8 @@ export class ParametersComponent implements OnInit {
       firstname: ['', Validators.required],
       lastname: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      password: ['']
+      password: [''],
+      profile_picture: ['']
     });
   }
 
@@ -37,22 +42,58 @@ export class ParametersComponent implements OnInit {
         lastname: user.lastname,
         email: user.email
       });
+      this.profileImage = user.profile_picture || this.profileImage;
+    }
+  }
+
+  triggerFileInput() {
+    this.fileInput.nativeElement.click();
+  }
+
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+    const maxSize = 5 * 1024 * 1024; 
+
+    if (file) {
+      if (file.size > maxSize) {
+        this.errorMessage = 'Image is too large. Maximum size is 5MB.';
+        return;
+      }
+
+      this.selectedFile = file;
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.profileImage = e.target.result;
+        this.errorMessage = ''; // Clear any previous error
+      };
+      reader.readAsDataURL(file);
     }
   }
 
   onSubmit() {
     if (this.userForm.valid) {
+      // Add profile picture to form data if changed
+      if (this.profileImage !== 'assets/img/default-person.jpg') {
+        this.userForm.patchValue({
+          profile_picture: this.profileImage
+        });
+      }
+
       this.authService.updateUserProfile(this.userForm.value).subscribe({
         next: (response) => {
           this.successMessage = 'Profile updated successfully';
           localStorage.setItem('userData', JSON.stringify(response.user));
-          // Refresh page to update header
-          window.location.reload();
+          // Instead of reloading, emit an event or use a service to update header
+          this.authService.updateUserData(response.user);
         },
         error: (error) => {
           this.errorMessage = 'Error updating profile';
         }
       });
     }
+  }
+
+  togglePassword() {
+    this.showPassword = !this.showPassword;
   }
 }

@@ -17,7 +17,8 @@ CREATE TABLE IF NOT EXISTS person(
    surname VARCHAR(50),
    is_admin BOOLEAN,
    mail VARCHAR(100),
-   password VARCHAR(255)
+   password VARCHAR(255),
+   profile_picture TEXT DEFAULT 'assets/img/default-person.jpg'
 );
 
 CREATE TABLE IF NOT EXISTS genre(

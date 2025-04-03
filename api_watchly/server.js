@@ -63,8 +63,10 @@ const Casting = require('./database/src/models/casting');
 const Picture = require('./database/src/models/picture');
 
 // MIDDLEWARES
-server.use(express.json());
+server.use(express.json({ limit: '50mb' }));  
+server.use(express.urlencoded({ limit: '50mb', extended: true }));  
 server.use(cors());
+server.use('/uploads', express.static('public/uploads')); 
 
 // ROUTING
 server.use('/api/shows', showsRoutes);
@@ -126,7 +128,7 @@ async function isDatabasePopulated() {
             await personController.addUsers();
 
             console.log(chalk.cyan('[DB] Adding favorites...'));
-            await favoriteController.addFavorite();
+            await favoriteController.addFavorites();
 
             console.log(chalk.cyan('[DB] Adding comments...'));
             await commentServices.addCommentsForAllShows();

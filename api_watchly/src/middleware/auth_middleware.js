@@ -20,7 +20,8 @@ async function register(req, res) {
             username,
             mail: email,
             password: hashedPassword,
-            is_admin: 0  
+            is_admin: 0,
+            profile_picture: 'assets/img/default-person.jpg'  // Add default profile picture
         });
         await newUser.save();
 
@@ -53,7 +54,8 @@ async function login(req, res) {
                 firstname: person.name,
                 lastname: person.surname,
                 email: person.mail,
-                is_admin: person.is_admin
+                is_admin: person.is_admin,
+                profile_picture: person.profile_picture  // Add profile picture to response
             }
         });
     } catch (error) {

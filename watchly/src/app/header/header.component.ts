@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, OnChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from '../user';
+import { AuthenticationService } from '../services/authentification.service';
 
 @Component({
   selector: 'app-header',
@@ -15,8 +16,20 @@ export class HeaderComponent implements OnInit {
   token: string | null = null;
   isAdmin: boolean = false;
   username: string = 'User';
+  profilePicture: string = 'assets/img/default-person.jpg';
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private authService: AuthenticationService
+  ) {
+    this.authService.userData$.subscribe(userData => {
+      if (userData) {
+        this.username = userData.username;
+        this.profilePicture = userData.profile_picture || 'assets/img/default-person.jpg';
+      }
+    });
+  }
+
   ngOnChanges(): void {
     this.token = localStorage.getItem('authToken');
     console.log(this.token);
@@ -26,6 +39,7 @@ export class HeaderComponent implements OnInit {
         if (userData) {
           const user: User = JSON.parse(userData);
           this.username = user.username;
+          this.profilePicture = user.profile_picture || 'assets/img/default-person.jpg';
         }
       } catch (error) {
         console.error('Error parsing userData:', error);
@@ -42,6 +56,7 @@ export class HeaderComponent implements OnInit {
         if (userData) {
           const user: User = JSON.parse(userData);
           this.username = user.username;
+          this.profilePicture = user.profile_picture || 'assets/img/default-person.jpg';
         }
       } catch (error) {
         console.error('Error parsing userData:', error);
