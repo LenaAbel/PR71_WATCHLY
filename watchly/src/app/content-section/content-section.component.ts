@@ -1,4 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Content } from '../models/content';
 import { AuthenticationService } from '../services/authentification.service';
 
@@ -14,7 +15,7 @@ export class ContentSectionComponent implements OnInit {
   isLoading = true;
   isLoggedIn = false;
 
-  constructor(private authService: AuthenticationService) {
+constructor(private authService: AuthenticationService) {
     this.isLoggedIn = this.authService.isLoggedIn();
   }
 

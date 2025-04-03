@@ -13,11 +13,13 @@ export class HeaderComponent implements OnInit {
   searchQuery: string = '';
 
   token: string | null = null;
-  username: string = 'User';  // Default value
+  isAdmin: boolean = false;
+  username: string = 'User';
 
   constructor(private router: Router) {}
   ngOnChanges(): void {
     this.token = localStorage.getItem('authToken');
+    console.log(this.token);
     if (this.token) {
       const userData = localStorage.getItem('userData');
       try {
@@ -45,6 +47,9 @@ export class HeaderComponent implements OnInit {
         console.error('Error parsing userData:', error);
       }
     }
+    console.log(this.token);
+    this.isAdmin = localStorage.getItem('isAdmin') === 'true';
+
     this.route = this.router.url.split('/')[1]; // e.g. "login", "register"
   }
 

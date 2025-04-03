@@ -41,6 +41,7 @@ const genreRoutes = require('./src/router/genre_router');
 const pictureRoutes = require('./src/router/picture_router');
 const personRoutes = require('./src/router/person_router');
 const commentRoutes = require('./src/router/comment_router');
+const favoriteRoutes = require('./src/router/favorite_router');
 const userRouter = require('./src/router/userRouter');
 
 // CONTROLLERS / SERVICES
@@ -74,8 +75,7 @@ server.use('/api/genres', genreRoutes);
 server.use('/api/persons', personRoutes);
 server.use('/api/users', userRouter);
 server.use('/api/comments', commentRoutes);
-
-
+server.use('/api/favorites', favoriteRoutes);
 // Swagger route
 server.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 

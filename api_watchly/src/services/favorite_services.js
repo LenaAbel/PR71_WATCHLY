@@ -96,16 +96,29 @@ async function createFavorites(){
     }
 } 
 
+async function getAllFavorites() {
+    const favorites = await Favorite.findAll({
+        include: {
+            model: Person,
+            as: 'person',
+            attributes: ['id', 'name'],
+        },
+    });
+    return favorites;
+}
 
-async function addFav(data){
-const fav  = Favorite.build({
-    show_id: data[0],
-    person_id: data[1],
-    rating: data[2],
-    is_watched: data[3],
-});
-fav.save()
+async function addFavorite(req) {
+    console.log(req.body);
+    
+    const { show_id, person_id, rating, is_watched } = req.body;
+    const favorite = await Favorite.create({
+        show_id,
+        person_id,
+        rating,
+        is_watched,
+    });
+    return favorite;
 }
 
 
-module.exports = { createFavorites };
+module.exports = { createFavorites, addFavorite };
