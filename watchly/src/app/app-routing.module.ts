@@ -21,9 +21,7 @@ const routes: Routes = [
   {path: 'user/:id/comments', component: CommentPageComponent},
   {path: 'admin', component: AdminPageComponent},
   {path: 'error/404', component: NotFoundComponent},
-  {path: '**', redirectTo: '404'},
   {path: 'research', component: ResearchPageComponent},
-  {path: ':id', component: ShowPageComponent},
   {path: ':id', component: ShowPageComponent},
   {path: ':id/episode/:episodeId', component: ShowPageComponent},
   {path: '', component: HomePageComponent},
@@ -31,7 +29,7 @@ const routes: Routes = [
   {path: ':id/episodes', component: EpisodePageComponent},
   {path: ':id/comments', component: CommentPageComponent},
   {path: ':id/posters', component: PosterPageComponent},
-//le query params sera donnée dans la route no worries
+  {path: '**', redirectTo: 'error/404'}, //le query params sera donnée dans la route no worries
 ];
 
 

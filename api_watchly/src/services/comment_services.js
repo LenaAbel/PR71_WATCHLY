@@ -120,7 +120,7 @@ async function getCommentsByUserId(userId) {
                 },
                 {
                     model: Show,
-                    attributes: ['name', 'show_id', 'is_movie']  // Add is_movie
+                    attributes: ['name', 'show_id', 'is_movie']  
                 }
             ]
         });

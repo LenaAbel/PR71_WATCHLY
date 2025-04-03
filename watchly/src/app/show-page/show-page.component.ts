@@ -16,7 +16,7 @@ export class ShowPageComponent implements OnInit {
   episodes!: any[];
   groupedSeasons!: any[];
   images!: any[];
-
+  isRatingPopupOpen = false;
 
   constructor(private route: ActivatedRoute, private http: HttpClient) {}
 
@@ -31,8 +31,6 @@ export class ShowPageComponent implements OnInit {
       this.getEpisode(Number(this.route.snapshot.paramMap.get('episodeId')));
     }
     this.getCast(this.showId);
-
-
     this.getImages(this.showId);
   }
 
@@ -44,12 +42,11 @@ export class ShowPageComponent implements OnInit {
         console.log(`Fetched with id ${id}:`, data);
         console.log(this.show);
         if (this.show.is_movie) {
-        this.type = 'movie';
+          this.type = 'movie';
         } else {
           this.type = 'series';
           this.getEpisodes(this.showId);
         }
-
       },
       error: (err) => {
         console.error(`Error fetching with id ${id}:`, err);
@@ -58,20 +55,19 @@ export class ShowPageComponent implements OnInit {
   }
 
   getCast(id: number): void {
-  const endpoint = `http://localhost:3000/api/casting/show/${id}/actors`;
-  this.http.get<any[]>(endpoint).subscribe({
-    next: (data) => {
-      this.cast = data.map(actor => new Actor(
-        actor.name,
-        actor.character,
-        actor.profile_path
-      ));
-
-    },
-    error: (err) => {
-      console.error(`Error fetching cast with id ${id}:`, err);
-    }
-  });
+    const endpoint = `http://localhost:3000/api/casting/show/${id}/actors`;
+    this.http.get<any[]>(endpoint).subscribe({
+      next: (data) => {
+        this.cast = data.map(actor => new Actor(
+          actor.name,
+          actor.character,
+          actor.profile_path
+        ));
+      },
+      error: (err) => {
+        console.error(`Error fetching cast with id ${id}:`, err);
+      }
+    });
   }
 
   getEpisodes(id: number): void {
@@ -83,7 +79,6 @@ export class ShowPageComponent implements OnInit {
         this.show.episodes = this.episodes.length;
         console.log(`Fetched with id ${id}:`, data);
         console.log(this.groupedSeasons);
-
       },
       error: (err) => {
         console.error(`Error fetching with id ${id}:`, err);
@@ -134,5 +129,18 @@ export class ShowPageComponent implements OnInit {
         console.error(`Error fetching with id ${id}:`, err);
       }
     });
+  }
+
+  openRatingPopup(): void {
+    this.isRatingPopupOpen = true;
+  }
+
+  closeRatingPopup(): void {
+    this.isRatingPopupOpen = false;
+  }
+
+  onRatingSubmitted(rating: number): void {
+    console.log(`Rating submitted: ${rating}`);
+    // Here you would implement the actual rating submission logic
   }
 }

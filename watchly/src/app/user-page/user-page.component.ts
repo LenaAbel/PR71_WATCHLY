@@ -17,6 +17,7 @@ export class UserPageComponent implements OnInit {
   lastname: string = '';
   username: string = '';
   comments: Comment[] = [];
+  successMessage: string | null = null;
 
   constructor(
     private authService: AuthenticationService,
@@ -31,7 +32,7 @@ export class UserPageComponent implements OnInit {
       this.firstname = user.firstname;
       this.lastname = user.lastname;
       this.username = user.username;
-      const userId = user.id; // Assuming userData contains user ID
+      const userId = user.id; 
       this.loadUserComments(userId);
     }
   }
@@ -66,6 +67,8 @@ export class UserPageComponent implements OnInit {
     this.commentService.deleteComment(commentId).subscribe({
       next: () => {
         this.comments = this.comments.filter(c => c.comment_id !== commentId);
+        this.successMessage = "Comment deleted successfully!";
+        setTimeout(() => this.successMessage = null, 3000); // Hide after 3 seconds
       },
       error: (error) => {
         console.error('Error deleting comment:', error);

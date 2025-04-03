@@ -28,6 +28,10 @@
     </div>
     <div class="px-6">
         <h2 class="text-3xl font-bold">All comments</h2>
+        <!-- Success Message -->
+        <div *ngIf="successMessage" class="mt-4 p-3 bg-green-100 border border-green-400 text-green-700 rounded relative" role="alert">
+            <span class="block sm:inline">{{ successMessage }}</span>
+        </div>
         <div class="comments-section">
             <app-comment *ngFor="let comment of comments"
                         [page]="'profile'"
