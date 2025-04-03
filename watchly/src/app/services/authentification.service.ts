@@ -37,7 +37,8 @@ export class AuthenticationService {
                     console.error("Token not found in response");
                 }
                 if (response.user.is_admin !== undefined){
-                    localStorage.setItem('isAdmin', response.user.is_admin.toString());
+                    localStorage.setItem('userData', JSON.stringify(response.user));
+                    localStorage.setItem('isAdmin', response.user.is_admin);
                     console.log('isAdmin stored:', response.user.is_admin);
                 }
             })

@@ -107,25 +107,18 @@ async function getAllFavorites() {
     return favorites;
 }
 
-async function addFavorite(show_id, user_id, rating, is_watched) {
+async function addFavorite(req) {
+    console.log(req.body);
+    
+    const { show_id, person_id, rating, is_watched } = req.body;
     const favorite = await Favorite.create({
         show_id,
-        user_id,
+        person_id,
         rating,
         is_watched,
     });
     return favorite;
 }
 
-async function addFav(data){
-const fav  = Favorite.build({
-    show_id: data[0],
-    person_id: data[1],
-    rating: data[2],
-    is_watched: data[3],
-});
-fav.save()
-}
 
-
-module.exports = { createFavorites };
+module.exports = { createFavorites, addFavorite };

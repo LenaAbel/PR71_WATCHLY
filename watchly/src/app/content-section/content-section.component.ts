@@ -1,4 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Content } from '../models/content';
 
 @Component({
@@ -11,7 +12,7 @@ export class ContentSectionComponent implements OnInit {
   @Input() content!: Content;
   @Output() openRating = new EventEmitter<void>();
 
-  constructor() {}
+  constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
   }

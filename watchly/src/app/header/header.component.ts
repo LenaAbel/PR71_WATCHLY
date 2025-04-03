@@ -19,6 +19,7 @@ export class HeaderComponent implements OnInit {
   constructor(private router: Router) {}
   ngOnChanges(): void {
     this.token = localStorage.getItem('authToken');
+    console.log(this.token);
     if (this.token) {
       const userData = localStorage.getItem('userData');
       try {

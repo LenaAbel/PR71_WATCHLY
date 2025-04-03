@@ -141,6 +141,24 @@ export class ShowPageComponent implements OnInit {
 
   onRatingSubmitted(rating: number): void {
     console.log(`Rating submitted: ${rating}`);
-    // Here you would implement the actual rating submission logic
+    this.addRating(rating);
+  }
+
+  addRating(rating: number): void{
+    const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+    const body = {
+      show_id: this.show.show_id,
+      person_id: userData.id || 'unknown',
+      rating: rating,
+      is_watched: false
+    };
+    console.log('Adding rating:', body);
+
+    this.http.post('http://localhost:3000/api/favorites/', { body: body })
+      .subscribe(response => {
+        console.log('Rating added successfully:', response);
+      }, error => {
+        console.error('Error adding rating:', error);
+      });
   }
 }
