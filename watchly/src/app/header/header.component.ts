@@ -13,7 +13,8 @@ export class HeaderComponent implements OnInit {
   searchQuery: string = '';
 
   token: string | null = null;
-  username: string = 'User';  // Default value
+  isAdmin: boolean = false;
+  username: string = 'User';
 
   constructor(private router: Router) {}
   ngOnChanges(): void {
@@ -31,6 +32,7 @@ export class HeaderComponent implements OnInit {
       }
     }
     this.route = this.router.url.split('/')[1]; // e.g. "login", "register"
+    this.isAdmin = localStorage.getItem('isAdmin') === 'true';
   }
   ngOnInit(): void {
     this.token = localStorage.getItem('authToken');
@@ -46,6 +48,9 @@ export class HeaderComponent implements OnInit {
         console.error('Error parsing userData:', error);
       }
     }
+    console.log(this.token);
+    this.isAdmin = localStorage.getItem('isAdmin') === 'true';
+
     this.route = this.router.url.split('/')[1]; // e.g. "login", "register"
   }
 

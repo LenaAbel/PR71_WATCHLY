@@ -11,6 +11,8 @@ export class PosterGridComponent implements OnInit, OnDestroy {
   @Input() page!: string;
   @ViewChildren('imageContainer') imageContainers!: QueryList<ElementRef>;
 
+  selectedImage: string | null = null;
+
   ngOnInit() {
     window.addEventListener('resize', this.adjustGridLayout.bind(this));
     setTimeout(() => this.adjustGridLayout(), 100);
@@ -32,6 +34,14 @@ export class PosterGridComponent implements OnInit, OnDestroy {
         container.style.gridRowEnd = `span ${Math.ceil(img.naturalHeight / img.naturalWidth * 2)}`;
       }
     });
+  }
+
+  openImage(imageUrl: string) {
+    this.selectedImage = imageUrl;
+  }
+
+  closeImage() {
+    this.selectedImage = null;
   }
 
   ngOnDestroy() {

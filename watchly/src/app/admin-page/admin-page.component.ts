@@ -17,29 +17,31 @@ export class AdminPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.checkAdminStatus();
+    if (!this.isAdmin) {
+      this.redirectToHome();
+    }
+    
     this.loadContent();
   }
 
   checkAdminStatus(): void {
-    // get the user from the api
-    // if (!user || !user.isAdmin) {
-    //   this.router.navigate(['/']);
-    // } else {
-    //   this.isAdmin = true;
-    // }
-    this.isAdmin= true;
+    this.isAdmin = localStorage.getItem('isAdmin') === 'true';
   }
 
   loadContent(): void {
-    this.displayedMovies;
-    this.displayedSeries;
-    this.nonDisplayedMovies;
-    this.nonDisplayedSeries;
+    // this.displayedMovies;
+    // this.displayedSeries;
+    // this.nonDisplayedMovies;
+    // this.nonDisplayedSeries;
   }
 
   deleteShow(movie: any): void {
     // put is_displayed to false in the api
     this.loadContent();
+  }
+
+  redirectToHome(): void {
+    this.router.navigate(['']);
   }
 
 

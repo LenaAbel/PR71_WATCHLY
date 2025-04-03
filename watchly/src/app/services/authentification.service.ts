@@ -16,25 +16,32 @@ interface LoginResponse {
   providedIn: 'root'
 })
 export class AuthenticationService {
-  private apiUrl = 'http://localhost:3000/api/users'; 
-  
+  private apiUrl = 'http://localhost:3000/api/users';
+
   constructor(private http: HttpClient) {}
 
   register(user: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/register`, user);
   }
 
-  login(credentials: any): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>(`${this.apiUrl}/login`, credentials)
+  login(credentials: any): Observable<{ token: string; user?: any }> {
+    return this.http.post<{ token: string; is_admin?: boolean }>(`${this.apiUrl}/login`, credentials)
       .pipe(
-        tap(response => {
-          if (response.token) {
-            localStorage.setItem('authToken', response.token);
-            localStorage.setItem('userData', JSON.stringify(response.user));
-            console.log('Token and user data stored:', response);
-          }
-        })
-      );
+            tap(response => {
+              console.log('Login response:', response);
+                if (response.token) {
+                    localStorage.setItem('authToken', response.token);
+
+                    console.log('Token stored:', response.token);
+                } else {
+                    console.error("Token not found in response");
+                }
+                if (response.user.is_admin !== undefined){
+                    localStorage.setItem('isAdmin', response.user.is_admin.toString());
+                    console.log('isAdmin stored:', response.user.is_admin);
+                }
+            })
+        );
   }
 
   saveToken(token: string): void {
