@@ -18,7 +18,7 @@
   </div>
 
   <!-- Affichez un autre bloc en fonction de la route -->
-  <div class="flex items-center space-x-2 cursor-pointer" *ngIf="token" routerLink="/profile">
+  <div class="flex items-center space-x-2 cursor-pointer" *ngIf="token && route !== 'login' && route !== 'register'" routerLink="/profile">
     <span>{{ username }}</span>
     <div class="w-8 h-8 flex items-center justify-center rounded-full bg-(--color-main-light) dark:bg-(--color-main-dark) text-white">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">

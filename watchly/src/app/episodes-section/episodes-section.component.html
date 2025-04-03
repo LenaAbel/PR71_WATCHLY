@@ -1,5 +1,11 @@
 <div class="max-w-[70vw] p-6">
-    <h3 class="text-3xl font-bold">Episodes</h3>
+    <div class="flex items-center cursor-pointer gap-2 w-fit" [routerLink]="'/' + showId + '/episodes'">
+        <h2 class="font-bold text-3xl">Episodes</h2>
+        <svg width="20" height="20" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+            <line x1="15" y1="10" x2="35" y2="25" stroke-width="4" stroke-linecap="round" class="stroke-(--font-color-light) dark:stroke-(--font-color-dark)"/>
+            <line x1="15" y1="40" x2="35" y2="25" stroke-width="4" stroke-linecap="round" class="stroke-(--font-color-light) dark:stroke-(--font-color-dark)"/>
+        </svg>
+    </div>
     <div class="p-6 mx-auto items-center gap-10 mt-4">
         <app-season-dropdown *ngFor="let season of groupedSeasons; let i = index" [season]="season" [page]="'show'" [active]="i === 0"></app-season-dropdown>
     </div>

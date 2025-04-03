@@ -1,5 +1,11 @@
 <div class="max-w-full m-4 p-6 bg-(--bg-surface-1-light) dark:bg-(--bg-surface-1-dark) rounded-(--radius-outer) shadow-(--shadow-light) dark:shadow-(--shadow-dark)">
-    <h3 class="text-3xl font-bold">Comments</h3>
+    <div class="flex items-center cursor-pointer gap-2 w-fit" [routerLink]="'/' + showId + '/comments'">
+        <h2 class="font-bold text-3xl">Comments</h2>
+        <svg width="20" height="20" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+            <line x1="15" y1="10" x2="35" y2="25" stroke-width="4" stroke-linecap="round" class="stroke-(--font-color-light) dark:stroke-(--font-color-dark)"/>
+            <line x1="15" y1="40" x2="35" y2="25" stroke-width="4" stroke-linecap="round" class="stroke-(--font-color-light) dark:stroke-(--font-color-dark)"/>
+        </svg>
+    </div>
 
     <!-- Error Message -->
     <div *ngIf="errorMessage" class="mt-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded relative" role="alert">
