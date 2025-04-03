@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../user';
 import { AuthenticationService } from '../services/authentification.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -11,8 +12,13 @@ export class LoginComponent implements OnInit {
   form = new User();
   showPassword = false;
   errorMessage: string | null = null;
+  sessionExpiredMessage: string = '';
 
-  constructor(private authService: AuthenticationService, private router: Router) {}
+  constructor(
+    private authService: AuthenticationService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   onSubmit() {
     this.errorMessage = null;
@@ -44,6 +50,11 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      if (params['message']) {
+        this.sessionExpiredMessage = params['message'];
+      }
+    });
   }
 
 }
