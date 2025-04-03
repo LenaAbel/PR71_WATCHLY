@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS person(
    surname VARCHAR(50),
    is_admin BOOLEAN,
    mail VARCHAR(100),
-   password VARCHAR(50)
+   password VARCHAR(255)
 );
 
 CREATE TABLE IF NOT EXISTS genre(

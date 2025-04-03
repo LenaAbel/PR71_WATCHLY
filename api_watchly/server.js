@@ -126,7 +126,7 @@ async function isDatabasePopulated() {
             await personController.addUsers();
 
             console.log(chalk.cyan('[DB] Adding favorites...'));
-            await favoriteController.addFavorites();
+            await favoriteController.addFavorite();
 
             console.log(chalk.cyan('[DB] Adding comments...'));
             await commentServices.addCommentsForAllShows();

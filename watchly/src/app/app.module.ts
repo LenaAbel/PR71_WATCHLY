@@ -39,6 +39,8 @@ import { SliderComponent } from './slider/slider.component';
 import { YourShowsSectionComponent } from './your-shows-section/your-shows-section.component';
 import { ResearchPageComponent } from './research-page/research-page.component';
 import { RatingPopupComponent } from './rating-popup/rating-popup.component';
+import { ParametersComponent } from './parameters/parameters.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -73,7 +75,8 @@ import { RatingPopupComponent } from './rating-popup/rating-popup.component';
     SliderComponent,
     YourShowsSectionComponent,
     ResearchPageComponent,
-    RatingPopupComponent
+    RatingPopupComponent,
+    ParametersComponent
   ],
   imports: [
     BrowserModule,
@@ -83,7 +86,13 @@ import { RatingPopupComponent } from './rating-popup/rating-popup.component';
     SwiperModule,
     ReactiveFormsModule
   ],
-  providers: [AuthenticationService, AuthInterceptor
+  providers: [
+    AuthenticationService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

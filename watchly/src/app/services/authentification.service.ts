@@ -63,4 +63,11 @@ export class AuthenticationService {
     localStorage.removeItem('authToken');
     localStorage.removeItem('userData');
   }
+
+  updateUserProfile(userData: any): Observable<any> {
+    const token = this.getToken();
+    return this.http.put(`${this.apiUrl}/profile`, userData, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+  }
 }

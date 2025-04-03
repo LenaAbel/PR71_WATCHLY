@@ -1,0 +1,115 @@
+<div class="flex w-full p-6 md:p-12 text-sm space-x-6 min-h-screen pb-24">
+  <!-- Left Sidebar -->
+  <aside class="hidden md:block w-1/5 text-left pl-8">
+    <div class="flex items-center gap-4">
+      <div class="w-1 h-12 bg-(--color-main-light) dark:bg-(--color-main-dark) rounded"></div>
+      <p class="font-semibold text-base text-(--font-color-light) dark:text-(--font-color-dark)">
+        Account &amp;<br />parameters
+      </p>
+    </div>
+  </aside>
+
+  <!-- Main content column -->
+  <main class="flex-1 space-y-8 mb-12">
+    <!-- First card: Profile info + form -->
+    <div class="rounded-(--radius-outer) shadow-(--shadow-light) 
+                bg-(--bg-surface-1-light) dark:bg-(--bg-surface-1-dark) p-8 space-y-6">
+
+      <!-- If success or error messages exist -->
+      <div *ngIf="successMessage" class="mb-4 p-3 bg-green-100 text-green-700 rounded">
+        {{ successMessage }}
+      </div>
+      <div *ngIf="errorMessage" class="mb-4 p-3 bg-red-100 text-red-700 rounded">
+        {{ errorMessage }}
+      </div>
+
+      <!-- Profile row -->
+      <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="space-y-6">
+        <!-- Avatar + Inputs -->
+        <div class="flex flex-col md:flex-row md:items-center md:space-x-6">
+          <!-- Avatar -->
+          <div class="relative w-32 h-32 flex-shrink-0">
+            <img
+              src="assets/img/default-person.jpg"
+              alt="Profile picture"
+              class="absolute inset-0 w-full h-full object-cover rounded-full ring-4 ring-(--color-main-light) dark:ring-(--color-main-dark)"
+            />
+          </div>
+
+          <!-- Inputs area -->
+          <div class="w-full grid grid-cols-2 gap-4">
+            <!-- Name -->
+            <div>
+              <label class="block text-sm font-medium mb-1">Name</label>
+              <input type="text" formControlName="firstname" class="w-full p-2 border rounded-(--radius-inner) 
+                       bg-(--bg-surface-2-light) dark:bg-(--bg-surface-2-dark)
+                       dark:border-(--bg-surface-3-dark)" />
+            </div>
+
+            <!-- Surname -->
+            <div>
+              <label class="block text-sm font-medium mb-1">Lastname</label>
+              <input type="text" formControlName="lastname" class="w-full p-2 border rounded-(--radius-inner) 
+                       bg-(--bg-surface-2-light) dark:bg-(--bg-surface-2-dark)
+                       dark:border-(--bg-surface-3-dark)" />
+            </div>
+
+            <!-- Username (col-span-2 so it’s wide) -->
+            <div class="col-span-2">
+              <label class="block text-sm font-medium mb-1">Username</label>
+              <input type="text" formControlName="username" class="w-full p-2 border rounded-(--radius-inner) 
+                       bg-(--bg-surface-2-light) dark:bg-(--bg-surface-2-dark)
+                       dark:border-(--bg-surface-3-dark)" />
+            </div>
+
+            <!-- Email (col-span-2 so it’s wide) -->
+            <div class="col-span-2">
+              <label class="block text-sm font-medium mb-1">E-mail</label>
+              <input type="email" formControlName="email" class="w-full p-2 border rounded-(--radius-inner) 
+                       bg-(--bg-surface-2-light) dark:bg-(--bg-surface-2-dark)
+                       dark:border-(--bg-surface-3-dark)" />
+            </div>
+
+            <!-- Password (col-span-2 so it’s wide) -->
+            <div class="col-span-2">
+              <label class="block text-sm font-medium mb-1">Password</label>
+              <input type="password" formControlName="password" class="w-full p-2 border rounded-(--radius-inner) 
+                       bg-(--bg-surface-2-light) dark:bg-(--bg-surface-2-dark)
+                       dark:border-(--bg-surface-3-dark)" />
+            </div>
+          </div>
+        </div>
+
+        <!-- 'Update' button -->
+        <div class="text-right">
+          <button type="submit" class="text-(--color-main-light) dark:text-(--color-main-dark) 
+                   font-semibold hover:underline">
+            Update
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Second card: theme settings + delete account -->
+    <div class="space-y-4 rounded-(--radius-outer) shadow-(--shadow-light)
+                bg-(--bg-surface-1-light) dark:bg-(--bg-surface-1-dark) p-6">
+
+      <div class="flex items-center justify-between">
+        <span class="font-medium">Customize theme settings</span>
+        <select class="border p-2 rounded-(--radius-inner) 
+                      bg-(--bg-surface-2-light) dark:bg-(--bg-surface-2-dark)
+                      dark:border-(--bg-surface-3-dark)">
+          <option>System setting</option>
+          <option>Light</option>
+          <option>Dark</option>
+        </select>
+      </div>
+
+      <hr class="my-2 border-(--bg-surface-3-light) dark:border-(--bg-surface-3-dark)" />
+
+      <button class="text-red-600 font-semibold hover:underline w-full text-left">
+        Delete my account
+      </button>
+    </div>
+  </main>
+</div>
