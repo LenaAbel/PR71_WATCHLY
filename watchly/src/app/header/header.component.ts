@@ -21,18 +21,16 @@ export class HeaderComponent implements OnInit {
     this.token = localStorage.getItem('authToken');
     if (this.token) {
       const userData = localStorage.getItem('userData');
-      console.log('userData in ngOnChanges:', userData);
       try {
         if (userData) {
           const user: User = JSON.parse(userData);
-          this.username = user.username || 'User';
+          this.username = user.username;
         }
       } catch (error) {
         console.error('Error parsing userData:', error);
       }
     }
     this.route = this.router.url.split('/')[1]; // e.g. "login", "register"
-    this.isAdmin = localStorage.getItem('isAdmin') === 'true';
   }
   ngOnInit(): void {
     this.token = localStorage.getItem('authToken');
@@ -42,7 +40,7 @@ export class HeaderComponent implements OnInit {
       try {
         if (userData) {
           const user: User = JSON.parse(userData);
-          this.username = user.username || 'User';
+          this.username = user.username;
         }
       } catch (error) {
         console.error('Error parsing userData:', error);

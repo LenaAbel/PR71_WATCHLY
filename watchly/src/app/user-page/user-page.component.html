@@ -28,6 +28,14 @@
     </div>
     <div class="px-6">
         <h2 class="text-3xl font-bold">All comments</h2>
-        <app-comment [page]="'profile'" [spoiler]="false"></app-comment>
+        <div class="comments-section">
+            <app-comment *ngFor="let comment of comments"
+                        [page]="'profile'"
+                        [comment]="comment"
+                        [isPage]="true"
+                        [canDelete]="true"
+                        (deleteComment)="deleteComment($event)">
+            </app-comment>
+        </div>
     </div>
 </div>

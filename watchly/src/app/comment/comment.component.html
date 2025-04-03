@@ -1,20 +1,31 @@
-<div class="w-full  text-sm p-4 mt-6 rounded-(--radius-inner)" [ngClass]="{'bg-(--bg-surface-2-light) dark:bg-(--bg-surface-2-dark)': page === 'show' && isPage === false, 'bg-(--bg-surface-1-light) dark:bg-(--bg-surface-1-dark) shadow-(--shadow-light) dark:shadow-(--shadow-dark)': page !== 'show' || isPage === true}">
-    <div class="flex gap-2" *ngIf="page !== 'show'">
-        <p class="font-bold text-(--color-main-light) dark:text-(--color-main-dark)">Arcane</p>
-        <p>· Season 1 E1</p>
-        <p>· 17/03/2025</p>
-    </div>
-    <div class="flex gap-2" *ngIf="page === 'show'">
-        <p class="font-bold text-(--color-main-light) dark:text-(--color-main-dark)">Ululusse</p>
-        <p>· 17/03/2025</p>
+<div class="w-full text-sm p-4 mt-6 rounded-(--radius-inner) h-fit" [ngClass]="{'bg-(--bg-surface-2-light) dark:bg-(--bg-surface-2-dark)': page === 'show' && isPage === false, 'bg-(--bg-surface-1-light) dark:bg-(--bg-surface-1-dark) shadow-(--shadow-light) dark:shadow-(--shadow-dark)': page !== 'show' || isPage === true}">
+    <div class="flex justify-between">
+        <div class="flex flex-col gap-1">
+            <div class="flex gap-2">
+                <p class="font-bold text-(--color-main-light) dark:text-(--color-main-dark)">
+                    User : {{ comment.username || 'Anonymous' }}
+                </p>
+                <p>· {{comment.comment_date | date:'dd/MM/yyyy'}}</p>
+            </div>
+            <a *ngIf="page === 'profile' && comment.show_id" 
+               [routerLink]="[comment.is_movie ? '/movies' : '/series', comment.show_id]"
+               class="text-sm text-(--color-main-light) dark:text-(--color-main-dark) hover:underline">
+                On: {{ comment.show_name }}
+            </a>
+        </div>
+        <button *ngIf="canDelete" 
+                (click)="onDelete()"
+                class="text-red-500 hover:text-red-700">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+            </svg>
+        </button>
     </div>
 
-    <p class="mt-2" *ngIf="spoiler === false">
-        As someone who had never played the game before, this was a great introduction to its lore. The story was riveting and the pacing was perfect. And the amazing animation and soundtrack just enhanced the entire viewing experience. The VAs did an incredible job as well, particular the VA for Powder/Jinx.
-        As someone who had never played the game before, this was a great introduction to its lore. The story was riveting and the pacing was perfect. And the amazing animation and soundtrack just enhanced the entire viewing experience. The VAs did an incredible job as well, particular the VA for Powder/Jinx.
+    <p class="mt-2 max-h-[200px] overflow-y-auto pr-2 prose dark:prose-invert" *ngIf="!comment.is_spoiler || showSpoilerContent" [innerHTML]="parsedComment">
     </p>
 
-    <div *ngIf="spoiler === true" class="w-full mt-2 h-[5vh] bg-(--bg-surface-4-light) dark:bg-(--bg-surface-1-dark) rounded-[5px] flex items-center justify-center" (click)="spoiler = false">
+    <div *ngIf="comment.is_spoiler && !showSpoilerContent" (click)="toggleSpoiler()" class="w-full mt-2 h-[5vh] bg-(--bg-surface-4-light) dark:bg-(--bg-surface-1-dark) rounded-[5px] flex items-center justify-center">
         <p class="font-bold text-(--color-main-light) dark:text-(--color-main-dark)">Show spoiler</p>
     </div>
 </div>

@@ -40,7 +40,7 @@ const episodeRoutes = require('./src/router/episode_router');
 const genreRoutes = require('./src/router/genre_router');
 const pictureRoutes = require('./src/router/picture_router');
 const personRoutes = require('./src/router/person_router');
-
+const commentRoutes = require('./src/router/comment_router');
 const userRouter = require('./src/router/userRouter');
 
 // CONTROLLERS / SERVICES
@@ -52,6 +52,8 @@ const genreController = require('./src/controllers/genre_controller');
 const pictureServices = require('./src/services/picture_services');
 const personController = require('./src/controllers/person_controller');
 const favoriteController = require('./src/controllers/favorite_controller');
+const commentServices = require('./src/services/comment_services');
+
 
 // MODELS
 const Show = require('./database/src/models/shows');
@@ -71,6 +73,8 @@ server.use('/api/pictures', pictureRoutes);
 server.use('/api/genres', genreRoutes);
 server.use('/api/persons', personRoutes);
 server.use('/api/users', userRouter);
+server.use('/api/comments', commentRoutes);
+
 
 // Swagger route
 server.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
@@ -123,6 +127,9 @@ async function isDatabasePopulated() {
 
             console.log(chalk.cyan('[DB] Adding favorites...'));
             await favoriteController.addFavorites();
+
+            console.log(chalk.cyan('[DB] Adding comments...'));
+            await commentServices.addCommentsForAllShows();
 
             console.log(chalk.green('[DB] ✅ Database population complete'));
         } else {

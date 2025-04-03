@@ -6,5 +6,5 @@
     <app-cast-section class="row-span-3" *ngIf="type !== 'episode'" [cast]="cast"></app-cast-section>
     <app-episodes-section *ngIf="!show.is_movie && type != 'episode'" [groupedSeasons]="groupedSeasons"></app-episodes-section>
     <app-poster-section [images]="images"></app-poster-section>
-    <app-comment-section></app-comment-section>
+    <app-comment-section [showId]="show.show_id"></app-comment-section>
 </div>

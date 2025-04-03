@@ -12,6 +12,8 @@ import { Router } from '@angular/router';
 export class RegisterComponent implements OnInit {
 
   registerForm: FormGroup = new FormGroup({}); // Ensuring initialization
+  showPassword = false;
+  errorMessage: string | null = null;
 
   constructor(private authService: AuthenticationService, private router: Router) {}
 
@@ -26,21 +28,32 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit() {
+    this.errorMessage = null;
+
     if (this.registerForm.invalid) {
-      console.log('Form is invalid');
+      this.errorMessage = 'Please fill all required fields correctly';
       return;
     }
 
     console.log('Submitting form', this.registerForm.value);
 
-    this.authService.register(this.registerForm.value).subscribe(
-      response => {
+    this.authService.register(this.registerForm.value).subscribe({
+      next: (response) => {
         console.log('User registered successfully!', response);
         this.router.navigate(['/login']);
       },
-      error => {
+      error: (error) => {
         console.error('Error registering user:', error);
+        if (error.status === 400) {
+          this.errorMessage = 'Email already exists';
+        } else {
+          this.errorMessage = 'An error occurred during registration. Please try again.';
+        }
       }
-    );
+    });
+  }
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
   }
 }
