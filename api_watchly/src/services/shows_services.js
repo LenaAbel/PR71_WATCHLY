@@ -61,6 +61,16 @@ async function getAllTVShows() {
     return await Show.findAll({ where: { is_movie: false, is_displayed: true } });
 }
 
+async function getShowTrailer(id) {
+    try {
+        const show = await Show.findOne({ where: {show_id : id } });
+        return show ? show.trailer_link : null;
+    } catch (error) {
+        console.error(`Error fetching trailer for show with ID ${id}:`, error.message);
+        return null;
+    }
+}
+
 // --- Show Builders ---
 /**
  * Create a movie object from TMDB data
@@ -137,6 +147,7 @@ module.exports = {
     getShowById,
     getAllMovies,
     getAllTVShows,
+    getShowTrailer,
     createMovie,
     createTv,
     saveShow

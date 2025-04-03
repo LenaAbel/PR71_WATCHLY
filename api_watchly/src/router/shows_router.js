@@ -59,4 +59,25 @@ router.get('/tv', showsController.getTV);
  */
 router.get('/:id', showsController.getById);
 
+/**
+ * @swagger
+ * /api/shows/{id}/trailer:
+ *   get:
+ *     summary: Get the trailer of a show by ID
+ *     tags: [Shows]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: Show ID
+ *     responses:
+ *       200:
+ *         description: Trailer details
+ *       404:
+ *         description: Trailer not found
+ */
+router.get("/:id/trailer", showsController.getTrailer);
+
 module.exports = router;
