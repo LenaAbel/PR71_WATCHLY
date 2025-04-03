@@ -22,7 +22,7 @@ constructor(private authService: AuthenticationService) {
   ngOnInit(): void {
     setTimeout(() => {
       this.isLoading = false;
-    }, 1000); // Simulate loading time
+    }, 100); 
   }
 
   onOpenRating(): void {
