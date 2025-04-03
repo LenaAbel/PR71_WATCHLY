@@ -38,6 +38,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SliderComponent } from './slider/slider.component';
 import { YourShowsSectionComponent } from './your-shows-section/your-shows-section.component';
 import { ResearchPageComponent } from './research-page/research-page.component';
+import { RatingPopupComponent } from './rating-popup/rating-popup.component';
 
 @NgModule({
   declarations: [
@@ -71,7 +72,8 @@ import { ResearchPageComponent } from './research-page/research-page.component';
     NotFoundComponent,
     SliderComponent,
     YourShowsSectionComponent,
-    ResearchPageComponent
+    ResearchPageComponent,
+    RatingPopupComponent
   ],
   imports: [
     BrowserModule,

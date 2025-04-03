@@ -5,7 +5,6 @@ const Person = require('../models/person');
 
 async function register(req, res) {
     try {
-        console.log(req.body);
         const { name, surname, username, email, password } = req.body;
 
         const existingPerson = await Person.findOne({ where: { mail: email } });
@@ -20,7 +19,8 @@ async function register(req, res) {
             surname,
             username,
             mail: email,
-            password: hashedPassword,  // You may want to hash the password before saving
+            password: hashedPassword,
+            is_admin: 0  
         });
         await newUser.save();
 
