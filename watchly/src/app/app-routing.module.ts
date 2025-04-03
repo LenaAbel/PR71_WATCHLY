@@ -29,7 +29,7 @@ const routes: Routes = [
   {path: ':id/episodes', component: EpisodePageComponent},
   {path: ':id/comments', component: CommentPageComponent},
   {path: ':id/posters', component: PosterPageComponent},
-  {path: '**', redirectTo: 'error/404'}, //le query params sera donnée dans la route no worries
+  {path: '**', redirectTo: 'error/404'}, 
 ];
 
 

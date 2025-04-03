@@ -63,10 +63,20 @@ async function getTV(req, res) {
     }
 }
 
+async function getTrailer(req, res) {
+    try {
+        const trailer = await showsServices.getShowTrailer(req.params.id);
+        res.status(200).json(trailer);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+}
+
 module.exports = {
     addsShowsDB,
     getAll,
     getById,
     getMovies,
-    getTV
+    getTV,
+    getTrailer
 };

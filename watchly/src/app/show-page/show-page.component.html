@@ -1,5 +1,5 @@
 <div class="max-w-full grid-container">
-    <app-trailer-banner class="col-span-2"></app-trailer-banner>
+    <app-trailer-banner class="col-span-2" [showId]="showId"></app-trailer-banner>
     <app-return-btn *ngIf="type === 'episode'"></app-return-btn>
     <app-cast-section class="row-span-3" *ngIf="type === 'episode'" [cast]="cast"></app-cast-section>
     <app-content-section

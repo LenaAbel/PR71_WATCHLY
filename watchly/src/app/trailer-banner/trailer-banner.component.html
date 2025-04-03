@@ -1,9 +1,12 @@
-<div class="relative w-full h-[35vh] overflow-hidden" >
-  <!-- Vidéo -->
-    <!-- Fallback Image -->
-    <img src="assets/img/wQEW3xLrQAThu1GvqpsKQyejrYS.jpg" alt="Bannière vidéo" class="absolute top-0 left-0 w-full h-full object-cover">
-    <!--mettre le résult api après le embed/ et playlist=-->
-  <iframe src="https://www.youtube.com/embed/ysqiEC6bLUI?playlist=ysqiEC6bLUI&autoplay=1&mute=1&loop=1&controls=0&modestbranding=1&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin">
-  </iframe> 
-</div>
+<div class="relative w-full h-[35vh] overflow-hidden">
+  <!-- Fallback Image -->
+  <img src="assets/img/default-loading.png" alt="Bannière vidéo" class="absolute top-0 left-0 w-full h-full object-cover">
   
+  <!-- Dynamic iframe -->
+  <iframe 
+    [src]="embedLink"
+    frameborder="0" 
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+    referrerpolicy="strict-origin-when-cross-origin">
+  </iframe>
+</div>
