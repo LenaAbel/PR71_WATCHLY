@@ -39,6 +39,7 @@ import { SliderComponent } from './slider/slider.component';
 import { YourShowsSectionComponent } from './your-shows-section/your-shows-section.component';
 import { ResearchPageComponent } from './research-page/research-page.component';
 import { RatingPopupComponent } from './rating-popup/rating-popup.component';
+import { SliderTitledComponent } from './slider-titled/slider-titled.component';
 
 @NgModule({
   declarations: [
@@ -73,7 +74,8 @@ import { RatingPopupComponent } from './rating-popup/rating-popup.component';
     SliderComponent,
     YourShowsSectionComponent,
     ResearchPageComponent,
-    RatingPopupComponent
+    RatingPopupComponent,
+    SliderTitledComponent
   ],
   imports: [
     BrowserModule,

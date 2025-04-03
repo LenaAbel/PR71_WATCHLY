@@ -3,83 +3,16 @@
       <div class="flex gap-4 mt-4 p-4 w-full max-w-6xl"> 
         <div class="w-full p-4">
           <h1 class="text-6xl font-bold">ADMIN PANEL</h1> 
-          <h2 class="text-2xl font-bold text-gray-400">Manage Movies and Series</h2><br>
-
-            <!-- Non Displayed Movies -->
-            <h2 class="text-3xl font-bold text-(--color-main-light) dark:text-(--color-main-dark)">Add Movies</h2>
-                    <swiper
-                        [slidesPerView]="3"
-                        [spaceBetween]="40"
-                        [navigation]="false"
-                        [keyboard]="true"
-                    >
-                        <ng-template *ngFor="let i of [0, 1, 2, 3, 4, 5]" swiperSlide>
-                            <app-content-card [type]="'series'"></app-content-card>
-                            <button 
-                                class="font-bold bg-(--color-main-light) dark:bg-(--color-main-dark) text-white px-4 py-2 rounded transition-transform duration-200 active:scale-90" 
-                                (click)="addShow(i)">
-                                Add
-                            </button>
-                        </ng-template>
-                    </swiper>
-          <br>
-          
+          <h2 class="text-2xl font-bold text-gray-400 mb-4">Manage Movies and Series</h2>
+          <!-- Non Displayed Movies -->
+          <app-slider-titled title="Add Movies" [content]="nonDisplayedMovies" type="movie"></app-slider-titled>
           <!-- Non Displayed Series -->
-            <h2 class="text-3xl font-bold text-(--color-main-light) dark:text-(--color-main-dark)">Add Series</h2>
-                    <swiper
-                        [slidesPerView]="3"
-                        [spaceBetween]="40"
-                        [navigation]="false"
-                        [keyboard]="true"
-                    >
-                        <ng-template *ngFor="let i of [0, 1, 2, 3, 4, 5]" swiperSlide>
-                            <app-content-card [type]="'series'"></app-content-card>
-                            <button 
-                                class="font-bold bg-(--color-main-light) dark:bg-(--color-main-dark) text-white px-4 py-2 rounded transition-transform duration-200 active:scale-90" 
-                                (click)="addShow(i)">
-                                Add
-                            </button>
-                        </ng-template>
-                    </swiper>
-          <br> <br> <br>
-
+          <app-slider-titled title="Add Series" [content]="nonDisplayedSeries" type="series"></app-slider-titled>
           <!-- Displayed Movies -->
-          <h2 class="text-3xl font-bold text-(--color-main-light) dark:text-(--color-main-dark)">Delete Movies</h2>
-                <swiper
-                    [slidesPerView]="3"
-                    [spaceBetween]="40"
-                    [navigation]="false"
-                    [keyboard]="true"
-                >
-                    <ng-template *ngFor="let i of [0, 1, 2, 3, 4, 5]" swiperSlide>
-                        <app-content-card [type]="'series'"></app-content-card>
-                        <button 
-                            class="font-bold bg-(--color-main-light) dark:bg-(--color-main-dark) text-white px-4 py-2 rounded transition-transform duration-200 active:scale-90" 
-                            (click)="deleteShow(i)">
-                            Delete
-                        </button>
-                    </ng-template>
-                </swiper>
-          <br>
-          
+          <app-slider-titled title="Delete Movies" [content]="displayedMovies" type="movie"></app-slider-titled>
           <!-- Displayed Series -->
-            <h2 class="text-3xl font-bold text-(--color-main-light) dark:text-(--color-main-dark)">Delete Series</h2>
-                <swiper
-                    [slidesPerView]="3"
-                    [spaceBetween]="40"
-                    [navigation]="false"
-                    [keyboard]="true"
-                >
-                    <ng-template *ngFor="let i of [0, 1, 2, 3, 4, 5]" swiperSlide>
-                        <app-content-card [type]="'series'"></app-content-card>
-                        <button 
-                            class="font-bold bg-(--color-main-light) dark:bg-(--color-main-dark) text-white px-4 py-2 rounded transition-transform duration-200 active:scale-90" 
-                            (click)="deleteShow(i)">
-                            Delete
-                        </button>
-                    </ng-template>
-                </swiper>
-          <br> <br>
+          <app-slider-titled title="Delete Series" [content]="displayedSeries" type="series"></app-slider-titled>
+          <div class="mb-8"></div>
         </div>
       </div>
     </div>
