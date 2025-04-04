@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { Content } from '../models/content';
@@ -13,15 +13,26 @@ export class ShowsService {
   private apiUrlTv = 'http://localhost:3000/api/episodes/details';
   private apiUrlPictures = 'http://localhost:3000/api/pictures';
 
-
   public movies: Content[] = [];
   public series: Content[] = [];
   public notDisplayedMovies: Content[] = [];
   public notDisplayedSeries: Content[] = [];
   public favoritesMovies: Content[] = [];
   public favoritesSeries: Content[] = [];
+
+  private displayedMoviesSubject = new BehaviorSubject<Content[]>([]);
+  private displayedSeriesSubject = new BehaviorSubject<Content[]>([]);
+  private nonDisplayedMoviesSubject = new BehaviorSubject<Content[]>([]);
+  private nonDisplayedSeriesSubject = new BehaviorSubject<Content[]>([]);
+
+  displayedMovies$ = this.displayedMoviesSubject.asObservable();
+  displayedSeries$ = this.displayedSeriesSubject.asObservable();
+  nonDisplayedMovies$ = this.nonDisplayedMoviesSubject.asObservable();
+  nonDisplayedSeries$ = this.nonDisplayedSeriesSubject.asObservable();
+
   constructor(private http: HttpClient) { 
   }
+
   async ngOnInit() {
     await this.initializeContent();
   }
@@ -30,9 +41,17 @@ export class ShowsService {
     try {
       await this.fetchMovies();
       await this.fetchSeries();
+      this.updateSubjects();
     } catch (error) {
       console.error('Error initializing content:', error);
     }
+  }
+
+  private updateSubjects(): void {
+    this.displayedMoviesSubject.next(this.movies);
+    this.displayedSeriesSubject.next(this.series);
+    this.nonDisplayedMoviesSubject.next(this.notDisplayedMovies);
+    this.nonDisplayedSeriesSubject.next(this.notDisplayedSeries);
   }
 
   public fetchSeries(){
@@ -62,6 +81,7 @@ export class ShowsService {
       );
     });
   }
+
   public fetchMovies(): Promise<void> {
     return new Promise((resolve, reject) => {
       this.http.get<Content[]>(`${this.apiURLMovie}/movies`).subscribe(
@@ -117,13 +137,28 @@ export class ShowsService {
     return this.notDisplayedSeries;
   }
 
-  // getFavoritesMovies(): Content[] {}
-  // getFavoritesSeries(): Content[] {}
+  updateShowDisplayStatus(show: Content, isDisplayed: boolean): Promise<void> {
+    const endpoint = `${this.apiURLMovie}/${show.show_id}/displayed`;
+    return new Promise((resolve, reject) => {
+      this.http.put(endpoint, { is_displayed: isDisplayed }).subscribe({
+        next: () => {
+          // Update local state
+          show.is_displayed = isDisplayed;
+          this.movies = this.movies.filter(m => m.is_displayed);
+          this.notDisplayedMovies = this.notDisplayedMovies.filter(m => !m.is_displayed);
+          this.series = this.series.filter(s => s.is_displayed);
+          this.notDisplayedSeries = this.notDisplayedSeries.filter(s => !s.is_displayed);
 
-  // updateMovie(movie: Content): Observable<Content> {
-  // }
-  // updateSeries(series: Content): Observable<Content> {
-  // }
-
+          // Re-fetch and update subjects
+          this.updateSubjects();
+          resolve();
+        },
+        error: (err) => {
+          console.error('Error updating show display status:', err);
+          reject(err);
+        }
+      });
+    });
+  }
 }
 
