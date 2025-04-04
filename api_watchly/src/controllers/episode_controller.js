@@ -72,7 +72,6 @@ async function getDetailsTV(req, res) {
         const shows = await showsServices.getAllTVShows();
         // if (!shows) return res.status(404).json({ message: "No TV shows found" });
         // if (shows.length === 0) return res.status(404).json({ message: "No TV shows found" });
-        console.log(shows);
         const showsWithDetails = [];
         for (const show of shows) {
             const episodes = await episodeServices.getNumberOfEpisodes(show.show_id);
