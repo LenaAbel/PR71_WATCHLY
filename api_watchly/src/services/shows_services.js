@@ -153,9 +153,7 @@ async function updateShowDisplayedStatus(id, isDisplayed) {
         );
         if (updatedRows === 0) {
             console.warn(chalk.yellow(`[DB] No rows updated for ID: ${id}`));
-        } else {
-            console.log(chalk.green(`[DB] Updated displayed status for ID: ${id}, isDisplayed: ${isDisplayed}`));
-        }
+        } 
     } catch (err) {
         console.error(chalk.red(`[Error] Failed to update displayed status for ID: ${id}`));
         console.error(err);

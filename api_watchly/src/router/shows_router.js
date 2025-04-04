@@ -100,6 +100,6 @@ router.get("/:id/trailer", showsController.getTrailer);
  *       404:
  *         description: Show not found
  */
-router.put('/:id/displayed', showsController.updateDisplayedStatus);
+router.patch('/:id/displayed', showsController.updateDisplayedStatus);
 
 module.exports = router;

@@ -58,8 +58,7 @@ export class ShowsService {
     return new Promise((resolve, reject) => {
       this.http.get<Content[]>(`${this.apiUrlTv}`).subscribe(
         async data => {
-          this.series = data.filter(m => m.is_displayed);
-          this.notDisplayedSeries = data.filter(m => !m.is_displayed);
+          this.series = data.filter(m => m.is_displayed=== true);
 
           // Fetch thumbnails for each series : its not in the first call
           try {
@@ -140,16 +139,28 @@ export class ShowsService {
   updateShowDisplayStatus(show: Content, isDisplayed: boolean): Promise<void> {
     const endpoint = `${this.apiURLMovie}/${show.show_id}/displayed`;
     return new Promise((resolve, reject) => {
-      this.http.put(endpoint, { is_displayed: isDisplayed }).subscribe({
+      this.http.patch(endpoint, { is_displayed: isDisplayed }).subscribe({
         next: () => {
-          // Update local state
           show.is_displayed = isDisplayed;
-          this.movies = this.movies.filter(m => m.is_displayed);
-          this.notDisplayedMovies = this.notDisplayedMovies.filter(m => !m.is_displayed);
-          this.series = this.series.filter(s => s.is_displayed);
-          this.notDisplayedSeries = this.notDisplayedSeries.filter(s => !s.is_displayed);
 
-          // Re-fetch and update subjects
+          if (isDisplayed) {
+            if (show.is_movie) {
+              this.movies.push(show);
+              this.notDisplayedMovies = this.notDisplayedMovies.filter(m => m.show_id !== show.show_id);
+            } else {
+              this.series.push(show);
+              this.notDisplayedSeries = this.notDisplayedSeries.filter(s => s.show_id !== show.show_id);
+            }
+          } else {
+            if (show.is_movie) {
+              this.notDisplayedMovies.push(show);
+              this.movies = this.movies.filter(m => m.show_id !== show.show_id);
+            } else {
+              this.notDisplayedSeries.push(show);
+              this.series = this.series.filter(s => s.show_id !== show.show_id);
+            }
+          }
+
           this.updateSubjects();
           resolve();
         },
