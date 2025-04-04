@@ -72,11 +72,28 @@ async function getTrailer(req, res) {
     }
 }
 
+async function updateDisplayedStatus(req, res) {
+    try {
+        const id = req.params.id;
+        const isDisplayed = req.body.is_displayed;
+        const updatedRows = await showsServices.updateShowDisplayedStatus(id, isDisplayed);
+        if (updatedRows === 0) {
+            return res.status(404).json({ message: "No rows updated. Show may not exist or already has the desired status." });
+        }
+
+        res.status(200).json({ message: "Show displayed status updated" });
+    } catch (err) {
+        console.error(chalk.red(`[Controller] Error updating displayed status for ID: ${req.params.id}`));
+        res.status(500).json({ error: err.message });
+    }
+}
+
 module.exports = {
     addsShowsDB,
     getAll,
     getById,
     getMovies,
     getTV,
-    getTrailer
+    getTrailer,
+    updateDisplayedStatus
 };

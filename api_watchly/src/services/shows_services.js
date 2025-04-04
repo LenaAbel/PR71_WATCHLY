@@ -139,6 +139,29 @@ async function saveShow(show) {
     }
 }
 
+/**
+ * Update the displayed status of a show
+ * @param {Show} show 
+ * @param {boolean} isDisplayed 
+ */
+async function updateShowDisplayedStatus(id, isDisplayed) {
+    try {
+        console.log(chalk.blue(`[DB] Updating displayed status for ID: ${id}, isDisplayed: ${isDisplayed}`)); // Log the values
+        const [updatedRows] = await Show.update(
+            { is_displayed: isDisplayed },
+            { where: { show_id: id } }
+        );
+        if (updatedRows === 0) {
+            console.warn(chalk.yellow(`[DB] No rows updated for ID: ${id}`));
+        } else {
+            console.log(chalk.green(`[DB] Updated displayed status for ID: ${id}, isDisplayed: ${isDisplayed}`));
+        }
+    } catch (err) {
+        console.error(chalk.red(`[Error] Failed to update displayed status for ID: ${id}`));
+        console.error(err);
+    }
+}
+
 module.exports = {
     getIds,
     getShows,
@@ -150,5 +173,6 @@ module.exports = {
     getShowTrailer,
     createMovie,
     createTv,
-    saveShow
+    saveShow,
+    updateShowDisplayedStatus
 };

@@ -80,4 +80,26 @@ router.get('/:id', showsController.getById);
  */
 router.get("/:id/trailer", showsController.getTrailer);
 
+
+/**
+ * @swagger
+ * /api/shows/{id}/displayed:
+ *   put:
+ *     summary: Update the displayed status of a show by ID
+ *     tags: [Shows]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: Show ID
+ *     responses:
+ *       200:
+ *         description: Show updated successfully
+ *       404:
+ *         description: Show not found
+ */
+router.put('/:id/displayed', showsController.updateDisplayedStatus);
+
 module.exports = router;
