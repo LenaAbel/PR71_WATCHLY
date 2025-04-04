@@ -27,10 +27,8 @@ export class AdminPageComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     try {
-      // Initialize content in the service
       await this.showsService.initializeContent();
 
-      // Access the populated arrays after fetching
       this.displayedMovies = this.showsService.getDisplayedMovies();
       this.displayedSeries = this.showsService.getDisplayedSeries();
       this.nonDisplayedMovies = this.showsService.getNonDisplayedMovies();
@@ -44,16 +42,32 @@ export class AdminPageComponent implements OnInit {
     this.isAdmin = localStorage.getItem('isAdmin') === 'true';
   }
 
+  async addShow(show: Content): Promise<void> {
+    try {
+      await this.showsService.updateShowDisplayStatus(show, true);
+      await this.refreshLists(); 
+    } catch (error) {
+      console.error('Error adding show:', error);
+    }
+  }
 
-  deleteShow(movie: any): void {
-    // put is_displayed to false in the api
+  async deleteShow(show: Content): Promise<void> {
+    try {
+      await this.showsService.updateShowDisplayStatus(show, false);
+      await this.refreshLists(); 
+    } catch (error) {
+      console.error('Error deleting show:', error);
+    }
+  }
+
+  private async refreshLists(): Promise<void> {
+    this.displayedMovies = await this.showsService.getDisplayedMovies();
+    this.displayedSeries = await this.showsService.getDisplayedSeries();
+    this.nonDisplayedMovies = await this.showsService.getNonDisplayedMovies();
+    this.nonDisplayedSeries = await this.showsService.getNonDisplayedSeries();
   }
 
   redirectToHome(): void {
     this.router.navigate(['']);
-  }
-
-  addShow(movie: any): void {
-    // put is_displayed to true in the api
   }
 }
