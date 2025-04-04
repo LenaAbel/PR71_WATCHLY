@@ -1,0 +1,18 @@
+<swiper
+  [slidesPerView]="5"
+  [spaceBetween]="20"
+  [navigation]="false"
+  [keyboard]="true"
+  class="w-full"
+>
+  <ng-template swiperSlide *ngFor="let item of content">
+    <div class="w-[250px] h-full flex flex-col items-center justify-center">
+      <app-content-card
+        [type]="type"
+        [content]="item"
+        class="w-full h-full"
+      ></app-content-card>
+      <button class="bg-(--color-main-light) dark:bg-(--color-main-dark) text-(--bg-surface-1-light) dark:text-(--bg-surface-1-dark) px-4 py-2 rounded-(--radius-inner) mt-4">{{buttonType}}</button>
+    </div>
+  </ng-template>
+</swiper>

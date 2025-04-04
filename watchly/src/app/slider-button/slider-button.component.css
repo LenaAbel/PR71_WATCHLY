@@ -1,0 +1,19 @@
+swiper {
+    width: 100%;
+    height: auto;
+  }
+  
+  swiper ::ng-deep .swiper-slide {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    height: auto;
+  }
+  ::ng-deep .swiper-slide {
+    width: auto !important;
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+}
+  
