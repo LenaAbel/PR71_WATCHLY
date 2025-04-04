@@ -9,6 +9,7 @@ import { Content } from '../models/content';
 export class SliderTitledComponent implements OnInit {
   @Input() title: string = '';
   @Input() type: string = '';
+  @Input() buttonType: string = ''; // delete or add
   @Input() content: Content[] = [];
   constructor() { }
 

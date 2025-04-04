@@ -40,6 +40,7 @@ import { YourShowsSectionComponent } from './your-shows-section/your-shows-secti
 import { ResearchPageComponent } from './research-page/research-page.component';
 import { RatingPopupComponent } from './rating-popup/rating-popup.component';
 import { SliderTitledComponent } from './slider-titled/slider-titled.component';
+import { SliderButtonComponent } from './slider-button/slider-button.component';
 
 @NgModule({
   declarations: [
@@ -75,7 +76,8 @@ import { SliderTitledComponent } from './slider-titled/slider-titled.component';
     YourShowsSectionComponent,
     ResearchPageComponent,
     RatingPopupComponent,
-    SliderTitledComponent
+    SliderTitledComponent,
+    SliderButtonComponent
   ],
   imports: [
     BrowserModule,
