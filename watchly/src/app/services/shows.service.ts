@@ -9,8 +9,10 @@ import { Content } from '../models/content';
   providedIn: 'root'
 })
 export class ShowsService {
-  private apiUrl = 'http://localhost:3000/api/shows';
+  private apiURLMovie = 'http://localhost:3000/api/shows';
+  private apiUrlTv = 'http://localhost:3000/api/episodes/details';
   private apiUrlPictures = 'http://localhost:3000/api/pictures';
+
 
   public movies: Content[] = [];
   public series: Content[] = [];
@@ -35,7 +37,7 @@ export class ShowsService {
 
   public fetchSeries(){
     return new Promise((resolve, reject) => {
-      this.http.get<Content[]>(`${this.apiUrl}/tv`).subscribe(
+      this.http.get<Content[]>(`${this.apiUrlTv}`).subscribe(
         async data => {
           this.series = data.filter(m => m.is_displayed);
           this.notDisplayedSeries = data.filter(m => !m.is_displayed);
@@ -62,7 +64,7 @@ export class ShowsService {
   }
   public fetchMovies(): Promise<void> {
     return new Promise((resolve, reject) => {
-      this.http.get<Content[]>(`${this.apiUrl}/movies`).subscribe(
+      this.http.get<Content[]>(`${this.apiURLMovie}/movies`).subscribe(
         async data => {
           this.movies = data.filter(m => m.is_displayed);
           this.notDisplayedMovies = data.filter(m => !m.is_displayed);
