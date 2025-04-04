@@ -2,6 +2,20 @@ const express = require('express');
 const router = express.Router();
 const episodeController = require('../controllers/episode_controller');
 
+
+
+/**
+ * @swagger
+ * /api/episodes/details:
+ *  get:
+ *     summary: Get all episodes details number of episodes and seasons
+ *     tags: [Episodes]
+ *     responses:
+ *       200:
+ *         description: List of all episodes details number of episodes and seasons
+ */
+router.get('/details', episodeController.getDetailsTV);
+
 /**
  * @swagger
  * /api/episodes:
@@ -114,6 +128,27 @@ router.get('/:showId/seasons', episodeController.getSeasonsByShow);
  *         description: List of picture links for the episode
  */
 router.get('/:showId/season/:season/episode/:number/pictures', episodeController.getPicturesByEpisode);
+
+
+/**
+ * @swagger
+ * /api/episodes/details/{showId}:
+ *   get:
+ *     summary: Get details of a TV show  number of episodes and seasons
+ *     tags: [Episodes]
+ *     parameters:
+ *       - in: path
+ *         name: showId
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: Show ID
+ *     responses:
+ *       200:
+ *         description: Details of the TV show
+ */
+router.get('/details/:showId', episodeController.getDetailsTVID);
+
 
 
 

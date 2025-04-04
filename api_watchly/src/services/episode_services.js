@@ -188,6 +188,31 @@ async function createTv(show) {
     }
 }
 
+
+/**
+ * Get the number of seasons for a show
+ * @param {number} showId - The ID of the show
+ * @return {Promise<number>} - The number of seasons
+ */
+async function getNumberOfSeasons(showId) {
+    const seasons = await getSeasonsByShowId(showId);
+    if (!seasons) return 0;
+    return seasons.length;
+}
+
+/**
+ * Get the number of episodes for a given season
+ * @param {number} showId - The ID of the show
+ * @param {number} season - The season number
+ * @return {Promise<number>} - The number of episodes
+ */
+async function getNumberOfEpisodes(showId) {
+    const episodes = await getEpisodesByShowId(showId);
+    if (!episodes) return 0;
+
+    return episodes.length;
+}
+
 module.exports = {
     addEpisodes,
     getEpisodesByShowId,
@@ -195,4 +220,6 @@ module.exports = {
     getSeasonsByShowId,
     getPicturesForEpisode,
     getEpisodeById,
+    getNumberOfSeasons,
+    getNumberOfEpisodes,
 };
