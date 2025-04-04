@@ -12,7 +12,11 @@
         [content]="item"
         class="w-full h-full"
       ></app-content-card>
-      <button class="bg-(--color-main-light) dark:bg-(--color-main-dark) text-(--bg-surface-1-light) dark:text-(--bg-surface-1-dark) px-4 py-2 rounded-(--radius-inner) mt-4">{{buttonType}}</button>
+      <button 
+        class="bg-(--color-main-light) dark:bg-(--color-main-dark) text-(--bg-surface-1-light) dark:text-(--bg-surface-1-dark) px-4 py-2 rounded-(--radius-inner) mt-4"
+        (click)="handleChange(item)">
+        {{buttonType}}
+      </button>
     </div>
   </ng-template>
 </swiper>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { Content } from '../models/content';
 import { SwiperComponent } from 'swiper/angular';
 import Swiper, { Navigation, Pagination, Keyboard } from 'swiper';
@@ -10,10 +10,13 @@ import { Input, ViewChild } from '@angular/core';
   styleUrls: ['./slider-button.component.css']
 })
 export class SliderButtonComponent implements OnInit {
+  @Output() buttonClick = new EventEmitter<Content>();
 
   @Input() type!: string; // 'movie' or 'series'
   @Input() content: Content[] = [];
   @Input() buttonType!: string; // delete or add
+  isClicked: boolean = false;
+  selectedItem: Content | null = null;
 
   @ViewChild(SwiperComponent, { static: false }) swiper?: SwiperComponent;
 
@@ -34,7 +37,9 @@ export class SliderButtonComponent implements OnInit {
     this.swiperRef = swiper;
   }
 
-  deleteContent(movie: any): void {
-    // put is_displayed to false in the api
+  handleChange(show: Content): void {
+    this.isClicked = !this.isClicked;
+    this.selectedItem = show;
+    this.buttonClick.emit(show); // Emit the event to the parent
   }
 }

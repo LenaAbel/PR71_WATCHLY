@@ -1,4 +1,8 @@
-
 <h2 class="text-3xl font-bold text-(--color-main-light) dark:text-(--color-main-dark)">{{title}}</h2>
-        <app-slider-button type="type" [content]="content" [buttonType]="buttonType"></app-slider-button>
+<app-slider-button
+  [type]="type"
+  [content]="content"
+  [buttonType]="buttonType"
+  (buttonClick)="handleButtonClick($event)"
+></app-slider-button>
 <div class="mb-4"></div>

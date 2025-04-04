@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
 import { Content } from '../models/content';
 
 @Component({
@@ -11,9 +11,15 @@ export class SliderTitledComponent implements OnInit {
   @Input() type: string = '';
   @Input() buttonType: string = ''; // delete or add
   @Input() content: Content[] = [];
+  @Output() buttonClick = new EventEmitter<Content>();
+
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  handleButtonClick(show: Content): void {
+    console.log('Button clicked for show:', show);
+    this.buttonClick.emit(show); 
+  }
 }
