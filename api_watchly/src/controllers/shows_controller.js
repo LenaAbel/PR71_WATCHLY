@@ -37,7 +37,7 @@ async function getAll(req, res) {
 
 async function getById(req, res) {
     try {
-        const show = await showsServices.getShowById(req.params.id);
+        const show = await showsServices.getShowById(req.params.id, req.body.user_id?? null);
         if (!show) return res.status(404).json({ message: "Show not found" });
         res.status(200).json(show);
     } catch (err) {

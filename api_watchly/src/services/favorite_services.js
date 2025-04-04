@@ -107,6 +107,43 @@ async function getAllFavorites() {
     return favorites;
 }
 
+async function getFavoritesByPersonId(person_id) {
+    const favorites = await Favorite.findAll({
+        where: { person_id },
+        include: {
+            model: Person,
+            as: 'person',
+            attributes: ['person_id', 'name'],
+        },
+    });
+    console.log(favorites);
+    
+    return favorites;
+}
+async function getFavoritesByShowId(show_id) {
+    const favorites = await Favorite.findAll({
+        where: { show_id },
+        include: {
+            model: Person,
+            as: 'person',
+            attributes: ['person_id', 'name'],
+        },
+    });
+    return favorites;
+}
+
+async function getFavoritesByPersonIdAndShowId(person_id, show_id) {
+    const favorites = await Favorite.findAll({
+        where: { person_id, show_id },
+        include: {
+            model: Person,
+            as: 'person',
+            attributes: ['person_id', 'name'],
+        },
+    });
+    return favorites;
+}
+
 async function addFavorite(req) {
     console.log(req.body);
     
@@ -121,4 +158,4 @@ async function addFavorite(req) {
 }
 
 
-module.exports = { createFavorites, addFavorite };
+module.exports = { createFavorites, addFavorite, getFavoritesByPersonId, getFavoritesByShowId, getFavoritesByPersonIdAndShowId };

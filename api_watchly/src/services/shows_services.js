@@ -4,6 +4,7 @@ const chalk = require('chalk');
 const sequelize = require('../../database/src/database'); 
 const Genre = require('../../database/src/models/genre.js');
 const Has = require('../../database/src/models/has.js');
+const Favorite = require('../../database/src/models/favorite.js');
 
 // --- TMDB Fetching ---
 async function getIds(name, time, pages = process.env.TMDB_PAGES) {
@@ -42,11 +43,15 @@ async function getAllShows() {
     return await Show.findAll({ where: { is_displayed: true } });
 }
 
-async function getShowById(id) {
+async function getShowById(id, user_id = null) {
     return await Show.findByPk(id, { include: [
             {
                 model: Genre,
                 through: { model: Has }, 
+            },
+            {
+                model: Favorite,
+                where: { user_id: null }, // Assuming you want to include all favorites
             }
         ]}
     );

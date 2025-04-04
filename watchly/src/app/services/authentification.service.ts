@@ -53,12 +53,10 @@ export class AuthenticationService {
     return localStorage.getItem('authToken');
   }
 
-  // Check if the user is logged in
   isLoggedIn(): boolean {
     return !!this.getToken();
   }
 
-  // Log out the user
   logout(): void {
     localStorage.removeItem('authToken');
     localStorage.removeItem('userData');

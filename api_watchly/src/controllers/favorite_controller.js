@@ -11,13 +11,19 @@ async function addFavorite(req, res) {
     }
 }
 
-async function getFavorites(req, res) {
+async function getFavoritesByPersonId(req, res) {
     try {
-        const favorites = await favoriteServices.getFavorites();
-        res.status(200).send(favorites);
+        return await favoriteServices.getFavoritesByPersonId(req.params.personId);
     } catch (error) {
         console.error(chalk.red('Error fetching favorites:', error));
-        res.status(500).send({ error: 'Failed to fetch favorites' });
+    }
+}
+
+async function getFavoritesByShowId(req, res) {
+    try {
+        return await favoriteServices.getFavoritesByShowId(req.params.showId);
+    } catch (error) {
+        console.error(chalk.red('Error fetching favorites:', error));
     }
 }
 
@@ -31,4 +37,12 @@ async function removeFavorite(req, res) {
     }
 }
 
-module.exports = { addFavorite, getFavorites, removeFavorite };
+async function getFavoritesByPersonIdAndShowId(req, res) {
+    try {
+        return await favoriteServices.getFavoritesByPersonIdAndShowId(req.params.personId, req.params.showId);
+    } catch (error) {
+        console.error(chalk.red('Error fetching favorites:', error));
+    }
+}
+
+module.exports = { addFavorite, getFavoritesByPersonId, getFavoritesByShowId, removeFavorite, getFavoritesByPersonIdAndShowId };
