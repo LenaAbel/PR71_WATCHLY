@@ -26,29 +26,12 @@ export class AuthenticationService {
 
   constructor(private http: HttpClient) {}
 
-  register(user: any): Observable<any> {
-    // Clear any existing cached data
+  private clearAllStorageAndCache(): void {
+    // Clear all storage
     localStorage.clear();
     sessionStorage.clear();
-    
-    return this.http.post(`${this.apiUrl}/register`, user).pipe(
-      tap(() => {
-        // Clear browser cache for profile pictures
-        if (window.caches) {
-          caches.keys().then(names => {
-            names.forEach(name => {
-              caches.delete(name);
-            });
-          });
-        }
-      })
-    );
-  }
 
-  login(credentials: any): Observable<{ token: string; user?: any }> {
-    // Clear any existing cached data
-    localStorage.clear();
-    sessionStorage.clear();
+    // Clear browser cache, focusing on images
     if (window.caches) {
       caches.keys().then(names => {
         names.forEach(name => {
@@ -56,22 +39,35 @@ export class AuthenticationService {
         });
       });
     }
+    // Force reload of images by adding timestamp
+    const timestamp = new Date().getTime();
+    localStorage.setItem('cache_bust', timestamp.toString());
+  }
+
+  register(user: any): Observable<any> {
+    this.clearAllStorageAndCache();
+    return this.http.post(`${this.apiUrl}/register`, user);
+  }
+
+  login(credentials: any): Observable<{ token: string; user?: any }> {
+    this.clearAllStorageAndCache();
 
     return this.http.post<{ token: string; user?: any }>(`${this.apiUrl}/login`, credentials)
       .pipe(
-            tap(response => {
-                if (response.token) {
-                    localStorage.setItem('authToken', response.token);
-                } else {
-                    console.error("Token not found in response");
-                }
-                if (response.user.is_admin !== undefined){
-                    localStorage.setItem('userData', JSON.stringify(response.user));
-                    localStorage.setItem('isAdmin', response.user.is_admin);
-                    console.log('isAdmin stored:', response.user.is_admin);
-                }
-            })
-        );
+        tap(response => {
+          if (response.token) {
+            localStorage.setItem('authToken', response.token);
+          }
+          if (response.user) {
+            // Ensure profile picture is set with default if null
+            response.user.profile_picture = response.user.profile_picture || 'assets/img/default-person.jpg';
+            localStorage.setItem('userData', JSON.stringify(response.user));
+            if (response.user.is_admin !== undefined) {
+              localStorage.setItem('isAdmin', response.user.is_admin);
+            }
+          }
+        })
+      );
   }
 
   saveToken(token: string): void {
@@ -89,15 +85,7 @@ export class AuthenticationService {
 
   // Log out the user
   logout(): void {
-    localStorage.clear();
-    sessionStorage.clear();
-    if (window.caches) {
-      caches.keys().then(names => {
-        names.forEach(name => {
-          caches.delete(name);
-        });
-      });
-    }
+    this.clearAllStorageAndCache();
   }
 
   updateUserProfile(userData: any): Observable<any> {
