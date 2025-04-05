@@ -37,11 +37,24 @@ async function getAll(req, res) {
 
 async function getById(req, res) {
     try {
-        const show = await showsServices.getShowById(req.params.id, req.body.user_id?? null);
-        if (!show) return res.status(404).json({ message: "Show not found" });
-        res.status(200).json(show);
+        const show = await showsServices.getShowById(req.params.id, req.query.user_id ?? null);
+
+        if (!show) {
+            return res.status(404).json({ message: "Show not found" });
+        }
+
+        console.log(chalk.cyan(`[DB] Found: ${show.name}`));
+
+        // Create plain object so we can modify safely
+        const showData = show.toJSON();
+
+        showData.is_rated = (showData.Favorites && showData.Favorites.length > 0);
+        delete showData.Favorites;
+
+        return res.status(200).json(showData);
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        console.error(err);
+        return res.status(500).json({ error: err.message });
     }
 }
 

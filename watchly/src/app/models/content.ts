@@ -9,6 +9,7 @@ export class Content {
   status!: string;
   duration!: number;
   is_movie!: boolean;
+  is_rated!: boolean;
   Genres!: any[];
   // Episode properties
   season!: number; // Season number for the episode

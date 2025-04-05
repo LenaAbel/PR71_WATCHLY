@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { AuthenticationService } from '../services/authentification.service';
 import { CommentService } from '../services/comment.service';
 import { Comment } from '../models/comment';
-
+import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-user-page',
   templateUrl: './user-page.component.html',
@@ -22,7 +22,8 @@ export class UserPageComponent implements OnInit {
   constructor(
     private authService: AuthenticationService,
     private router: Router,
-    private commentService: CommentService
+    private commentService: CommentService,
+    private http: HttpClient
   ) {}
 
   ngOnInit(): void {
@@ -72,6 +73,18 @@ export class UserPageComponent implements OnInit {
       },
       error: (error) => {
         console.error('Error deleting comment:', error);
+      }
+    });
+  }
+
+  getPerson(id: number) {
+    const endpoint = `http://localhost:3000/api/persons/id/${id}`;
+    this.http.get(endpoint).subscribe({
+      next: (data) => {
+        console.log(`Fetched person with id ${id}:`, data);
+      },
+      error: (err) => {
+        console.error(`Error fetching person with id ${id}:`, err);
       }
     });
   }

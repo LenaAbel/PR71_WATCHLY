@@ -5,6 +5,7 @@ const sequelize = require('../../database/src/database');
 const Genre = require('../../database/src/models/genre.js');
 const Has = require('../../database/src/models/has.js');
 const Favorite = require('../../database/src/models/favorite.js');
+const Person = require('../../database/src/models/person.js');
 
 // --- TMDB Fetching ---
 async function getIds(name, time, pages = process.env.TMDB_PAGES) {
@@ -44,17 +45,19 @@ async function getAllShows() {
 }
 
 async function getShowById(id, user_id = null) {
-    return await Show.findByPk(id, { include: [
-            {
-                model: Genre,
-                through: { model: Has }, 
-            },
-            {
-                model: Favorite,
-                where: { user_id: null }, // Assuming you want to include all favorites
-            }
-        ]}
-    );
+    return await Show.findByPk(id, { 
+        include: [
+        {
+            model: Genre,
+            through: { model: Has }, 
+        },
+        {
+            model: Favorite,
+            required: false,
+            where: { person_id: user_id, show_id: id },
+        }
+        ]
+    });
 }
 
 async function getAllMovies() {
