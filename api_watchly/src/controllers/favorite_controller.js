@@ -2,28 +2,17 @@ const Favorite = require('../../database/src/models/favorite');
 const chalk = require('chalk');
 const favoriteServices = require('../services/favorite_services');
 
-// Function for adding random favorites during initialization
-async function addFavorites() {
-    try {
-        await favoriteServices.createFavorites();
-    } catch (error) {
-        console.error(chalk.red('Error adding favorites:', error));
-    }
-}
-
-// API endpoint for adding a user favorite
 async function addFavorite(req, res) {
     try {
-        const result = await favoriteServices.addFavorite({
-            show_id: req.body.show_id,
-            person_id: req.userId,
-            rating: req.body.rating || null,
-            is_watched: req.body.is_watched || false
-        });
-        res.status(201).json(result);
+        await favoriteServices.createFavorites();
+        if (res) {
+            res.status(201).json({ message: 'Favorites initialized successfully' });
+        }
     } catch (error) {
-        console.error(chalk.red('Error adding favorite:', error));
-        res.status(500).json({ error: 'Failed to add favorite' });
+        console.error(chalk.red('Error adding favorites:', error));
+        if (res) {
+            res.status(500).json({ error: 'Failed to add favorites' });
+        }
     }
 }
 
@@ -47,4 +36,4 @@ async function removeFavorite(req, res) {
     }
 }
 
-module.exports = { addFavorites, addFavorite, getFavorites, removeFavorite };
+module.exports = { addFavorite, getFavorites, removeFavorite };

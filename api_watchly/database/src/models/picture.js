@@ -16,6 +16,10 @@ Picture.init(
         link: {
             type: DataTypes.STRING(100),
         },
+        type: {
+            type: DataTypes.STRING(20),
+            defaultValue: null
+        },
     },
     {
         sequelize,

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, tap, Subject } from 'rxjs';
+import { Observable, tap, throwError } from 'rxjs';
 
 interface LoginResponse {
   token: string;
@@ -12,13 +12,17 @@ interface LoginResponse {
   };
 }
 
+interface ProfilePicture {
+  picture_id: number;
+  link: string;
+  type: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
   private apiUrl = 'http://localhost:3000/api/users';
-  private userDataSubject = new Subject<any>();
-  userData$ = this.userDataSubject.asObservable();
 
   constructor(private http: HttpClient) {}
 
@@ -30,7 +34,6 @@ export class AuthenticationService {
     return this.http.post<{ token: string; user?: any }>(`${this.apiUrl}/login`, credentials)
       .pipe(
             tap(response => {
-              console.log('Login response:', response);
                 if (response.token) {
                     localStorage.setItem('authToken', response.token);
 
@@ -68,12 +71,21 @@ export class AuthenticationService {
 
   updateUserProfile(userData: any): Observable<any> {
     const token = this.getToken();
+    if (!token) {
+      return throwError(() => new Error('No authentication token'));
+    }
     return this.http.put(`${this.apiUrl}/profile`, userData, {
-      headers: { Authorization: `Bearer ${token}` }
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
     });
   }
 
-  updateUserData(userData: any) {
-    this.userDataSubject.next(userData);
+  getDefaultProfilePictures(): Observable<ProfilePicture[]> {
+    return this.http.get<ProfilePicture[]>(`${this.apiUrl}/profile-pictures`);
+  }
+
+  getUserPicture(userId: number): Observable<{ profile_picture: string }> {
+    return this.http.get<{ profile_picture: string }>(`${this.apiUrl}/${userId}/picture`);
   }
 }

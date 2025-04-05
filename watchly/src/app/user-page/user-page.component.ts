@@ -16,6 +16,8 @@ export class UserPageComponent implements OnInit {
   firstname: string = '';
   lastname: string = '';
   username: string = '';
+  profilePicture: string = '';
+
   comments: Comment[] = [];
   successMessage: string | null = null;
 
@@ -29,9 +31,31 @@ export class UserPageComponent implements OnInit {
     const userData = localStorage.getItem('userData');
     if (userData) {
       const user = JSON.parse(userData);
+      this.username = user.username;
       this.firstname = user.firstname;
       this.lastname = user.lastname;
-      this.username = user.username;
+
+      // Fetch the profile picture from the backend
+      this.authService.getUserPicture(user.id).subscribe({
+        next: (response) => {
+          this.profilePicture = response.profile_picture || 'assets/img/default-person.jpg';
+          console.log('Fetched profile picture:', this.profilePicture);
+        },
+        error: (error) => {
+          console.error('Error fetching profile picture:', error);
+          this.profilePicture = 'assets/img/default-person.jpg';
+        }
+      });
+
+      // Listen for changes in localStorage
+      window.addEventListener('storage', (e) => {
+        if (e.key === 'userData') {
+          const updatedUser = JSON.parse(e.newValue || '{}');
+          this.profilePicture = updatedUser.profile_picture || 'assets/img/default-person.jpg';
+          console.log('Updated profile picture:', this.profilePicture);
+        }
+      });
+
       const userId = user.id; 
       this.loadUserComments(userId);
     }
@@ -47,7 +71,7 @@ export class UserPageComponent implements OnInit {
 
   logout() {
     this.authService.logout();
-    this.router.navigate(['/']);
+    this.router.navigate(['/login']);
   }
 
   private loadUserComments(userId: number) {

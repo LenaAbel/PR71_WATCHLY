@@ -1,10 +1,10 @@
 <div class="w-full p-8">
     <div class="flex gap-15 mt-12 p-6">
         <div class="w-1/5 flex flex-col items-center gap-4">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-full bg-(--color-main-light) dark:bg-(--color-main-dark) text-white rounded-full p-1">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 7.5A3.75 3.75 0 1112 3.75 3.75 3.75 0 0115.75 7.5z" />
-                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 20.25a8.25 8.25 0 0116.5 0" />
-            </svg>
+            <img [src]="profilePicture" 
+                 alt="Profile" 
+                 class="w-full rounded-full"
+                 onerror="this.src='assets/img/default-person.jpg'">
             <a routerLink="/parameters" class="underline cursor-pointer">Parameters</a>
             <p class="font-bold text-red-500 cursor-pointer" (click)="logout()">Logout</p>
         </div>

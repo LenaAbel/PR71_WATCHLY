@@ -8,7 +8,6 @@ async function fetchTMDB(url, model) {
                 Authorization: 'Bearer ' + process.env.API_KEYS,
             },
         });
-        // console.log(model + ' data fetched:', response.data);
         if (response.status !== 200) {
             console.error('Error fetching ' + model + ' data:', response.data);
             return;

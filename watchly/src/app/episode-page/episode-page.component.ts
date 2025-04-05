@@ -26,10 +26,7 @@ export class EpisodePageComponent implements OnInit {
       next: (data: any[]) => {
         this.episodes = data;
         this.groupSeasons();
-        
-        console.log(`Fetched with id ${id}:`, data);
-        console.log(this.groupedSeasons);
-
+    
       },
       error: (err) => {
         console.error(`Error fetching with id ${id}:`, err);

@@ -24,16 +24,13 @@ export class CommentSectionComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log('CommentSection initialized with showId:', this.showId);
     this.loadComments();
   }
 
   private loadComments() {
     if (this.showId) {
-      console.log('Loading comments for show:', this.showId);
       this.commentService.getShowComments(this.showId).subscribe({
         next: (comments) => {
-          console.log('Received comments:', comments);
           this.comments = comments;
         },
         error: (error) => {
@@ -84,7 +81,6 @@ export class CommentSectionComponent implements OnInit {
     }
 
     const userData = JSON.parse(localStorage.getItem('userData') || '{}');
-    console.log('User data from localStorage:', userData); 
 
     if (!userData.id) {
       this.errorMessage = "Session expired. Please login again";
@@ -101,7 +97,6 @@ export class CommentSectionComponent implements OnInit {
       username: userData.username
     };
 
-    console.log('Submitting comment with data:', comment); 
 
     this.commentService.addComment(comment).subscribe({
       next: (response) => {

@@ -7,7 +7,8 @@ CREATE TABLE IF NOT EXISTS casting(
 
 CREATE TABLE IF NOT EXISTS picture(
    picture_id INTEGER PRIMARY KEY AUTOINCREMENT,
-   link VARCHAR(100)
+   link VARCHAR(100),
+   type VARCHAR(20)
 );
 
 CREATE TABLE IF NOT EXISTS person(
@@ -18,7 +19,7 @@ CREATE TABLE IF NOT EXISTS person(
    is_admin BOOLEAN,
    mail VARCHAR(100),
    password VARCHAR(255),
-   profile_picture TEXT DEFAULT 'assets/img/default-person.jpg'
+   profile_picture VARCHAR(100)
 );
 
 CREATE TABLE IF NOT EXISTS genre(

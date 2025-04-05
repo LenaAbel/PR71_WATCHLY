@@ -22,7 +22,6 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     this.errorMessage = null;
-    console.log('Submitting form', this.form);
     
     if (!this.form.email || !this.form.password) {
       this.errorMessage = 'Email and password are required';
