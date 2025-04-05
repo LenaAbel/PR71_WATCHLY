@@ -77,7 +77,6 @@ export class UserPageComponent implements OnInit {
   private loadUserComments(userId: number) {
     this.commentService.getUserComments(userId).subscribe({
       next: (comments) => {
-        console.log('User comments loaded:', comments);
         this.comments = comments;
       },
       error: (error) => {

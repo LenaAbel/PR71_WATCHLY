@@ -33,6 +33,9 @@
             <span class="block sm:inline">{{ successMessage }}</span>
         </div>
         <div class="comments-section">
+            <div *ngIf="comments.length === 0" class="mt-4 text-gray-500 text-center">
+                No comments yet. Start watching shows and share your thoughts!
+            </div>
             <app-comment *ngFor="let comment of comments"
                         [page]="'profile'"
                         [comment]="comment"

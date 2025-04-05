@@ -111,15 +111,16 @@ exports.updateProfile = async (req, res) => {
             return res.status(404).json({ message: 'User not found' });
         }
 
+        // Create a base update object with the current profile picture
         const updates = {
-            username: req.body.username,
-            name: req.body.firstname,
-            surname: req.body.lastname,
-            mail: req.body.email,
-            profile_picture: user.profile_picture
+            username: req.body.username || user.username,
+            name: req.body.firstname || user.name,
+            surname: req.body.lastname || user.surname,
+            mail: req.body.email || user.mail,
+            profile_picture: user.profile_picture || 'assets/img/default-person.jpg'
         };
 
-        // Handle profile picture update only if a new one is selected
+        // Only update profile picture if a new one is selected
         if (req.body.profilePictureId) {
             const picture = await Picture.findByPk(req.body.profilePictureId);
             if (picture) {
@@ -127,25 +128,12 @@ exports.updateProfile = async (req, res) => {
             }
         }
 
-        // Direct SQL update to ensure all fields are updated
-        await Person.sequelize.query(
-            `UPDATE person 
-             SET username = ?, name = ?, surname = ?, mail = ?, profile_picture = ?
-             WHERE person_id = ?`,
-            {
-                replacements: [
-                    updates.username,
-                    updates.name,
-                    updates.surname,
-                    updates.mail,
-                    updates.profile_picture,
-                    req.userId
-                ],
-                type: Person.sequelize.QueryTypes.UPDATE
-            }
-        );
+        // Update user using update method instead of raw query
+        await Person.update(updates, {
+            where: { person_id: req.userId }
+        });
 
-        // Fetch fresh user data
+        // Fetch updated user data
         user = await Person.findByPk(req.userId);
 
         res.json({
@@ -164,8 +152,7 @@ exports.updateProfile = async (req, res) => {
         console.error('Update profile error:', error);
         res.status(500).json({ 
             message: 'Error updating profile', 
-            error: error.message,
-            stack: error.stack 
+            error: error.message
         });
     }
 };
