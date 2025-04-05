@@ -53,12 +53,12 @@ async function getShowById(id) {
 }
 
 async function getAllMovies() {
-    return await Show.findAll({ where: { is_movie: true, is_displayed: true } });
+    return await Show.findAll({ where: { is_movie: true } }); 
 }
 
 
 async function getAllTVShows() {
-    return await Show.findAll({ where: { is_movie: false, is_displayed: true } });
+    return await Show.findAll({ where: { is_movie: false } }); 
 }
 
 async function getShowTrailer(id) {

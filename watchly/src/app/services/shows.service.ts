@@ -59,6 +59,7 @@ export class ShowsService {
       this.http.get<Content[]>(`${this.apiUrlTv}`).subscribe(
         async data => {
           this.series = data.filter(m => m.is_displayed=== true);
+          this.notDisplayedSeries = data.filter(m => m.is_displayed === false);
 
           // Fetch thumbnails for each series : its not in the first call
           try {
@@ -67,6 +68,12 @@ export class ShowsService {
                 s.thumbnail = (await this.fetchPoster(s.show_id).toPromise()) || 'assets/img/default-episode.jpg';
               })
             );
+            await Promise.all(
+              this.notDisplayedSeries.map(async s => {
+                s.thumbnail = (await this.fetchPoster(s.show_id).toPromise()) || 'assets/img/default-episode.jpg';
+              })
+            );
+
             resolve(undefined);
           } catch (error) {
             console.error("Error fetching thumbnails:", error);
@@ -88,10 +95,15 @@ export class ShowsService {
           this.movies = data.filter(m => m.is_displayed);
           this.notDisplayedMovies = data.filter(m => !m.is_displayed);
 
-          // Fetch thumbnails for each movie
+          // Fetch thumbnails for each movie : its not in the first call
           try {
             await Promise.all(
               this.movies.map(async m => {
+                m.thumbnail = (await this.fetchPoster(m.show_id).toPromise()) || 'assets/img/default-episode.jpg';
+              })
+            );
+            await Promise.all(
+              this.notDisplayedMovies.map(async m => {
                 m.thumbnail = (await this.fetchPoster(m.show_id).toPromise()) || 'assets/img/default-episode.jpg';
               })
             );
