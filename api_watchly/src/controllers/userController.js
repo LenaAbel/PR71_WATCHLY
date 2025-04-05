@@ -33,7 +33,11 @@ exports.getUserById = async (req, res) => {
 
 exports.createUser = async (req, res) => {
     try {
-        const newUser = await Person.create(req.body);
+        const userData = {
+            ...req.body,
+            profile_picture: 'assets/img/default-person.jpg'
+        };
+        const newUser = await Person.create(userData);
         res.status(201).json(newUser);
     } catch (error) {
         res.status(500).json({ message: 'Error creating user', error });

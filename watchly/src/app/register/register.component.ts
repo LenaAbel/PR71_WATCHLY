@@ -35,7 +35,9 @@ export class RegisterComponent implements OnInit {
       return;
     }
 
-    console.log('Submitting form', this.registerForm.value);
+    // Clear any existing user data from localStorage
+    localStorage.clear();
+    sessionStorage.clear();
 
     this.authService.register(this.registerForm.value).subscribe({
       next: (response) => {

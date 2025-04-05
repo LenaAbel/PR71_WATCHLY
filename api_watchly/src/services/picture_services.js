@@ -134,7 +134,11 @@ async function addDefaultProfilePictures() {
         { link: 'assets/img/default-pic2.jpg', type: 'profile', description: 'Default default-pic 2' },
         { link: 'assets/img/default-pic3.jpg', type: 'profile', description: 'Default default-pic 3' },
         { link: 'assets/img/default-pic4.jpg', type: 'profile', description: 'Default default-pic 4' },
-        { link: 'assets/img/default-pic5.jpg', type: 'profile', description: 'Default default-pic 5' }
+        { link: 'assets/img/default-pic5.jpg', type: 'profile', description: 'Default default-pic 5' },
+        { link: 'assets/img/default-pic6.jpg', type: 'profile', description: 'Default default-pic 6' },
+        { link: 'assets/img/default-pic7.jpg', type: 'profile', description: 'Default default-pic 7' },
+        { link: 'assets/img/default-pic8.jpg', type: 'profile', description: 'Default default-pic 8' },
+        { link: 'assets/img/default-pic9.jpg', type: 'profile', description: 'Default default-pic 9' },
     ];
 
     try {

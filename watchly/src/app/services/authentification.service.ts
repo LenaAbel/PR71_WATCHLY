@@ -27,17 +27,41 @@ export class AuthenticationService {
   constructor(private http: HttpClient) {}
 
   register(user: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/register`, user);
+    // Clear any existing cached data
+    localStorage.clear();
+    sessionStorage.clear();
+    
+    return this.http.post(`${this.apiUrl}/register`, user).pipe(
+      tap(() => {
+        // Clear browser cache for profile pictures
+        if (window.caches) {
+          caches.keys().then(names => {
+            names.forEach(name => {
+              caches.delete(name);
+            });
+          });
+        }
+      })
+    );
   }
 
   login(credentials: any): Observable<{ token: string; user?: any }> {
+    // Clear any existing cached data
+    localStorage.clear();
+    sessionStorage.clear();
+    if (window.caches) {
+      caches.keys().then(names => {
+        names.forEach(name => {
+          caches.delete(name);
+        });
+      });
+    }
+
     return this.http.post<{ token: string; user?: any }>(`${this.apiUrl}/login`, credentials)
       .pipe(
             tap(response => {
                 if (response.token) {
                     localStorage.setItem('authToken', response.token);
-
-                    console.log('Token stored:', response.token);
                 } else {
                     console.error("Token not found in response");
                 }
@@ -65,8 +89,15 @@ export class AuthenticationService {
 
   // Log out the user
   logout(): void {
-    localStorage.removeItem('authToken');
-    localStorage.removeItem('userData');
+    localStorage.clear();
+    sessionStorage.clear();
+    if (window.caches) {
+      caches.keys().then(names => {
+        names.forEach(name => {
+          caches.delete(name);
+        });
+      });
+    }
   }
 
   updateUserProfile(userData: any): Observable<any> {
@@ -87,5 +118,23 @@ export class AuthenticationService {
 
   getUserPicture(userId: number): Observable<{ profile_picture: string }> {
     return this.http.get<{ profile_picture: string }>(`${this.apiUrl}/${userId}/picture`);
+  }
+
+  deleteAccount(): Observable<any> {
+    const token = this.getToken();
+    const userData = localStorage.getItem('userData');
+    if (!token || !userData) {
+      return throwError(() => new Error('No authentication token or user data'));
+    }
+    const userId = JSON.parse(userData).id;
+    return this.http.delete(`${this.apiUrl}/${userId}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    }).pipe(
+      tap(() => {
+        this.logout();
+      })
+    );
   }
 }

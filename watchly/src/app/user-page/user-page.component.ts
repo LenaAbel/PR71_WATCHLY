@@ -34,18 +34,7 @@ export class UserPageComponent implements OnInit {
       this.username = user.username;
       this.firstname = user.firstname;
       this.lastname = user.lastname;
-
-      // Fetch the profile picture from the backend
-      this.authService.getUserPicture(user.id).subscribe({
-        next: (response) => {
-          this.profilePicture = response.profile_picture || 'assets/img/default-person.jpg';
-          console.log('Fetched profile picture:', this.profilePicture);
-        },
-        error: (error) => {
-          console.error('Error fetching profile picture:', error);
-          this.profilePicture = 'assets/img/default-person.jpg';
-        }
-      });
+      this.profilePicture = user.profile_picture || 'assets/img/default-person.jpg';
 
       // Listen for changes in localStorage
       window.addEventListener('storage', (e) => {

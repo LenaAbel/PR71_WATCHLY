@@ -24,8 +24,8 @@ export class ParametersComponent implements OnInit {
   showPictureSelector: boolean = false;
   selectedPicture: ProfilePicture | null = null;
   currentProfilePicture: string | null = null;
-  selectedTheme: string = 'system';
   originalFormValues: any;
+  showDeleteConfirmation: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -59,58 +59,50 @@ export class ParametersComponent implements OnInit {
       };
     }
     this.loadDefaultPictures();
-
-    // Initialize theme selection
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme) {
-      this.selectedTheme = savedTheme;
-    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      this.selectedTheme = 'dark';
-    } else {
-      this.selectedTheme = 'light';
-    }
   }
 
   onSubmit() {
     if (this.userForm.valid) {
-      const formData = {
-        ...this.userForm.value,
-        profilePictureId: this.selectedPictureId
-      };
+        const formData = {
+            ...this.userForm.value,
+            profilePictureId: this.selectedPictureId
+        };
 
-      // Check if anything has changed
-      const hasFormChanged = Object.keys(this.originalFormValues).some(key => 
-        this.originalFormValues[key] !== formData[key]
-      );
-      const hasPictureChanged = this.selectedPictureId !== null;
+        // Check if anything has changed
+        const hasFormChanged = Object.keys(this.originalFormValues).some(key => 
+            this.originalFormValues[key] !== formData[key]
+        );
+        const hasPictureChanged = this.selectedPictureId !== null;
 
-      if (!hasFormChanged && !hasPictureChanged) {
-        this.errorMessage = 'No changes were made';
-        return;
-      }
-      
-      this.authService.updateUserProfile(formData).subscribe({
-        next: (response) => {
-          this.successMessage = 'Profile updated successfully';
-          
-          // Make sure both properties are updated in localStorage
-          const userData = {
-            ...response.user,
-            profile_picture: response.user.profile_picture || this.currentProfilePicture
-          };
-          
-          localStorage.setItem('userData', JSON.stringify(userData));
-          
-          // Only reload after ensuring data is saved
-          setTimeout(() => window.location.reload(), 100);
-        },
-        error: (error) => {
-          console.error('Error updating profile:', error);
-          this.errorMessage = 'Error updating profile';
+        if (!hasFormChanged && !hasPictureChanged) {
+            this.errorMessage = 'No changes were made';
+            return;
         }
-      });
+        
+        this.authService.updateUserProfile(formData).subscribe({
+            next: (response) => {
+                this.successMessage = 'Profile updated successfully';
+                
+                // Update localStorage with the new user data
+                const updatedUserData = {
+                    ...response.user,
+                    profile_picture: response.user.profile_picture || this.currentProfilePicture
+                };
+                localStorage.setItem('userData', JSON.stringify(updatedUserData));
+                
+                // Update the current profile picture
+                this.currentProfilePicture = updatedUserData.profile_picture;
+
+                // Only reload after ensuring data is saved
+                setTimeout(() => window.location.reload(), 100);
+            },
+            error: (error) => {
+                console.error('Error updating profile:', error);
+                this.errorMessage = 'Error updating profile';
+            }
+        });
     }
-  }
+}
 
   togglePassword() {
     this.showPassword = !this.showPassword;
@@ -179,29 +171,28 @@ export class ParametersComponent implements OnInit {
     this.closePictureSelector();
   }
 
-  onThemeChange(event: Event): void {
-    const theme = (event.target as HTMLSelectElement).value;
-    this.selectedTheme = theme;
-    
-    if (theme === 'dark') {
-      document.documentElement.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
-    } else if (theme === 'light') {
-      document.documentElement.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
-    } else {
-      localStorage.removeItem('theme');
-      // Apply system setting
-      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        document.documentElement.classList.add('dark');
-      } else {
-        document.documentElement.classList.remove('dark');
-      }
-    }
-  }
-
   logout(): void {
     this.authService.logout();
     this.router.navigate(['/login']);
+  }
+
+  deleteAccount(): void {
+    this.showDeleteConfirmation = true;
+  }
+
+  confirmDelete(): void {
+    this.authService.deleteAccount().subscribe({
+      next: () => {
+        this.router.navigate(['/register']);
+      },
+      error: (error) => {
+        console.error('Error deleting account:', error);
+        this.errorMessage = 'Error deleting account';
+      }
+    });
+  }
+
+  cancelDelete(): void {
+    this.showDeleteConfirmation = false;
   }
 }

@@ -122,30 +122,31 @@
     <!-- Second card: theme settings + delete account -->
     <div class="space-y-4 rounded-(--radius-outer) shadow-(--shadow-light)
                 bg-(--bg-surface-1-light) dark:bg-(--bg-surface-1-dark) p-6">
-
-      <div class="flex items-center justify-between">
-        <span class="font-medium">Customize theme settings</span>
-        <select class="border p-2 rounded-(--radius-inner) 
-                      bg-(--bg-surface-2-light) dark:bg-(--bg-surface-2-dark)
-                      dark:border-(--bg-surface-3-dark)"
-                [(ngModel)]="selectedTheme"
-                (change)="onThemeChange($event)">
-          <option value="system">System setting</option>
-          <option value="light">Light</option>
-          <option value="dark">Dark</option>
-        </select>
-      </div>
-
-      <hr class="my-2 border-(--bg-surface-3-light) dark:border-(--bg-surface-3-dark)" />
-
-      <button class="text-red-600 font-semibold hover:underline w-full text-left">
+      <button class="text-red-600 font-semibold hover:underline w-full text-left"
+              (click)="deleteAccount()">
         Delete my account
       </button>
     </div>
   </main>
 </div>
 
-<div *ngIf="showPictureSelector" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+<!-- Delete Account Confirmation Modal -->
+<div *ngIf="showDeleteConfirmation" class="fixed inset-0 backdrop-blur-sm flex items-center justify-center z-50">
+  <div class="bg-(--bg-surface-1-light) dark:bg-(--bg-surface-1-dark) p-6 rounded-(--radius-outer) max-w-md w-full">
+    <h3 class="text-lg font-medium mb-4">Are you sure you want to delete your account?</h3>
+    <p class="text-gray-500 mb-6">This action cannot be undone.</p>
+    <div class="flex justify-end gap-2">
+      <button type="button" 
+              class="px-4 py-2 text-gray-600"
+              (click)="cancelDelete()">Cancel</button>
+      <button type="button" 
+              class="px-4 py-2 bg-red-600 text-white rounded"
+              (click)="confirmDelete()">Delete Account</button>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="showPictureSelector" class="fixed inset-0 backdrop-blur-sm flex items-center justify-center z-50">
   <div class="bg-(--bg-surface-1-light) dark:bg-(--bg-surface-1-dark) p-6 rounded-(--radius-outer) max-w-md w-full">
     <h3 class="text-lg font-medium mb-4">Choose a profile picture</h3>
     <div class="grid grid-cols-3 gap-4 mb-4">
