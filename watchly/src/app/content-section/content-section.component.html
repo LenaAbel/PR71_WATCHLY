@@ -1,9 +1,15 @@
 <div class="max-w-[70vw] overflow-hidden p-6">
   <div class="flex justify-between items-center">
     <h2 class="text-5xl font-bold text-(--color-main-light) dark:text-(--color-main-dark) w-fit">{{ content.name }}</h2>
-    <button *ngIf="!content.is_rated" (click)="onOpenRating()" class="bg-(--color-main-light) dark:bg-(--color-main-dark) text-sm font-bold px-4 py-1 rounded-full text-white">
+    <button *ngIf="!content.Favorite" (click)="onOpenRating()" class="bg-(--color-main-light) dark:bg-(--color-main-dark) text-sm font-bold px-4 py-1 rounded-full text-white">
       <span class="pr-2">+</span> Your rating
     </button>
+    <p *ngIf="content.Favorite" class="text-(--color-main-light) dark:text-(--color-main-dark) text-2xl">
+      <ng-container *ngFor="let star of [1,2,3,4,5]">
+        <span *ngIf="content.Favorite?.rating >= star">&#9733;</span>
+        <span *ngIf="content.Favorite?.rating < star">&#9734;</span>
+      </ng-container>
+    </p>
   </div>
   <div class="flex justify-between items-end">
     <div class="infos">

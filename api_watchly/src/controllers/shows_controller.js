@@ -45,10 +45,8 @@ async function getById(req, res) {
 
         console.log(chalk.cyan(`[DB] Found: ${show.name}`));
 
-        // Create plain object so we can modify safely
         const showData = show.toJSON();
-
-        showData.is_rated = (showData.Favorites && showData.Favorites.length > 0);
+        showData.Favorite = showData.Favorites[0];
         delete showData.Favorites;
 
         return res.status(200).json(showData);

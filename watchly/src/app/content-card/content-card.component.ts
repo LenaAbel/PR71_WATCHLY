@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Content } from '../models/content';
 
 @Component({
   selector: 'app-content-card',
@@ -7,5 +8,10 @@ import { Component, Input } from '@angular/core';
 })
 export class ContentCardComponent {
   @Input() type! : string;
+  @Input() content! : Content;
 
+  ngOnInit() {
+    console.log(this.content);
+
+  }
 }

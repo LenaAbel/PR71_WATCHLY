@@ -2,15 +2,20 @@
   <img class="w-full h-40 object-cover" src="assets/img/wQEW3xLrQAThu1GvqpsKQyejrYS.jpg" alt="Movie Poster">
   <div class="p-4 flex flex-col gap-2.5">
     <div class="flex items-center gap-2">
-      <h2 class="text-lg font-bold">Arcane </h2>
+      <h2 class="text-lg font-bold">{{content.name}} </h2>
       <p class="text-lg" *ngIf="type == 'series'"> - 2 seasons</p>
     </div>
-      <p class=" text-xs text-justify">Amid the stark discord of twin cities Piltover and Zaun, two sisters fight on rival sides of a war between magic technologies and clashing convictions.</p>
+      <p class=" text-xs text-justify">{{content.description}}</p>
       <div class="flex items-center gap-4">
-        <p class="text-(--color-main-light) text-sm dark:text-(--color-main-dark) text-2xl">&#9733; &#9733; &#9733; &#9733; &#9734;</p> <!-- faire logique en fonction du rating-->
+        
+        <p class="text-(--color-main-light) dark:text-(--color-main-dark) text-2xl">
+          <ng-container *ngFor="let star of [1,2,3,4,5]">
+            <span *ngIf="content.Favorite?.rating >= star">&#9733;</span>
+            <span *ngIf="content.Favorite?.rating < star">&#9734;</span>
+          </ng-container>
+        </p> <!-- faire logique en fonction du rating-->
         <p class="font-bold">·</p>
-        <p class="text-sm" *ngIf="type == 'series'">18 episodes</p>
-        <p class="text-sm" *ngIf="type == 'movies'">1h 20 min</p>
+        <p class="text-sm" *ngIf="type == 'movies'">{{content.duration}} min</p>
       </div>
   </div>
 </div>

@@ -29,6 +29,9 @@ Person.hasMany(Comments, { foreignKey: 'person_id', as: 'comments' });
 Comments.belongsTo(Show, { foreignKey: 'show_id' });
 Show.hasMany(Comments, { foreignKey: 'show_id' });
 
+Show.belongsToMany(Person, { through: Favorite, foreignKey: 'show_id' });
+Person.belongsToMany(Show, { through: Favorite, foreignKey: 'person_id' });
+
 Show.hasMany(Favorite, { foreignKey: 'show_id' });
 Favorite.belongsTo(Show, { foreignKey: 'show_id' });
 

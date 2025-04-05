@@ -6,6 +6,7 @@ import { AuthenticationService } from '../services/authentification.service';
 import { CommentService } from '../services/comment.service';
 import { Comment } from '../models/comment';
 import { HttpClient } from '@angular/common/http';
+import { Content } from '../models/content';
 @Component({
   selector: 'app-user-page',
   templateUrl: './user-page.component.html',
@@ -18,7 +19,7 @@ export class UserPageComponent implements OnInit {
   username: string = '';
   comments: Comment[] = [];
   successMessage: string | null = null;
-
+  shows: Content[] = [];
   constructor(
     private authService: AuthenticationService,
     private router: Router,
@@ -35,6 +36,8 @@ export class UserPageComponent implements OnInit {
       this.username = user.username;
       const userId = user.id; 
       this.loadUserComments(userId);
+      this.getPerson(userId)
+
     }
   }
 
@@ -79,8 +82,11 @@ export class UserPageComponent implements OnInit {
 
   getPerson(id: number) {
     const endpoint = `http://localhost:3000/api/persons/id/${id}`;
-    this.http.get(endpoint).subscribe({
+    this.http.get<{ Shows: Content[] }>(endpoint).subscribe({
       next: (data) => {
+        this.shows = data.Shows;
+        console.log(this.shows);
+        
         console.log(`Fetched person with id ${id}:`, data);
       },
       error: (err) => {

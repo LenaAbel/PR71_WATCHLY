@@ -11,6 +11,7 @@ export class Content {
   is_movie!: boolean;
   is_rated!: boolean;
   Genres!: any[];
+  Favorite!: any;
   // Episode properties
   season!: number; // Season number for the episode
   number!: number; // Episode number

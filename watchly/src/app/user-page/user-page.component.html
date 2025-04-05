@@ -19,8 +19,8 @@
                     [navigation]="false"
                     [keyboard]="true"
                 >
-                    <ng-template *ngFor="let i of [0, 1, 2, 3, 4, 5]" swiperSlide>
-                        <app-content-card [type]="'series'"></app-content-card>
+                    <ng-template *ngFor="let show of shows" swiperSlide>
+                        <app-content-card [type]="'series'" [content]="show"></app-content-card>
                     </ng-template>
                 </swiper>
             </div>

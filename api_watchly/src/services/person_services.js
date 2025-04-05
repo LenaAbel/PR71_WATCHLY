@@ -3,6 +3,8 @@ const Favorite = require('../../database/src/models/favorite');
 
 const chalk = require('chalk');
 const bcrypt = require('bcrypt');
+const Shows = require('../../database/src/models/shows');
+const { Show } = require('../../database/src/models/associations');
 
 Person.hasMany(Favorite, { foreignKey: 'person_id', as: 'favorites' });
 
@@ -39,6 +41,16 @@ const person = Person.build({
 person.save().then(() => console.log(chalk.green(`User ${data[0]} added`)));
 }
 
+async function getPersonById(id) {
+    return await Person.findByPk(id, 
+        { 
+            attributes: ['username', 'mail'],
+            include: Shows,
+            through: {
+                model: Favorite,
+            }
+        }
+    );
+}
 
-
-module.exports = { createUsers };
+module.exports = { createUsers, getPersonById };
