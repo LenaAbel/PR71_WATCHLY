@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Content } from '../models/content';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-content-card',
@@ -10,8 +11,23 @@ export class ContentCardComponent {
   @Input() type! : string;
   @Input() content! : Content;
 
+  constructor(private http: HttpClient) {}
+
   ngOnInit() {
     console.log(this.content);
+  }
 
+  onDeleteFavorite(event: Event): void {
+    event.preventDefault();
+    event.stopPropagation();
+    
+    const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+    if (userData.id && this.content.show_id) {
+      this.http.delete(`http://localhost:3000/api/favorites/user/${userData.id}/show/${this.content.show_id}`)
+        .subscribe({
+          next: () => window.location.reload(),
+          error: (err) => console.error('Error deleting favorite:', err)
+        });
+    }
   }
 }

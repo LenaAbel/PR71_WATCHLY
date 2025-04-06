@@ -146,5 +146,16 @@ async function addFavorite(favoriteData) {
     }
 }
 
+async function deleteFavorite(person_id, show_id) {
+    try {
+        const result = await Favorite.destroy({
+            where: { person_id, show_id }
+        });
+        return result > 0;
+    } catch (error) {
+        console.error(chalk.red('Error deleting favorite:', error));
+        throw error;
+    }
+}
 
-module.exports = { initializeTestFavorites, addFavorite, getFavoritesByPersonId, getFavoritesByShowId, getFavoritesByPersonIdAndShowId, getAllFavorites };
+module.exports = { initializeTestFavorites, addFavorite, getFavoritesByPersonId, getFavoritesByShowId, getFavoritesByPersonIdAndShowId, getAllFavorites, deleteFavorite };

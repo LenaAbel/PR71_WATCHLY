@@ -1,5 +1,6 @@
 const express = require('express');
 const favoriteController = require('../controllers/favorite_controller');
+const favoriteServices = require('../services/favorite_services'); 
 
 const router = express.Router();
 
@@ -163,6 +164,20 @@ router.post('/', async (req, res) => {
  */
 router.delete('/:id', async (req, res) => {
     return favoriteController.removeFavorite(req, res);
+});
+
+router.delete('/user/:personId/show/:showId', async (req, res) => {
+    try {
+        const result = await favoriteServices.deleteFavorite(req.params.personId, req.params.showId);
+        if (result) {
+            res.status(200).json({ message: 'Favorite deleted successfully' });
+        } else {
+            res.status(404).json({ message: 'Favorite not found' });
+        }
+    } catch (error) {
+        console.error('Error deleting favorite:', error);
+        res.status(500).json({ error: 'Failed to delete favorite' });
+    }
 });
 
 module.exports = router;

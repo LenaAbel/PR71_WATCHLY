@@ -26,4 +26,12 @@ export class ContentSectionComponent implements OnInit {
   get isLoggedIn(): boolean {
     return this.authService.isLoggedIn();
   }
+
+  onDeleteRating(): void {
+    const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+    this.http.delete(`http://localhost:3000/api/favorites/user/${userData.id}/show/${this.content.show_id}`)
+      .subscribe(() => {
+        window.location.reload();
+      });
+  }
 }
