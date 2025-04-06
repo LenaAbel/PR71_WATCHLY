@@ -1,7 +1,10 @@
 <div class="w-full overflow-hidden p-4 md:p-6">
   <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
     <h2 class="text-3xl md:text-5xl font-bold text-(--color-main-light) dark:text-(--color-main-dark)">{{ content.name }}</h2>
-    <button *ngIf="!content.Favorite" (click)="onOpenRating()" class="bg-(--color-main-light) dark:bg-(--color-main-dark) text-sm font-bold px-4 py-1 rounded-full text-white">
+    <!-- Hide rating button for episodes -->
+    <button *ngIf="!content.Favorite && type !== 'episode'" 
+            (click)="onOpenRating()" 
+            class="bg-(--color-main-light) dark:bg-(--color-main-dark) text-sm font-bold px-4 py-1 rounded-full text-white">
       <span class="pr-2">+</span> Your rating
     </button>
   </div>
@@ -17,7 +20,8 @@
       <span class="pr-1">{{ content.nationality }}</span>
     </div>
     <div class="flex flex-col">
-      <div class="ml-auto flex flex-col gap-2">
+      <!-- Only show ratings if not an episode -->
+      <div *ngIf="type !== 'episode'" class="ml-auto flex flex-col gap-2">
         <!-- TMDB Rating -->
         <div class="flex flex-col items-end">
           <span class="text-base">TMDB rating</span>

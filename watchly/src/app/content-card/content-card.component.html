@@ -1,4 +1,13 @@
 <div class="relative mb-[2em] w-[250px] bg-(--bg-surface-1-light) dark:bg-(--bg-surface-1-dark) shadow-(--shadow-light) dark:shadow-(--shadow-dark) rounded-(--radius-outer) overflow-hidden mt-10">
+    <!-- Alert Message -->
+    <div *ngIf="alertMessage" 
+         class="absolute top-0 left-0 right-0 p-2 text-center text-sm animate-slide-in"
+         [ngClass]="{
+           'bg-green-100 text-green-700': alertType === 'success',
+           'bg-red-100 text-red-700': alertType === 'error'
+         }">
+        {{ alertMessage }}
+    </div>
     <!-- Delete button -->
     <button *ngIf="content.Favorite" 
             (click)="onDeleteFavorite($event)"

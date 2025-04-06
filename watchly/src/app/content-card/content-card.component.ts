@@ -10,6 +10,8 @@ import { HttpClient } from '@angular/common/http';
 export class ContentCardComponent {
   @Input() type! : string;
   @Input() content! : Content;
+  alertMessage: string = '';
+  alertType: 'success' | 'error' | '' = '';
 
   constructor(private http: HttpClient) {}
 
@@ -25,9 +27,23 @@ export class ContentCardComponent {
     if (userData.id && this.content.show_id) {
       this.http.delete(`http://localhost:3000/api/favorites/user/${userData.id}/show/${this.content.show_id}`)
         .subscribe({
-          next: () => window.location.reload(),
-          error: (err) => console.error('Error deleting favorite:', err)
+          next: () => {
+            this.showAlert('Show removed from favorites', 'success');
+            setTimeout(() => window.location.reload(), 1500);
+          },
+          error: () => {
+            this.showAlert('Error removing show from favorites', 'error');
+          }
         });
     }
+  }
+
+  private showAlert(message: string, type: 'success' | 'error'): void {
+    this.alertMessage = message;
+    this.alertType = type;
+    setTimeout(() => {
+      this.alertMessage = '';
+      this.alertType = '';
+    }, 3000);
   }
 }
