@@ -25,6 +25,10 @@ export class UserPageComponent implements OnInit {
   shows: Content[] = [];
   swiperRef: Swiper | undefined;
 
+  currentFilter: 'all' | 'movies' | 'series' = 'all';
+  searchQuery: string = '';
+  allShows: Content[] = [];
+
   constructor(
     private authService: AuthenticationService,
     private router: Router,
@@ -99,15 +103,44 @@ export class UserPageComponent implements OnInit {
     const endpoint = `http://localhost:3000/api/persons/id/${id}`;
     this.http.get<{ Shows: Content[] }>(endpoint).subscribe({
       next: (data) => {
-        this.shows = data.Shows;
-        console.log(this.shows);
-        
-        console.log(`Fetched person with id ${id}:`, data);
+        this.allShows = data.Shows;
+        this.filterShows();
       },
       error: (err) => {
         console.error(`Error fetching person with id ${id}:`, err);
       }
     });
+  }
+
+  filterShows() {
+    let filtered = [...this.allShows];
+    
+    // Apply type filter
+    if (this.currentFilter !== 'all') {
+      filtered = filtered.filter(show => 
+        this.currentFilter === 'movies' ? show.is_movie : !show.is_movie
+      );
+    }
+    
+    // Apply search filter
+    if (this.searchQuery.trim()) {
+      const query = this.searchQuery.toLowerCase();
+      filtered = filtered.filter(show => 
+        show.name.toLowerCase().includes(query)
+      );
+    }
+    
+    this.shows = filtered;
+  }
+
+  onFilterChange(filter: 'all' | 'movies' | 'series') {
+    this.currentFilter = filter;
+    this.filterShows();
+  }
+
+  onSearch(event: Event) {
+    this.searchQuery = (event.target as HTMLInputElement).value;
+    this.filterShows();
   }
 
   onSwiper(swiper: Swiper) {
