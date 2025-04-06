@@ -1,5 +1,5 @@
 <div class="max-w-full">
-    <app-trailer-banner *ngIf="type === ''"></app-trailer-banner>
+    <app-trailer-banner [showId]="showId" *ngIf="type === 'show'"></app-trailer-banner>
     <app-return-btn></app-return-btn>
     <h2 class="p-6 text-5xl font-bold text-(--color-main-light) dark:text-(--color-main-dark) w-fit">All comments</h2>
     <div class="px-4 mx-auto items-center gap-10">

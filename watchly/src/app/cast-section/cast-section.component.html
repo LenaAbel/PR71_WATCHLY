@@ -1,5 +1,12 @@
-<div class="w-full md:max-w-[23vw] bg-(--bg-surface-1-light) dark:bg-(--bg-surface-1-dark) p-4 md:p-6 shadow-(--shadow-light) dark:shadow-(--shadow-dark) rounded-(--radius-outer) overflow-hidden mt-6 md:mt-10">
-    <h2 class="font-bold text-2xl md:text-3xl">Casting</h2>
+<div class="max-w-[23vw] bg-(--bg-surface-1-light) dark:bg-(--bg-surface-1-dark) p-6 shadow-(--shadow-light) dark:shadow-(--shadow-dark) rounded-(--radius-outer) overflow-hidden mt-10">
+    <div class="flex items-center cursor-pointer gap-2 w-fit" [routerLink]="'/' + showId + '/casting'">
+        <h3 class="font-bold text-3xl">Casting</h3>
+        <svg width="20" height="20" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+            <line x1="15" y1="10" x2="35" y2="25" stroke-width="4" stroke-linecap="round" class="stroke-(--font-color-light) dark:stroke-(--font-color-dark)"/>
+            <line x1="15" y1="40" x2="35" y2="25" stroke-width="4" stroke-linecap="round" class="stroke-(--font-color-light) dark:stroke-(--font-color-dark)"/>
+        </svg>
+    </div>
+
     <div *ngIf="cast && cast.length > 0; else noCast">
         <div class="grid grid-cols-3 md:grid-cols-2 gap-2 md:gap-4 mt-4">
             <ng-container>
