@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { AuthenticationService } from '../services/authentification.service';
 import { CommentService } from '../services/comment.service';
 import { Comment } from '../models/comment';
+import { HttpClient } from '@angular/common/http';
+import { Content } from '../models/content';
 
 @Component({
   selector: 'app-user-page',
@@ -16,24 +18,46 @@ export class UserPageComponent implements OnInit {
   firstname: string = '';
   lastname: string = '';
   username: string = '';
+  profilePicture: string = '';
+
   comments: Comment[] = [];
   successMessage: string | null = null;
+  shows: Content[] = [];
+  swiperRef: Swiper | undefined;
+
+  currentFilter: 'all' | 'movies' | 'series' = 'all';
+  searchQuery: string = '';
+  allShows: Content[] = [];
 
   constructor(
     private authService: AuthenticationService,
     private router: Router,
-    private commentService: CommentService
+    private commentService: CommentService,
+    private http: HttpClient
   ) {}
 
   ngOnInit(): void {
     const userData = localStorage.getItem('userData');
     if (userData) {
       const user = JSON.parse(userData);
+      this.username = user.username;
       this.firstname = user.firstname;
       this.lastname = user.lastname;
-      this.username = user.username;
+      this.profilePicture = user.profile_picture || 'assets/img/default-person.jpg';
+
+      // Listen for changes in localStorage
+      window.addEventListener('storage', (e) => {
+        if (e.key === 'userData') {
+          const updatedUser = JSON.parse(e.newValue || '{}');
+          this.profilePicture = updatedUser.profile_picture || 'assets/img/default-person.jpg';
+          console.log('Updated profile picture:', this.profilePicture);
+        }
+      });
+
       const userId = user.id; 
       this.loadUserComments(userId);
+      this.getPerson(userId)
+
     }
   }
 
@@ -47,13 +71,12 @@ export class UserPageComponent implements OnInit {
 
   logout() {
     this.authService.logout();
-    this.router.navigate(['/']);
+    this.router.navigate(['/login']);
   }
 
   private loadUserComments(userId: number) {
     this.commentService.getUserComments(userId).subscribe({
       next: (comments) => {
-        console.log('User comments loaded:', comments);
         this.comments = comments;
       },
       error: (error) => {
@@ -74,5 +97,62 @@ export class UserPageComponent implements OnInit {
         console.error('Error deleting comment:', error);
       }
     });
+  }
+
+
+  getPerson(id: number) {
+    const endpoint = `http://localhost:3000/api/persons/id/${id}`;
+    this.http.get<{ Shows: Content[] }>(endpoint).subscribe({
+      next: (data) => {
+        this.allShows = data.Shows;
+        // Ensure each show has proper thumbnail paths
+        this.allShows.forEach(show => {
+          if (!show.thumbnail || show.thumbnail.trim() === '') {
+            show.thumbnail = 'assets/img/default-poster.jpg';
+          }
+        });
+        this.filterShows();
+      },
+      error: (err) => {
+        console.error(`Error fetching person with id ${id}:`, err);
+        this.allShows = [];
+        this.shows = [];
+      }
+    });
+  }
+
+  filterShows() {
+    let filtered = [...this.allShows];
+    
+    // Apply type filter
+    if (this.currentFilter !== 'all') {
+      filtered = filtered.filter(show => 
+        this.currentFilter === 'movies' ? show.is_movie : !show.is_movie
+      );
+    }
+    
+    // Apply search filter
+    if (this.searchQuery.trim()) {
+      const query = this.searchQuery.toLowerCase();
+      filtered = filtered.filter(show => 
+        show.name.toLowerCase().includes(query)
+      );
+    }
+    
+    this.shows = filtered;
+  }
+
+  onFilterChange(filter: 'all' | 'movies' | 'series') {
+    this.currentFilter = filter;
+    this.filterShows();
+  }
+
+  onSearch(event: Event) {
+    this.searchQuery = (event.target as HTMLInputElement).value;
+    this.filterShows();
+  }
+
+  onSwiper(swiper: Swiper) {
+    this.swiperRef = swiper;
   }
 }

@@ -62,9 +62,16 @@ const Episode = require('./database/src/models/episode');
 const Casting = require('./database/src/models/casting');
 const Picture = require('./database/src/models/picture');
 
-// MIDDLEWARES
+// Updated CORS configuration to explicitly allow PATCH method
+server.use(cors({
+    origin: 'http://localhost:4200',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
+// Body parser middleware
 server.use(express.json());
-server.use(cors());
+server.use(express.urlencoded({ extended: true }));
 
 // ROUTING
 server.use('/api/shows', showsRoutes);
@@ -125,8 +132,11 @@ async function isDatabasePopulated() {
             console.log(chalk.cyan('[DB] Adding users...'));
             await personController.addUsers();
 
+            console.log(chalk.cyan('[DB] Adding default profile pictures...'));
+            await pictureServices.addDefaultProfilePictures();
+
             console.log(chalk.cyan('[DB] Adding favorites...'));
-            await favoriteController.addFavorites();
+            await favoriteController.initializeFavorites();
 
             console.log(chalk.cyan('[DB] Adding comments...'));
             await commentServices.addCommentsForAllShows();

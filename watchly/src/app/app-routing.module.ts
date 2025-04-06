@@ -12,6 +12,7 @@ import { CommentPageComponent } from './comment-page/comment-page.component';
 import { AdminPageComponent } from './admin-page/admin-page.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { ResearchPageComponent } from './research-page/research-page.component';
+import { ParametersComponent } from './parameters/parameters.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -22,6 +23,7 @@ const routes: Routes = [
   {path: 'admin', component: AdminPageComponent},
   {path: 'error/404', component: NotFoundComponent},
   {path: 'research', component: ResearchPageComponent},
+  {path: 'parameters', component: ParametersComponent},
   {path: ':id', component: ShowPageComponent},
   {path: ':id/episode/:episodeId', component: ShowPageComponent},
   {path: '', component: HomePageComponent},

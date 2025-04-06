@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, BehaviorSubject } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, BehaviorSubject, of, throwError } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 
 import { Content } from '../models/content';
 
@@ -12,6 +12,11 @@ export class ShowsService {
   private apiURLMovie = 'http://localhost:3000/api/shows';
   private apiUrlTv = 'http://localhost:3000/api/episodes/details';
   private apiUrlPictures = 'http://localhost:3000/api/pictures';
+
+  // Alert properties
+  public alertMessage = '';
+  public alertType: 'success' | 'error' | '' = '';
+  private alertTimeout: any = null;
 
   public movies: Content[] = [];
   public series: Content[] = [];
@@ -148,39 +153,73 @@ export class ShowsService {
     return this.notDisplayedSeries;
   }
 
-  updateShowDisplayStatus(show: Content, isDisplayed: boolean): Promise<void> {
-    const endpoint = `${this.apiURLMovie}/${show.show_id}/displayed`;
+  /**
+   * Display an alert message in the UI
+   * @param message Message to display
+   * @param type Type of alert (success or error)
+   * @param duration How long to show the alert (ms)
+   */
+  showAlert(message: string, type: 'success' | 'error', duration: number = 3000): void {
+    // Clear any existing timeout
+    if (this.alertTimeout) {
+      clearTimeout(this.alertTimeout);
+    }
+    
+    this.alertMessage = message;
+    this.alertType = type;
+    
+    // Auto-dismiss after duration
+    this.alertTimeout = setTimeout(() => {
+      this.hideAlert();
+    }, duration);
+  }
+
+  /**
+   * Hide the current alert
+   */
+  hideAlert(): void {
+    this.alertMessage = '';
+    this.alertType = '';
+    if (this.alertTimeout) {
+      clearTimeout(this.alertTimeout);
+      this.alertTimeout = null;
+    }
+  }
+
+  /**
+   * Update the display status of a show
+   * @param id Show ID
+   * @param isDisplayed Whether the show should be displayed
+   * @returns Observable of the updated show
+   */
+  updateShowDisplayStatus(id: number, isDisplayed: boolean): Promise<any> {
     return new Promise((resolve, reject) => {
-      this.http.patch(endpoint, { is_displayed: isDisplayed }).subscribe({
-        next: () => {
-          show.is_displayed = isDisplayed;
-
-          if (isDisplayed) {
-            if (show.is_movie) {
-              this.movies.push(show);
-              this.notDisplayedMovies = this.notDisplayedMovies.filter(m => m.show_id !== show.show_id);
-            } else {
-              this.series.push(show);
-              this.notDisplayedSeries = this.notDisplayedSeries.filter(s => s.show_id !== show.show_id);
-            }
-          } else {
-            if (show.is_movie) {
-              this.notDisplayedMovies.push(show);
-              this.movies = this.movies.filter(m => m.show_id !== show.show_id);
-            } else {
-              this.notDisplayedSeries.push(show);
-              this.series = this.series.filter(s => s.show_id !== show.show_id);
-            }
+      // Using PUT instead of PATCH to avoid CORS issues
+      this.http.put(`http://localhost:3000/api/shows/${id}/displayed`, { is_displayed: isDisplayed })
+        .pipe(
+          map((response: any) => {
+            console.log('Update response:', response);
+            // Show success alert
+            this.showAlert(`Success! ${isDisplayed ? 'Added' : 'Removed'} show with ID: ${id}`, 'success');
+            return response;
+          }),
+          catchError(error => {
+            console.error('ERROR', error);
+            // Show error alert
+            this.showAlert(`Failed to ${isDisplayed ? 'add' : 'remove'} show with ID: ${id}`, 'error');
+            // Throw a more specific error message
+            return throwError(() => new Error('Failed to update show status'));
+          })
+        )
+        .subscribe({
+          next: (response) => {
+            resolve(response);
+          },
+          error: (error) => {
+            console.error('Subscription error:', error);
+            reject(error);
           }
-
-          this.updateSubjects();
-          resolve();
-        },
-        error: (err) => {
-          console.error('Error updating show display status:', err);
-          reject(err);
-        }
-      });
+        });
     });
   }
 }

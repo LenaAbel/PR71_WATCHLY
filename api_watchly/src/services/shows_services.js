@@ -4,6 +4,8 @@ const chalk = require('chalk');
 const sequelize = require('../../database/src/database'); 
 const Genre = require('../../database/src/models/genre.js');
 const Has = require('../../database/src/models/has.js');
+const Favorite = require('../../database/src/models/favorite.js');
+const Person = require('../../database/src/models/person.js');
 
 // --- TMDB Fetching ---
 async function getIds(name, time, pages = process.env.TMDB_PAGES) {
@@ -42,14 +44,20 @@ async function getAllShows() {
     return await Show.findAll({ where: { is_displayed: true } });
 }
 
-async function getShowById(id) {
-    return await Show.findByPk(id, { include: [
-            {
-                model: Genre,
-                through: { model: Has }, 
-            }
-        ]}
-    );
+async function getShowById(id, user_id = null) {
+    return await Show.findByPk(id, { 
+        include: [
+        {
+            model: Genre,
+            through: { model: Has }, 
+        },
+        {
+            model: Favorite,
+            required: false,
+            where: { person_id: user_id, show_id: id },
+        }
+        ]
+    });
 }
 
 async function getAllMovies() {
@@ -71,6 +79,16 @@ async function getShowTrailer(id) {
     }
 }
 
+async function getShowRating(show_id) {
+    try {
+        const show = await Show.findByPk(show_id, { attributes: ['rating'] });
+        return show ? show.rating : null;
+    } catch (error) {
+        console.error("Error fetching show rating:", error);
+        throw error;
+    }
+}
+
 // --- Show Builders ---
 /**
  * Create a movie object from TMDB data
@@ -81,7 +99,8 @@ async function createMovie(s) {
     try {
         const trailer = await getTrailer(s.id, "movie");
         const t = trailer?.results?.[0]?.key || '';
-
+        // Compute rating on a 5-scale with round numbers
+        const computedRating = s.popularity ? Math.round(Math.min(s.popularity / 20, 5)) : 0;
         return Show.build({
             name: s.original_title,
             description: s.overview,
@@ -92,7 +111,7 @@ async function createMovie(s) {
             duration: s.runtime || 'Unknown',
             is_movie: true,
             is_displayed: true,
-            rating: s.vote_average || 0,
+            rating: computedRating, // updated rating on 5-scale
         });
     } catch (error) {
         console.error(chalk.red('Error creating movie:', error.message));
@@ -108,7 +127,7 @@ async function createTv(s) {
     try {
         const trailer = await getTrailer(s.id, "tv");
         const t = trailer?.results?.[0]?.key || '';
-
+        const computedRating = s.popularity ? Math.round(Math.min(s.popularity / 20, 5)) : 0;
         return Show.build({
             name: s.name,
             description: s.overview,
@@ -119,7 +138,7 @@ async function createTv(s) {
             duration: s.episode_run_time?.[0] || 0,
             is_movie: false,
             is_displayed: true,
-            rating: Math.round(s.vote_average) || 0,
+            rating: computedRating, // updated rating on 5-scale
         });
     } catch (error) {
         console.error(chalk.red('Error creating TV show:', error.message));
@@ -171,6 +190,8 @@ module.exports = {
     getShowTrailer,
     createMovie,
     createTv,
+    saveShow,
+    getShowRating,
     saveShow,
     updateShowDisplayedStatus
 };

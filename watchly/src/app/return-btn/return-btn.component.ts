@@ -12,4 +12,8 @@ export class ReturnBtnComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  goToPreviousPage(){
+    window.history.back();
+  }
+
 }

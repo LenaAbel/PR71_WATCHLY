@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
 import { ShowsService } from '../services/shows.service';
 import { Content } from '../models/content';
 
@@ -18,53 +16,69 @@ export class AdminPageComponent implements OnInit {
   nonDisplayedMovies: any[] = [];
   nonDisplayedSeries: any[] = [];
 
-  constructor(private router: Router, private showsService: ShowsService) {
+  // Change the constructor parameter from private to public
+  constructor(private router: Router, public showsService: ShowsService) { }
+
+  async ngOnInit(): Promise<void> {
     this.checkAdminStatus();
-    if (!this.isAdmin) {
+    await this.loadContent();
+  }
+
+  checkAdminStatus(): void {
+    const userData = localStorage.getItem('userData');
+    if (userData) {
+      const user = JSON.parse(userData);
+      this.isAdmin = user.is_admin === true;
+      if (!this.isAdmin) {
+        this.redirectToHome();
+      }
+    } else {
       this.redirectToHome();
     }
   }
 
-  async ngOnInit(): Promise<void> {
-    try {
-      await this.showsService.initializeContent();
-
-      this.displayedMovies = this.showsService.getDisplayedMovies();
-      this.displayedSeries = this.showsService.getDisplayedSeries();
-      this.nonDisplayedMovies = this.showsService.getNonDisplayedMovies();
-      this.nonDisplayedSeries = this.showsService.getNonDisplayedSeries();
-    } catch (error) {
-      console.error('Error initializing admin page:', error);
-    }
-  }
-
-  checkAdminStatus(): void {
-    this.isAdmin = localStorage.getItem('isAdmin') === 'true';
-  }
-
   async addShow(show: Content): Promise<void> {
     try {
-      await this.showsService.updateShowDisplayStatus(show, true);
-      await this.refreshLists(); 
+      await this.showsService.updateShowDisplayStatus(show.show_id, true);
+      await this.loadContent();
     } catch (error) {
       console.error('Error adding show:', error);
     }
   }
 
+  async showShow(show: Content): Promise<void> {
+    try {
+      await this.showsService.updateShowDisplayStatus(show.show_id, true);
+      await this.loadContent();
+    } catch (error) {
+      console.error('Error showing show:', error);
+    }
+  }
+
   async deleteShow(show: Content): Promise<void> {
     try {
-      await this.showsService.updateShowDisplayStatus(show, false);
-      await this.refreshLists(); 
+      await this.showsService.updateShowDisplayStatus(show.show_id, false);
+      await this.loadContent();
     } catch (error) {
       console.error('Error deleting show:', error);
     }
   }
 
+  async loadContent(): Promise<void> {
+    try {
+      // Reinitialize content
+      await this.showsService.initializeContent();
+      await this.refreshLists();
+    } catch (error) {
+      console.error('Error loading content:', error);
+    }
+  }
+
   private async refreshLists(): Promise<void> {
-    this.displayedMovies = await this.showsService.getDisplayedMovies();
-    this.displayedSeries = await this.showsService.getDisplayedSeries();
-    this.nonDisplayedMovies = await this.showsService.getNonDisplayedMovies();
-    this.nonDisplayedSeries = await this.showsService.getNonDisplayedSeries();
+    this.displayedMovies = this.showsService.getDisplayedMovies();
+    this.displayedSeries = this.showsService.getDisplayedSeries();
+    this.nonDisplayedMovies = this.showsService.getNonDisplayedMovies();
+    this.nonDisplayedSeries = this.showsService.getNonDisplayedSeries();
   }
 
   redirectToHome(): void {

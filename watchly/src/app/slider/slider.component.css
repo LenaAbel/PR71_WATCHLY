@@ -1,0 +1,8 @@
+.slider-container {
+  -ms-overflow-style: none;  /* Internet Explorer and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.slider-container::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari and Opera */
+}

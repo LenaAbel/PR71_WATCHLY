@@ -1,28 +1,58 @@
-<div class="p-6"> <!--mettre un if pour display que si c'est log in -->
-    <h2 class="text-3xl font-bold text-(--color-main-light) dark:text-(--color-main-dark)">Your shows</h2>
-    <div class="flex gap-4 p-4">
-        <p [ngClass]="{'text-(--bg-surface-5-light) dark:text-(--bg-surface-5-dark)' : !isSelected('movies')}" (click)="selectTab('movies')" class="cursor-pointer">
-            Movies <span class="pl-4 text-(--bg-surface-5-light) dark:text-(--bg-surface-5-dark)">|</span>
-        </p>
-        <p [ngClass]="{'text-(--bg-surface-5-light) dark:text-(--bg-surface-5-dark)' : !isSelected('series')}" (click)="selectTab('series')" class="cursor-pointer">
-            Series
-        </p>
+<div class="p-6">
+    <!-- Admin Dashboard Section -->
+    <div *ngIf="isAdmin">
+        <app-admin-page></app-admin-page>
     </div>
 
-    <div class="overflow-hidden px-4">
-        <app-slider [type]="selectedTab" [content]="content"></app-slider><!--si data vide afficher la div en dessous-->
-
-        <div class="flex flex-col items-center justify-center h-[25vh] w-full">
-            <p class="text-2xl font-bold text-(--color-main-light) dark:text-(--color-main-dark)">Oops :(</p>
-            <p class="text-(--bg-surface-5-light) dark:text-(--bg-surface-5-dark)">You haven't rated any show yet, start now by looking for your all time favorites</p>
+    <!-- Regular User Shows Section -->
+    <div *ngIf="!isAdmin">
+        <h2 class="text-3xl font-bold text-(--color-main-light) dark:text-(--color-main-dark)">Your shows</h2>
+        <div class="flex gap-4 p-4">
+            <p [ngClass]="{'text-(--bg-surface-5-light) dark:text-(--bg-surface-5-dark)' : !isSelected('movies')}" (click)="selectTab('movies')" class="cursor-pointer">
+                Movies <span class="pl-4 text-(--bg-surface-5-light) dark:text-(--bg-surface-5-dark)">|</span>
+            </p>
+            <p [ngClass]="{'text-(--bg-surface-5-light) dark:text-(--bg-surface-5-dark)' : !isSelected('series')}" (click)="selectTab('series')" class="cursor-pointer">
+                Series
+            </p>
         </div>
-    </div>
 
-    <div> <!-- A afficher si pas login-->
-        <div class="flex flex-col items-center justify-center h-[25vh] w-full">
-            <p class="text-2xl font-bold text-(--color-main-light) dark:text-(--color-main-dark)">New here ?</p>
-            <p class="text-(--bg-surface-5-light) dark:text-(--bg-surface-5-dark)">Login or register right now !</p>
-            <button  routerLink="/login" class="bg-(--color-main-light) dark:bg-(--color-main-dark) text-(--bg-surface-1-light) dark:text-(--bg-surface-1-dark) px-4 py-2 rounded-(--radius-inner) mt-4">Go to login !</button>
+        <div class="overflow-hidden px-4 relative">
+            <!-- Left arrow -->
+            <button 
+                *ngIf="hasContent()"
+                class="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-(--bg-surface-1-light) dark:bg-(--bg-surface-1-dark) rounded-full p-2 shadow-(--shadow-light) dark:shadow-(--shadow-dark)"
+                (click)="slideLeft()">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-(--color-main-light) dark:text-(--color-main-dark)">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                </svg>
+            </button>
+            
+            <!-- Right arrow -->
+            <button 
+                *ngIf="hasContent()"
+                class="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-(--bg-surface-1-light) dark:bg-(--bg-surface-1-dark) rounded-full p-2 shadow-(--shadow-light) dark:shadow-(--shadow-dark)"
+                (click)="slideRight()">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-(--color-main-light) dark:text-(--color-main-dark)">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                </svg>
+            </button>
+            
+            <app-slider [type]="selectedTab" [content]="content" *ngIf="hasContent()"></app-slider>
+
+            <!-- No content message -->
+            <div class="flex flex-col items-center justify-center h-[25vh] w-full" *ngIf="!hasContent() && isLoggedIn">
+                <p class="text-2xl font-bold text-(--color-main-light) dark:text-(--color-main-dark)">Oops :(</p>
+                <p class="text-(--bg-surface-5-light) dark:text-(--bg-surface-5-dark)">You haven't rated any show yet, start now by looking for your all time favorites</p>
+            </div>
+        </div>
+
+        <!-- Not logged in message -->
+        <div *ngIf="!isLoggedIn">
+            <div class="flex flex-col items-center justify-center h-[25vh] w-full">
+                <p class="text-2xl font-bold text-(--color-main-light) dark:text-(--color-main-dark)">New here ?</p>
+                <p class="text-(--bg-surface-5-light) dark:text-(--bg-surface-5-dark)">Login or register right now !</p>
+                <button routerLink="/login" class="bg-(--color-main-light) dark:bg-(--color-main-dark) text-(--bg-surface-1-light) dark:text-(--bg-surface-1-dark) px-4 py-2 rounded-(--radius-inner) mt-4">Go to login !</button>
+            </div>
         </div>
     </div>
 </div>

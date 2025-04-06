@@ -39,6 +39,8 @@ import { SliderComponent } from './slider/slider.component';
 import { YourShowsSectionComponent } from './your-shows-section/your-shows-section.component';
 import { ResearchPageComponent } from './research-page/research-page.component';
 import { RatingPopupComponent } from './rating-popup/rating-popup.component';
+import { ParametersComponent } from './parameters/parameters.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SliderTitledComponent } from './slider-titled/slider-titled.component';
 import { SliderButtonComponent } from './slider-button/slider-button.component';
 
@@ -76,6 +78,8 @@ import { SliderButtonComponent } from './slider-button/slider-button.component';
     YourShowsSectionComponent,
     ResearchPageComponent,
     RatingPopupComponent,
+    ParametersComponent,
+    RatingPopupComponent,
     SliderTitledComponent,
     SliderButtonComponent
   ],
@@ -87,7 +91,13 @@ import { SliderButtonComponent } from './slider-button/slider-button.component';
     SwiperModule,
     ReactiveFormsModule
   ],
-  providers: [AuthenticationService, AuthInterceptor
+  providers: [
+    AuthenticationService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

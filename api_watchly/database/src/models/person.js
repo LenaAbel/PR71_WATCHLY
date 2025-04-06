@@ -28,8 +28,13 @@ Person.init(
             type: DataTypes.STRING(100),
         },
         password: {
-            type: DataTypes.STRING(50),
+            type: DataTypes.STRING(255),
         },
+        profile_picture: {
+            type: DataTypes.STRING(100),
+            allowNull: false, 
+            defaultValue: 'assets/img/default-person.jpg'
+        }
     },
     {
         sequelize,

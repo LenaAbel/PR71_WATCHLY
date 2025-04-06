@@ -3,6 +3,7 @@ import { ActivatedRoute, UrlSegment } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Actor } from '../models/actor';
 import { Content } from '../models/content';
+import { AuthenticationService } from '../services/authentification.service';
 @Component({
   selector: 'app-show-page',
   templateUrl: './show-page.component.html',
@@ -17,8 +18,8 @@ export class ShowPageComponent implements OnInit {
   groupedSeasons!: any[];
   images!: any[];
   isRatingPopupOpen = false;
-
-  constructor(private route: ActivatedRoute, private http: HttpClient) {}
+  isLoggedIn = false;
+  constructor(private route: ActivatedRoute, private http: HttpClient, private authService: AuthenticationService) {}
 
   ngOnInit(): void {
     this.type = this.route.snapshot.url.some(segment => segment.path === 'episode')
@@ -32,11 +33,16 @@ export class ShowPageComponent implements OnInit {
     }
     this.getCast(this.showId);
     this.getImages(this.showId);
+    this.isLoggedIn = this.authService.isLoggedIn();
   }
 
   getShow(id: number): void {
+    const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+    const userId = userData.id || 'unknown';
     const endpoint = `http://localhost:3000/api/shows/${id}`;
-    this.http.get(endpoint).subscribe({
+    const options = userId !== 'unknown' ? { params: { user_id: userId } } : {};
+
+    this.http.get(endpoint, options).subscribe({
       next: (data) => {
         this.show = data as Content;
         console.log(`Fetched with id ${id}:`, data);
@@ -47,6 +53,7 @@ export class ShowPageComponent implements OnInit {
           this.type = 'series';
           this.getEpisodes(this.showId);
         }
+        
       },
       error: (err) => {
         console.error(`Error fetching with id ${id}:`, err);
@@ -140,8 +147,10 @@ export class ShowPageComponent implements OnInit {
   }
 
   onRatingSubmitted(rating: number): void {
-    console.log(`Rating submitted: ${rating}`);
     this.addRating(rating);
+    this.closeRatingPopup();
+    // Reload the page after rating is submitted
+    window.location.reload();
   }
 
   addRating(rating: number): void{

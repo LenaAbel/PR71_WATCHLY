@@ -1,8 +1,5 @@
 node_modules/
 .env
 package-lock.json
-<<<<<<< HEAD
 ./database/data/watchlyDb.sqlite
-=======
 database/data/watchlyDB
->>>>>>> 2992fb2cc8e672c395f8dee57e20eb21d6caaefa

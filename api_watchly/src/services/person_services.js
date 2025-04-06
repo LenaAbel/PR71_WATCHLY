@@ -1,5 +1,7 @@
 const Person = require('../../database/src/models/person');
 const Favorite = require('../../database/src/models/favorite');
+const Shows = require('../../database/src/models/shows');
+const Comments = require('../../database/src/models/comments');
 
 const chalk = require('chalk');
 const bcrypt = require('bcrypt');
@@ -27,18 +29,41 @@ async function createUsers(){
 
 
 async function addPerson(data){
-const hashedPassword = await bcrypt.hash(data[5], 10);
-const person = Person.build({
-    username: data[0],
-    name: data[1],
-    surname: data[2],
-    is_admin: data[3],
-    mail: data[4],
-    password: hashedPassword,
-});
-person.save().then(() => console.log(chalk.green(`User ${data[0]} added`)));
+    const hashedPassword = await bcrypt.hash(data[5], 10);
+    const person = Person.build({
+        username: data[0],
+        name: data[1],
+        surname: data[2],
+        is_admin: data[3],
+        mail: data[4],
+        password: hashedPassword,
+        profile_picture: 'assets/img/default-person.jpg'
+    });
+    person.save().then(() => console.log(chalk.green(`User ${data[0]} added`)));
 }
 
+async function getUserPicture(personId) {
+    try {
+        const user = await Person.findByPk(personId, {
+            attributes: ['profile_picture']
+        });
+        return user ? user.profile_picture : null;
+    } catch (error) {
+        console.error('Error fetching user picture:', error);
+        throw error;
+    }
+}
 
+async function getPersonById(id) {
+    return await Person.findByPk(id, 
+        { 
+            attributes: ['username', 'mail'],
+            include: Shows,
+            through: {
+                model: Favorite,
+            }
+        }
+    );
+}
 
-module.exports = { createUsers };
+module.exports = { createUsers, getUserPicture, getPersonById };

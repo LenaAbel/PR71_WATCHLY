@@ -7,16 +7,12 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class CastSectionComponent implements OnInit {
   @Input() cast: any[] = [];
-  isLoading = true;
-
+   
+  @Input() showId!: number;
   constructor() { }
 
   ngOnInit(): void {
-    setTimeout(() => {
-      this.isLoading = false;
-    }, 1000); // Simulate loading time
-    console.log('CastSectionComponent initialized');
-    console.log('Cast:', this.cast);
+
   }
 
 }

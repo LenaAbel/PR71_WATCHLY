@@ -19,11 +19,11 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {
     this.registerForm = new FormGroup({
-      name: new FormControl('azeaze', [Validators.required, Validators.minLength(3)]),
-      surname: new FormControl('azeaze', [Validators.required, Validators.minLength(3)]),
-      username: new FormControl('azeaze', [Validators.required, Validators.minLength(3)]),
-      email: new FormControl('aze@aze.aze', [Validators.required, Validators.email]),
-      password: new FormControl('azeaze', [Validators.required, Validators.minLength(6)])
+      name: new FormControl('John', [Validators.required, Validators.minLength(3)]),
+      surname: new FormControl('Smith', [Validators.required, Validators.minLength(3)]),
+      username: new FormControl('johnsmith', [Validators.required, Validators.minLength(3)]),
+      email: new FormControl('john.smith@example.com', [Validators.required, Validators.email]),
+      password: new FormControl('123456', [Validators.required, Validators.minLength(6)])
     });
   }
 
@@ -35,7 +35,9 @@ export class RegisterComponent implements OnInit {
       return;
     }
 
-    console.log('Submitting form', this.registerForm.value);
+    // Clear any existing user data from localStorage
+    localStorage.clear();
+    sessionStorage.clear();
 
     this.authService.register(this.registerForm.value).subscribe({
       next: (response) => {

@@ -9,8 +9,12 @@ export class Content {
   status!: string;
   duration!: number;
   is_movie!: boolean;
+  is_rated!: boolean;
   is_displayed!: boolean;
   Genres!: any[];
+  Favorite!: any;
+  imdb_rating?: number;
+  rating?: number;  // TMDB rating on 5-scale
   // Episode properties
   season!: number; // Season number for the episode
   number!: number; // Episode number
@@ -33,6 +37,8 @@ export class Content {
     episodes: number,
     seasons: number,
     thumbnail: string,
+    imdb_rating?: number,
+    rating?: number,
     is_displayed: boolean = true,
   ) {
     // Show properties
@@ -52,5 +58,7 @@ export class Content {
     this.episodes = episodes;
     this.seasons = seasons;
     this.thumbnail = thumbnail;
+    this.imdb_rating = imdb_rating;
+    this.rating = rating;
   }
 }

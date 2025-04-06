@@ -92,7 +92,6 @@ async function getFullCastingFromShowId(showId) {
 
     const fullCast = await getCast(tmdbId, mediaType);
     
-    // Add image URLs to cast and crew
     const addProfileUrl = person => ({
         ...person,
         image_url: person.profile_path 
