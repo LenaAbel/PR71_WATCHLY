@@ -1,90 +1,100 @@
 /* Card wrapper with margin */
 .card-wrapper {
-  margin: 1.5rem 0.75rem;
-  display: flex;
-  justify-content: center;
-}
-
-/* Card container with fixed height and transition effects */
-.card-container {
-  width: 460px; 
-  height: 470px; /* Increased from 430px to ensure button visibility */
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  display: flex;
-  flex-direction: column;
-  background-color: #f3f9f3; /* Light green background for light mode */
-}
-
-/* Dark mode card styling */
-@media (prefers-color-scheme: dark) {
-  .card-container {
-    background-color: #1e2e1e; /* Darker green for dark mode */
+    margin: 1.5rem 0.75rem;
+    display: flex;
+    justify-content: center;
   }
-}
-
-.card-container:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-}
-
-/* Scrollable description styling */
-.description-container {
-  scrollbar-width: thin;
-  scrollbar-color: rgba(155, 155, 155, 0.5) transparent;
-  padding-right: 8px;
-}
-
-.description-container::-webkit-scrollbar {
-  width: 4px;
-}
-
-.description-container::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.description-container::-webkit-scrollbar-thumb {
-  background-color: rgba(155, 155, 155, 0.5);
-  border-radius: 10px;
-}
-
-.description-container::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(155, 155, 155, 0.7);
-}
-
-/* Action button hover effect */
-.action-button {
-  transition: all 0.2s ease;
-}
-
-.action-button:hover {
-  transform: scale(1.03);
-}
-
-/* Action button styling */
-.action-button.add-button {
-  background-color: var(--color-main-light); /* Using site's theme variable for light mode */
-  color: white;
-}
-
-.dark .action-button.add-button {
-  background-color: var(--color-main-dark); /* Using site's theme variable for dark mode */
-}
-
-.action-button.add-button:hover {
-  opacity: 0.9;
-}
-
-.action-button.delete-button {
-  background-color: #f44336; /* Keep red color for Delete button */
-  color: white;
-}
-
-.action-button.delete-button:hover {
-  background-color: #d32f2f; /* Darker red on hover */
-}
-
-/* Fade overlays for scrollable content */
-.fade-top, .fade-bottom {
-  opacity: 0.7;
-  pointer-events: none;
-}
+  
+  /* Card container with fixed height and transition effects */
+  .card-container {
+    width: 460px; 
+    height: 520px; 
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--bg-surface-1-light);
+  }
+  
+  /* Dark mode card styling */
+  @media (prefers-color-scheme: dark) {
+    .card-container {
+      background-color: var(--bg-surface-1-dark); 
+    }
+  }
+  
+  .card-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* Scrollable description styling */
+  .description-container {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(155, 155, 155, 0.5) transparent;
+    padding-right: 8px;
+  }
+  
+  .description-container::-webkit-scrollbar {
+    width: 4px;
+  }
+  
+  .description-container::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  .description-container::-webkit-scrollbar-thumb {
+    background-color: rgba(155, 155, 155, 0.5);
+    border-radius: 10px;
+  }
+  
+  .description-container::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(155, 155, 155, 0.7);
+  }
+  
+  /* Description wrapper taller to accommodate longer cards */
+  .description-wrapper {
+    height: 130px !important; 
+  }
+  
+  /* Action button hover effect */
+  .action-button {
+    transition: all 0.2s ease;
+  }
+  
+  .action-button:hover {
+    transform: scale(1.03);
+  }
+  
+  /* Action button styling */
+  .action-button.add-button {
+    background-color: #2e7d32; 
+    color: white;
+  }
+  
+  .dark .action-button.add-button {
+    background-color: #4caf50; 
+  }
+  
+  .action-button.add-button:hover {
+    background-color: #1b5e20;
+  }
+  
+  .dark .action-button.add-button:hover {
+    background-color: #388e3c; 
+  }
+  
+  .action-button.delete-button {
+    background-color: #f44336; /* Keep red color for Delete button */
+    color: white;
+  }
+  
+  .action-button.delete-button:hover {
+    background-color: #d32f2f; /* Darker red on hover */
+  }
+  
+  /* Fade overlays for scrollable content */
+  .fade-top, .fade-bottom {
+    opacity: 0.7;
+    pointer-events: none;
+  }
+  

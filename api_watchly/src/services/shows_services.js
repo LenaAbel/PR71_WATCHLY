@@ -239,6 +239,10 @@ async function updateShowDisplayedStatus(id, isDisplayed) {
     }
 }
 
+async function getFirstShow() {
+    return await Show.findOne({ where: { is_displayed: true } });
+}
+
 module.exports = {
     getIds,
     getShows,
@@ -254,5 +258,6 @@ module.exports = {
     searchShows,
     getShowRating,
     saveShow,
-    updateShowDisplayedStatus
+    updateShowDisplayedStatus,
+    getFirstShow
 };
