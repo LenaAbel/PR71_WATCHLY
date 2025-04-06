@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Content } from '../models/content';
 import { HttpClient } from '@angular/common/http';
 
@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
   templateUrl: './content-card.component.html',
   styleUrls: ['./content-card.component.css']
 })
-export class ContentCardComponent {
+export class ContentCardComponent implements OnInit {
   @Input() type! : string;
   @Input() content! : Content;
   alertMessage: string = '';
@@ -15,8 +15,9 @@ export class ContentCardComponent {
 
   constructor(private http: HttpClient) {}
 
-  ngOnInit() {
-    console.log(this.content);
+  ngOnInit(): void {
+    // Debug: Log the content object to see what's being received
+    console.log(`Content card for ${this.content.name}, type: ${this.type}`, this.content);
   }
 
   onDeleteFavorite(event: Event): void {
@@ -45,5 +46,19 @@ export class ContentCardComponent {
       this.alertMessage = '';
       this.alertType = '';
     }, 3000);
+  }
+
+  // Helper method to safely get seasons count
+  getSeasonsCount(): number {
+    // Return seasons count or 0 if not available
+    if (this.content.seasons !== undefined && this.content.seasons !== null) {
+      return this.content.seasons;
+    }
+    // Try to get from episodes array if available
+    if (this.content.episodes && Array.isArray(this.content.episodes)) {
+      const seasons = [...new Set(this.content.episodes.map((ep: any) => ep.season))];
+      return seasons.length;
+    }
+    return 0;
   }
 }
