@@ -275,6 +275,10 @@ async function updateShowDisplayedStatus(id, isDisplayed) {
     }
 }
 
+async function getFirstShow() {
+    return await Show.findOne({ where: { is_displayed: true } });
+}
+
 module.exports = {
     getIds,
     getShows,
@@ -292,5 +296,6 @@ module.exports = {
     saveShow,
     updateShowDisplayedStatus,
     getDisplayedMovies,
-    getDisplayedTVShows
+    getDisplayedTVShows,
+    getFirstShow
 };

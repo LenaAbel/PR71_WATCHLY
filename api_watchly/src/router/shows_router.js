@@ -148,6 +148,19 @@ router.get("/:id/trailer", showsController.getTrailer);
  */
 router.get('/:id/rating', showsController.getShowRating);
 
+/**
+ * @swagger
+ * /api/shows/first:
+ *   get:
+ *     summary: Get the first show in the database
+ *     tags: [Shows]
+ *     responses:
+ *       200:
+ *         description: First show in the database
+ *       404:
+ *         description: No shows found
+ */
+router.get('/first', showsController.getFirst);
 
 /**
  * @swagger

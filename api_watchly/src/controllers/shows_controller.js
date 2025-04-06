@@ -141,6 +141,18 @@ async function getShowRating(req, res) {
     }
 }
 
+async function getFirst(req, res) {
+    try {
+        const show = await showsServices.getFirstShow();
+        if (!show) {
+            return res.status(404).json({ message: "No shows found" });
+        }
+        res.status(200).json(show);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+}
+
 module.exports = {
     addsShowsDB,
     getAll,
@@ -153,4 +165,5 @@ module.exports = {
     getShowRating,
     getMoviesDisplayed,
     getTVDisplayed,
+    getFirst
 };
