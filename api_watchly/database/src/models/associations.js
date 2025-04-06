@@ -6,6 +6,7 @@ const Genre = require('./genre');
 const Comments = require('./comments');
 const Person = require('./person');
 const Favorite = require('./favorite');
+
 // === Associations ===
 
 // Picture - Illustrated
@@ -29,8 +30,9 @@ Person.hasMany(Comments, { foreignKey: 'person_id', as: 'comments' });
 Comments.belongsTo(Show, { foreignKey: 'show_id' });
 Show.hasMany(Comments, { foreignKey: 'show_id' });
 
-Show.belongsToMany(Person, { through: Favorite, foreignKey: 'show_id' });
+// Favorite associations
 Person.belongsToMany(Show, { through: Favorite, foreignKey: 'person_id' });
+Show.belongsToMany(Person, { through: Favorite, foreignKey: 'show_id' });
 
 Show.hasMany(Favorite, { foreignKey: 'show_id' });
 Favorite.belongsTo(Show, { foreignKey: 'show_id' });
@@ -46,4 +48,5 @@ module.exports = {
   Genre,
   Comments,
   Person,
+  Favorite
 };

@@ -101,6 +101,25 @@ router.get('/:id', showsController.getById);
  */
 router.get("/:id/trailer", showsController.getTrailer);
 
-
+/**
+ * @swagger
+ * /api/shows/{id}/rating:
+ *   get:
+ *     summary: Get the rating of a show by ID
+ *     tags: [Shows]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: Show ID
+ *     responses:
+ *       200:
+ *         description: Rating details
+ *       404:
+ *         description: Rating not found
+ */
+router.get('/:id/rating', showsController.getShowRating);
 
 module.exports = router;

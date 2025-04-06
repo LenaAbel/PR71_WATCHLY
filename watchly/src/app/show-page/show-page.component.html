@@ -1,22 +1,35 @@
 <div class="max-w-full grid-container">
-    <app-trailer-banner class="col-span-2" [showId]="showId"></app-trailer-banner>
+    <app-trailer-banner class="col-span-full md:col-span-2" [showId]="showId"></app-trailer-banner>
     <app-return-btn *ngIf="type === 'episode'"></app-return-btn>
-    <app-cast-section class="row-span-3" *ngIf="type === 'episode'" [cast]="cast"></app-cast-section>
+    <app-cast-section 
+        class="row-span-3" 
+        *ngIf="type === 'episode'" 
+        [cast]="cast" 
+        [showId]="showId">
+    </app-cast-section>
     <app-content-section
         [type]="type"
         [content]="show"
         (openRating)="openRatingPopup()">
     </app-content-section>
-    <app-cast-section class="row-span-3" *ngIf="type !== 'episode'" [cast]="cast"></app-cast-section>
-    <app-episodes-section *ngIf="!show.is_movie && type != 'episode'" [groupedSeasons]="groupedSeasons"></app-episodes-section>
-    <app-poster-section [images]="images"></app-poster-section>
+    <app-cast-section 
+        class="row-span-1 md:row-span-3" 
+        *ngIf="type !== 'episode'" 
+        [cast]="cast" 
+        [showId]="showId">
+    </app-cast-section>
+    <app-episodes-section 
+        class="col-span-full md:col-span-1" 
+        *ngIf="!show.is_movie && type != 'episode'" 
+        [groupedSeasons]="groupedSeasons"
+        [showId]="showId">
+    </app-episodes-section>
+    <app-poster-section 
+        [images]="images"
+        [showId]="showId">
+    </app-poster-section>
     <app-comment-section [showId]="show.show_id"></app-comment-section>
-    <div class="flex items-center gap-4 mt-4">
-        <button (click)="openRatingPopup()"
-                class="px-4 py-2 rounded-(--radius-inner) bg-(--color-main-light) dark:bg-(--color-main-dark) text-white hover:opacity-90">
-            Rate This Show
-        </button>
-    </div>
+
     <app-rating-popup
         [showTitle]="show.name || ''"
         [isOpen]="isRatingPopupOpen"

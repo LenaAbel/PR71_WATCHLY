@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-episode-page',
@@ -11,7 +12,7 @@ export class EpisodePageComponent implements OnInit {
   episodes!: any[];
   groupedSeasons!: any[];;
   showId!: number;
-  constructor(private http: HttpClient, private route: ActivatedRoute) { }
+  constructor(private router: Router, private http: HttpClient, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     const type = 'series';
@@ -21,14 +22,20 @@ export class EpisodePageComponent implements OnInit {
   }
   // Fetch episodes and group them by season
   getEpisodes(id: number): void {
-    const endpoint = `http://localhost:3000/api/episodes/${id}`;
+    const endpoint = `http://localhost:3000/api/episodes/${this.showId}/episodes`;
     this.http.get<any[]>(endpoint).subscribe({
       next: (data: any[]) => {
         this.episodes = data;
+        console.log('Episodes:', this.episodes);
+        
         this.groupSeasons();
         
         console.log(`Fetched with id ${id}:`, data);
         console.log(this.groupedSeasons);
+
+        if(this.episodes.length === 0) {
+          this.router.navigate(['/error/404']);
+        }
 
       },
       error: (err) => {

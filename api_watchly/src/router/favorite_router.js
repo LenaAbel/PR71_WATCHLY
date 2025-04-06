@@ -1,5 +1,6 @@
 const express = require('express');
-const { getFavoritesByPersonId, getFavoritesByShowId, addFavorite, removeFavorite, getFavoritesByPersonIdAndShowId } = require('../controllers/favorite_controller');
+const favoriteController = require('../controllers/favorite_controller');
+const favoriteServices = require('../services/favorite_services'); 
 
 const router = express.Router();
 
@@ -28,14 +29,7 @@ const router = express.Router();
  *         description: Failed to fetch favorites
  */
 router.get('/user/:personId', async (req, res) => {
-    try {
-        const favorites = await getFavoritesByPersonId(req);
-        console.log(favorites);
-        
-        res.status(200).json(favorites);
-    } catch (err) {
-        res.status(500).json({ error: 'Failed to fetch favorites' });
-    }
+    return favoriteController.getFavoritesByPersonId(req, res);
 });
 
 /**
@@ -72,16 +66,7 @@ router.get('/user/:personId', async (req, res) => {
  *         description: Failed to fetch favorites for the show
  */
 router.get('/show/:showId', async (req, res) => {
-    try {
-        const favorites = await getFavoritesByShowId(req);
-        if (favorites.length > 0) {
-            res.status(200).json(favorites);
-        } else {
-            res.status(404).json({ error: 'No favorites found for this show' });
-        }
-    } catch (err) {
-        res.status(500).json({ error: 'Failed to fetch favorites for the show' });
-    }
+    return favoriteController.getFavoritesByShowId(req, res);
 });
 
 /**
@@ -122,16 +107,7 @@ router.get('/show/:showId', async (req, res) => {
  *         description: Failed to fetch favorite item
  */
 router.get('/user/:personId/show/:showId', async (req, res) => {
-    try {
-        const favorite = await getFavoritesByPersonIdAndShowId(req);
-        if (favorite) {
-            res.status(200).json(favorite);
-        } else {
-            res.status(404).json({ error: 'Favorite not found' });
-        }
-    } catch (err) {
-        res.status(500).json({ error: 'Failed to fetch favorite' });
-    }
+    return favoriteController.getFavoritesByPersonIdAndShowId(req, res);
 });
 
 /**
@@ -157,11 +133,13 @@ router.get('/user/:personId/show/:showId', async (req, res) => {
  */
 router.post('/', async (req, res) => {
     try {
-        console.log(req.body);
-        const favorite = await addFavorite(req.body);
-        res.status(201).json(favorite);
-    } catch (err) {
-        res.status(400).json({ error: 'Failed to add favorite' });
+        // Handle nested body structure if present
+        const favoriteData = req.body.body || req.body;
+        req.body = favoriteData;
+        return await favoriteController.addFavorite(req, res);
+    } catch (error) {
+        console.error('Router error:', error);
+        return res.status(500).json({ error: 'Internal server error' });
     }
 });
 
@@ -184,16 +162,20 @@ router.post('/', async (req, res) => {
  *         description: Favorite item not found
  */
 router.delete('/:id', async (req, res) => {
+    return favoriteController.removeFavorite(req, res);
+});
+
+router.delete('/user/:personId/show/:showId', async (req, res) => {
     try {
-        const { id } = req.params;
-        const result = await removeFavorite(id);
+        const result = await favoriteServices.deleteFavorite(req.params.personId, req.params.showId);
         if (result) {
-            res.status(200).json({ message: 'Favorite removed successfully' });
+            res.status(200).json({ message: 'Favorite deleted successfully' });
         } else {
-            res.status(404).json({ error: 'Favorite not found' });
+            res.status(404).json({ message: 'Favorite not found' });
         }
-    } catch (err) {
-        res.status(500).json({ error: 'Failed to remove favorite' });
+    } catch (error) {
+        console.error('Error deleting favorite:', error);
+        res.status(500).json({ error: 'Failed to delete favorite' });
     }
 });
 

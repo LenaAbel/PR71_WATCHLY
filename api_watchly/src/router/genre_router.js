@@ -55,5 +55,4 @@ router.get('/', genreController.getAllGenre);
  */
 router.get('/:id', genreController.getGenreById);
 
-// Make sure the export is correct
 module.exports = router;  // NOT module.exports = { router }

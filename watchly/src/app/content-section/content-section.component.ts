@@ -11,14 +11,27 @@ export class ContentSectionComponent implements OnInit {
   @Input() type!: string;
   @Input() content!: Content;
   @Output() openRating = new EventEmitter<void>();
-  isLoggedIn = false;
+  @Output() ratingSubmitted = new EventEmitter<void>();
+
   constructor(private http: HttpClient, private authService: AuthenticationService) {}
 
   ngOnInit(): void {
-    this.isLoggedIn = this.authService.isLoggedIn();
+    // Empty since we're using the getter
   }
 
   onOpenRating(): void {
     this.openRating.emit();
+  }
+
+  get isLoggedIn(): boolean {
+    return this.authService.isLoggedIn();
+  }
+
+  onDeleteRating(): void {
+    const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+    this.http.delete(`http://localhost:3000/api/favorites/user/${userData.id}/show/${this.content.show_id}`)
+      .subscribe(() => {
+        window.location.reload();
+      });
   }
 }

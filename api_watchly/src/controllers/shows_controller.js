@@ -99,6 +99,15 @@ async function search(req, res) {
     }
 }
 
+async function getShowRating(req, res) {
+    try {
+        const rating = await showsServices.getShowRating(req.params.id);
+        res.status(200).json({ rating });
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to fetch show rating' });
+    }
+}
+
 module.exports = {
     addsShowsDB,
     getAll,
@@ -106,5 +115,6 @@ module.exports = {
     getMovies,
     getTV,
     getTrailer,
-    search
+    search,
+    getShowRating
 };

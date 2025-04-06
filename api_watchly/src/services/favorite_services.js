@@ -6,7 +6,7 @@ const bcrypt = require('bcrypt');
 Favorite.belongsTo(Person, { foreignKey: 'person_id', as: 'person' });
 
 
-async function createFavorites(){
+async function initializeTestFavorites(){
     const favorites = [
         [1, 1, 5, 1],
         [1, 2, 4, 0],
@@ -47,52 +47,17 @@ async function createFavorites(){
         [8, 2, 4, 0],
         [8, 3, 3, 1],
         [8, 4, 2, 0],
-        [8, 5, 1, 1],
-        [9, 1, 5, 1],
-        [9, 2, 4, 0],
-        [9, 3, 3, 1],
-        [9, 4, 2, 0],
-        [9, 5, 1, 1],
-        [10, 1, 5, 1],
-        [10, 2, 4, 0],
-        [10, 3, 3, 1],
-        [10, 4, 2, 0],
-        [10, 5, 1, 1],
-        [25, 1, 5, 1],
-        [25, 2, 4, 0],
-        [25, 3, 3, 1],
-        [25, 4, 2, 0],
-        [25, 5, 1, 1],
-        [26, 1, 5, 1],
-        [26, 2, 4, 0],
-        [26, 3, 3, 1],
-        [26, 4, 2, 0],
-        [26, 5, 1, 1],
-        [27, 1, 5, 1],
-        [27, 2, 4, 0],
-        [27, 3, 3, 1],
-        [27, 4, 2, 0],
-        [27, 5, 1, 1],
-        [28, 1, 5, 1],
-        [28, 2, 4, 0],
-        [28, 3, 3, 1],
-        [28, 4, 2, 0],
-        [28, 5, 1, 1],
-        [29, 1, 5, 1],
-        [29, 2, 4, 0],
-        [29, 3, 3, 1],
-        [29, 4, 2, 0],
-        [29, 5, 1, 1],
-        [30, 1, 5, 1],
-        [30, 2, 4, 0],
-        [30, 3, 3, 1],
-        [30, 4, 2, 0],
-        [30, 5, 1, 1],
-        
+        [8, 5, 1, 1],        
     ];
     console.log(chalk.cyan(`\n 💖 Processing favorites...`));
     for (const f of favorites) {
-        await addFav(f);
+        const [person_id, show_id, rating, is_watched] = f;
+        await Favorite.create({
+            show_id,
+            person_id,
+            rating,
+            is_watched,
+        });
     }
 } 
 
@@ -116,10 +81,9 @@ async function getFavoritesByPersonId(person_id) {
             attributes: ['person_id', 'name'],
         },
     });
-    console.log(favorites);
-    
     return favorites;
 }
+
 async function getFavoritesByShowId(show_id) {
     const favorites = await Favorite.findAll({
         where: { show_id },
@@ -144,18 +108,51 @@ async function getFavoritesByPersonIdAndShowId(person_id, show_id) {
     return favorites;
 }
 
-async function addFavorite(req) {
-    console.log(req.body);
-    
-    const { show_id, person_id, rating, is_watched } = req.body;
-    const favorite = await Favorite.create({
-        show_id,
-        person_id,
-        rating,
-        is_watched,
+async function addFavorite(favoriteData) {    
+    if (!favoriteData) {
+        throw new Error('No favorite data provided');
+    }
+
+    const { show_id, person_id, rating = 0, is_watched = false } = favoriteData;
+
+    if (!show_id || !person_id) {
+        console.error('Missing data:', { show_id, person_id, rating, is_watched });
+        throw new Error(`Missing required favorite data: show_id=${show_id}, person_id=${person_id}`);
+    }
+
+    // Check if favorite already exists
+    const existingFavorite = await Favorite.findOne({
+        where: { show_id, person_id }
     });
-    return favorite;
+
+    if (existingFavorite) {
+        throw new Error('Favorite already exists');
+    }
+
+    try {
+        const favorite = await Favorite.create({
+            show_id,
+            person_id,
+            rating,
+            is_watched,
+        });
+        return favorite;
+    } catch (error) {
+        console.error(chalk.red('Database error:', error));
+        throw new Error('Failed to create favorite');
+    }
 }
 
+async function deleteFavorite(person_id, show_id) {
+    try {
+        const result = await Favorite.destroy({
+            where: { person_id, show_id }
+        });
+        return result > 0;
+    } catch (error) {
+        console.error(chalk.red('Error deleting favorite:', error));
+        throw error;
+    }
+}
 
-module.exports = { createFavorites, addFavorite, getFavoritesByPersonId, getFavoritesByShowId, getFavoritesByPersonIdAndShowId };
+module.exports = { initializeTestFavorites, addFavorite, getFavoritesByPersonId, getFavoritesByShowId, getFavoritesByPersonIdAndShowId, getAllFavorites, deleteFavorite };

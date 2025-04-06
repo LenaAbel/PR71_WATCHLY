@@ -4,18 +4,21 @@ export class User {
   username: string;
   email: string;
   password: string;
+  profile_picture?: string;
 
   constructor(
     firstname: string = '',
     lastname: string = '',
     username: string = '',
     email: string = '',
-    password: string = ''
+    password: string = '',
+    profile_picture: string = 'assets/img/default-person.jpg'
   ) {
     this.firstname = firstname;
     this.lastname = lastname;
     this.username = username;
     this.email = email;
     this.password = password;
+    this.profile_picture = profile_picture;
   }
 }

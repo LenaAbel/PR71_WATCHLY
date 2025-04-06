@@ -147,8 +147,10 @@ export class ShowPageComponent implements OnInit {
   }
 
   onRatingSubmitted(rating: number): void {
-    console.log(`Rating submitted: ${rating}`);
     this.addRating(rating);
+    this.closeRatingPopup();
+    // Reload the page after rating is submitted
+    window.location.reload();
   }
 
   addRating(rating: number): void{

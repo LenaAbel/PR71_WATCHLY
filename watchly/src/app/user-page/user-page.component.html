@@ -1,38 +1,97 @@
-<div class="w-full p-8">
-    <div class="flex gap-15 mt-12 p-6">
-        <div class="w-1/5 flex flex-col items-center gap-4">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-full bg-(--color-main-light) dark:bg-(--color-main-dark) text-white rounded-full p-1">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 7.5A3.75 3.75 0 1112 3.75 3.75 3.75 0 0115.75 7.5z" />
-                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 20.25a8.25 8.25 0 0116.5 0" />
-            </svg>
-            <a class="underline cursor-pointer">Parameters</a>
+<div class="w-full p-4 md:p-8">
+    <div class="flex flex-col md:flex-row gap-8 md:gap-15 mt-8 md:mt-12 p-4 md:p-6">
+        <div class="w-full md:w-1/5 flex flex-col items-center gap-4">
+            <img [src]="profilePicture" 
+                 alt="Profile" 
+                 class="w-48 md:w-full rounded-full"
+                 onerror="this.src='assets/img/default-person.jpg'">
+            <a routerLink="/parameters" class="underline cursor-pointer">Parameters</a>
             <p class="font-bold text-red-500 cursor-pointer" (click)="logout()">Logout</p>
         </div>
-        <div class="w-4/5 flex flex-col gap-4">
-            <p class="text-4xl font-bold">{{ firstname }} {{ lastname }} ({{ username }})</p>
-            <div class="w-full overflow-hidden mt-8 pb-15">
-                <h2 class="text-3xl font-bold text-(--color-main-light) dark:text-(--color-main-dark)">Favorite shows</h2>
-
-                <swiper
-                    [slidesPerView]="3"
-                    [spaceBetween]="40"
-                    [navigation]="false"
-                    [keyboard]="true"
-                >
-                    <ng-template *ngFor="let show of shows" swiperSlide>
-                        <app-content-card [type]="'series'" [content]="show"></app-content-card>
-                    </ng-template>
-                </swiper>
+        <div class="w-full md:w-4/5 flex flex-col gap-4">
+            <p class="text-2xl md:text-4xl font-bold">{{ firstname }} {{ lastname }} <span class="block md:inline text-xl md:text-4xl">({{ username }})</span></p>
+            <div class="w-full overflow-hidden mt-4 md:mt-8 pb-15">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
+                    <h2 class="text-2xl md:text-3xl font-bold text-(--color-main-light) dark:text-(--color-main-dark)">Favorite shows</h2>
+                    <div class="flex flex-col md:flex-row gap-4 w-full md:w-auto">
+                        <!-- Search bar -->
+                        <input type="text" 
+                               (input)="onSearch($event)"
+                               placeholder="Search favorites..." 
+                               class="px-4 py-2 rounded-full bg-(--bg-surface-1-light) dark:bg-(--bg-surface-1-dark) border border-(--color-main-light) dark:border-(--color-main-dark) w-full md:w-64">
+                        <!-- Filter buttons -->
+                        <div class="flex gap-2">
+                            <button (click)="onFilterChange('all')" 
+                                    [class.bg-(--color-main-light)]="currentFilter === 'all'"
+                                    [class.dark:bg-(--color-main-dark)]="currentFilter === 'all'"
+                                    [class.text-white]="currentFilter === 'all'"
+                                    class="px-4 py-2 rounded-full border border-(--color-main-light) dark:border-(--color-main-dark)">
+                                All
+                            </button>
+                            <button (click)="onFilterChange('series')"
+                                    [class.bg-(--color-main-light)]="currentFilter === 'series'"
+                                    [class.dark:bg-(--color-main-dark)]="currentFilter === 'series'"
+                                    [class.text-white]="currentFilter === 'series'"
+                                    class="px-4 py-2 rounded-full border border-(--color-main-light) dark:border-(--color-main-dark)">
+                                Series
+                            </button>
+                            <button (click)="onFilterChange('movies')"
+                                    [class.bg-(--color-main-light)]="currentFilter === 'movies'"
+                                    [class.dark:bg-(--color-main-dark)]="currentFilter === 'movies'"
+                                    [class.text-white]="currentFilter === 'movies'"
+                                    class="px-4 py-2 rounded-full border border-(--color-main-light) dark:border-(--color-main-dark)">
+                                Movies
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative">
+                    <button *ngIf="shows && shows.length > 0" 
+                            class="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-(--bg-surface-2-light) dark:bg-(--bg-surface-2-dark) rounded-full p-2" 
+                            (click)="swiperRef?.slidePrev()">
+                        <svg width="20" height="20" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg" class="text-(--color-main-light) dark:text-(--color-main-dark)">
+                            <line x1="35" y1="10" x2="15" y2="25" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+                            <line x1="35" y1="40" x2="15" y2="25" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+                    <button *ngIf="shows && shows.length > 0"
+                            class="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-(--bg-surface-2-light) dark:bg-(--bg-surface-2-dark) rounded-full p-2" 
+                            (click)="swiperRef?.slideNext()">
+                        <svg width="20" height="20" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg" class="text-(--color-main-light) dark:text-(--color-main-dark)">
+                            <line x1="15" y1="10" x2="35" y2="25" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+                            <line x1="15" y1="40" x2="35" y2="25" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+                    <swiper
+                        [slidesPerView]="1.2"
+                        [spaceBetween]="20"
+                        [navigation]="false"
+                        [keyboard]="true"
+                        (swiper)="onSwiper($event)"
+                        [breakpoints]="{
+                            '640': { slidesPerView: 2, spaceBetween: 20 },
+                            '768': { slidesPerView: 2.5, spaceBetween: 30 },
+                            '1024': { slidesPerView: 3, spaceBetween: 40 }
+                        }"
+                    >
+                        <ng-template *ngFor="let show of shows" swiperSlide>
+                            <app-content-card [type]="'series'" [content]="show"></app-content-card>
+                        </ng-template>
+                    </swiper>
+                </div>
             </div>
         </div>
     </div>
-    <div class="px-6">
-        <h2 class="text-3xl font-bold">All comments</h2>
+    <div class="px-4 md:px-6">
+        <h2 class="text-2xl md:text-3xl font-bold">All comments</h2>
         <!-- Success Message -->
         <div *ngIf="successMessage" class="mt-4 p-3 bg-green-100 border border-green-400 text-green-700 rounded relative" role="alert">
             <span class="block sm:inline">{{ successMessage }}</span>
         </div>
         <div class="comments-section">
+            <div *ngIf="comments.length === 0" class="mt-4 text-gray-500 text-center">
+                No comments yet. Start watching shows and share your thoughts!
+            </div>
             <app-comment *ngFor="let comment of comments"
                         [page]="'profile'"
                         [comment]="comment"

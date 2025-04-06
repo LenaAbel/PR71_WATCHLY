@@ -7,11 +7,11 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class CastSectionComponent implements OnInit {
   @Input() cast: any[] = []; 
+  @Input() showId!: number;
   constructor() { }
 
   ngOnInit(): void {
-    console.log('CastSectionComponent initialized');
-    console.log('Cast:', this.cast);
+
   }
 
 }
