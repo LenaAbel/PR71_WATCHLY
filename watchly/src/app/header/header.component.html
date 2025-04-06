@@ -4,7 +4,8 @@
   </div>
 
   <!-- Centered search bar -->
-  <div class="flex-1 flex justify-center">
+  <div class="flex-1 flex justify-center items-center gap-4">
+    <p routerLink="/discover" class=" cursor-pointer text-(--color-main-light) dark:text-(--color-main-dark)">Discover</p>
     <div class="w-1/3 flex gap-4 items-center" *ngIf="route !== 'login' && route !== 'register'">
       <input [(ngModel)]="searchQuery" type="text" placeholder="What are you looking for ?"
         class="w-full px-4 py-1.5 rounded-full bg-(--bg-surface-1-light) dark:bg-(--bg-surface-1-dark) border border-(--bg-surface-2-light) dark:border-(--bg-surface-2-dark)" (keydown.enter)="goToResearch()"/>
@@ -15,6 +16,8 @@
       </svg>
     </div>
   </div>
+
+  
 
   <!-- User section with profile or login -->
   <div class="flex items-center space-x-4">

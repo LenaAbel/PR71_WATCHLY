@@ -72,6 +72,42 @@ async function getAllTVShows() {
     return await Show.findAll({ where: { is_movie: false } }); 
 }
 
+async function getDisplayedMovies() {
+    return await Show.findAll({
+        include: {
+            model: Illustrated,
+            include: [Picture],
+            required: false,
+            limit: 1,
+        },
+        where: { is_movie: true, is_displayed: true },
+    }).then(shows => {
+        return shows.map(show => {
+            const thumbnail = show.Illustrateds?.[0]?.Picture?.link || null;
+            const { Illustrateds, ...showData } = show.toJSON();
+            return { ...showData, thumbnail };
+        });
+    });
+}
+
+async function getDisplayedTVShows() {
+    return await Show.findAll({
+        include: {
+            model: Illustrated,
+            include: [Picture],
+            required: false,
+            limit: 1,
+        },
+        where: { is_movie: false, is_displayed: true },
+    }).then(shows => {
+        return shows.map(show => {
+            const thumbnail = show.Illustrateds?.[0]?.Picture?.link || null;
+            const { Illustrateds, ...showData } = show.toJSON();
+            return { ...showData, thumbnail };
+        });
+    });
+}
+
 async function getShowTrailer(id) {
     try {
         const show = await Show.findOne({ where: {show_id : id } });
@@ -254,5 +290,7 @@ module.exports = {
     searchShows,
     getShowRating,
     saveShow,
-    updateShowDisplayedStatus
+    updateShowDisplayedStatus,
+    getDisplayedMovies,
+    getDisplayedTVShows
 };

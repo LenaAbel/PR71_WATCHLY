@@ -27,6 +27,31 @@ router.get('/', showsController.getAll);
  */
 router.get('/movies', showsController.getMovies);
 
+
+/**
+ * @swagger
+ * /api/shows/movies/displayed:
+ *   get:
+ *     summary: Get all displayed movies
+ *     tags: [Shows]
+ *     responses:
+ *       200:
+ *         description: List of all displayed movies
+ */
+router.get('/movies/displayed', showsController.getMoviesDisplayed);
+
+/**
+ * @swagger
+ * /api/shows/tv/displayed:
+ *   get:
+ *     summary: Get all displayed tv shows
+ *     tags: [Shows]
+ *     responses:
+ *       200:
+ *         description: List of all displayed tv shows
+ */
+router.get('/tv/displayed', showsController.getTVDisplayed);
+
 /**
  * @swagger
  * /api/shows/tv:

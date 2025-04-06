@@ -13,13 +13,14 @@ import { AdminPageComponent } from './admin-page/admin-page.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { ResearchPageComponent } from './research-page/research-page.component';
 import { ParametersComponent } from './parameters/parameters.component';
+import { DiscoverPageComponent } from './discover-page/discover-page.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'profile', component: UserPageComponent},
+  {path: 'discover', component: DiscoverPageComponent},
   {path: 'user/:id', component: UserPageComponent},
-  {path: 'user/:id/comments', component: CommentPageComponent},
   {path: 'admin', component: AdminPageComponent},
   {path: 'error/404', component: NotFoundComponent},
   {path: 'research', component: ResearchPageComponent},

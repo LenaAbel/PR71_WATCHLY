@@ -29,7 +29,7 @@
             <!-- Swiper Implementation -->
             <div class="relative">
                 <button *ngIf="content && content.length > 0" 
-                        class="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-(--bg-surface-2-light) dark:bg-(--bg-surface-2-dark) rounded-full p-2" 
+                        class="absolute left-0 cursor-pointer top-1/2 -translate-y-1/2 z-10 bg-(--bg-surface-2-light) dark:bg-(--bg-surface-2-dark) rounded-full p-2" 
                         (click)="slidePrev()">
                     <svg width="20" height="20" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg" class="text-(--color-main-light) dark:text-(--color-main-dark)">
                         <line x1="35" y1="10" x2="15" y2="25" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
@@ -37,7 +37,7 @@
                     </svg>
                 </button>
                 <button *ngIf="content && content.length > 0"
-                        class="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-(--bg-surface-2-light) dark:bg-(--bg-surface-2-dark) rounded-full p-2" 
+                        class="absolute cursor-pointer right-0 top-1/2 -translate-y-1/2 z-10 bg-(--bg-surface-2-light) dark:bg-(--bg-surface-2-dark) rounded-full p-2" 
                         (click)="slideNext()">
                     <svg width="20" height="20" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg" class="text-(--color-main-light) dark:text-(--color-main-dark)">
                         <line x1="15" y1="10" x2="35" y2="25" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
@@ -76,7 +76,7 @@
                     <p class="text-center text-gray-600 dark:text-gray-400 max-w-md">
                         {{ selectedTab === 'movies' ? 'You haven\'t added any movies to your favorites yet.' : 'You haven\'t added any series to your favorites yet.' }}
                     </p>
-                    <button routerLink="/" class="mt-6 px-4 py-2 bg-(--color-main-light) dark:bg-(--color-main-dark) text-white rounded-(--radius-inner)">
+                    <button routerLink="/discover" class="mt-6 px-4 cursor-pointer py-2 bg-(--color-main-light) dark:bg-(--color-main-dark) text-white rounded-(--radius-inner)">
                         Discover shows
                     </button>
                 </div>
@@ -89,7 +89,7 @@
         <div class="flex flex-col items-center justify-center h-[25vh] w-full">
             <p class="text-2xl font-bold text-(--color-main-light) dark:text-(--color-main-dark)">New here?</p>
             <p class="text-(--bg-surface-5-light) dark:text-(--bg-surface-5-dark)">Login or register right now!</p>
-            <button routerLink="/login" class="bg-(--color-main-light) dark:bg-(--color-main-dark) text-(--bg-surface-1-light) dark:text-(--bg-surface-1-dark) px-4 py-2 rounded-(--radius-inner) mt-4">Go to login!</button>
+            <button routerLink="/login" class="bg-(--color-main-light) dark:bg-(--color-main-dark) px-4 py-2 rounded-(--radius-inner) cursor-pointer mt-4 text-white">Go to login!</button>
         </div>
     </div>
 </div>
