@@ -1,7 +1,9 @@
-<div class="main bg-(--bg-color-light) dark:bg-(--bg-color-dark) text-(--font-color-light) dark:text-(--font-color-dark) min-h-screen">
+<div class="main bg-(--bg-color-light) dark:bg-(--bg-color-dark) text-(--font-color-light) dark:text-(--font-color-dark) min-h-screen flex flex-col">
     <app-header [route]="currentRoute"></app-header>
-    <router-outlet></router-outlet>
-    <div class="text-center text-(--bg-surface-5-light) dark:text-(--bg-surface-5-dark) p-6 font-regular text-sm">
-        <p>2025 © ABEL GERARD IZOULET LEBREUIL</p>
+    <div class="flex-1">
+        <router-outlet></router-outlet>
     </div>
+    <footer class="text-center text-(--bg-surface-5-light) dark:text-(--bg-surface-5-dark) p-6 font-regular text-sm">
+        <p>2025 © ABEL GERARD IZOULET LEBREUIL</p>
+    </footer>
 </div>

@@ -42,6 +42,7 @@ export class NewShowBannerComponent implements OnInit {
           this.picUrl = data[0].Picture.link;
         } else {
           console.warn(`No pictures found for show ID: ${id}`);
+          this.picUrl = "assets/img/default-loading.png"; // Default image if no picture is found
         }
       },
       error: (err) => {
