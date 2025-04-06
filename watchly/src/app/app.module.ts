@@ -44,6 +44,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SliderTitledComponent } from './slider-titled/slider-titled.component';
 import { SliderButtonComponent } from './slider-button/slider-button.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DiscoverPageComponent } from './discover-page/discover-page.component';
 
 @NgModule({
   declarations: [
@@ -82,7 +83,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ParametersComponent,
     RatingPopupComponent,
     SliderTitledComponent,
-    SliderButtonComponent
+    SliderButtonComponent,
+    DiscoverPageComponent
   ],
   imports: [
     BrowserModule,

@@ -74,6 +74,24 @@ async function getTV(req, res) {
     }
 }
 
+async function getMoviesDisplayed(req, res) {
+    try {
+        const movies = await showsServices.getDisplayedMovies();
+        res.status(200).json(movies);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+}
+
+async function getTVDisplayed(req, res) {
+    try {
+        const tvShows = await showsServices.getDisplayedTVShows();
+        res.status(200).json(tvShows);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+}
+
 async function getTrailer(req, res) {
     try {
         const trailer = await showsServices.getShowTrailer(req.params.id);
@@ -145,5 +163,7 @@ module.exports = {
     updateDisplayedStatus,
     search,
     getShowRating,
+    getMoviesDisplayed,
+    getTVDisplayed,
     getFirst
 };
