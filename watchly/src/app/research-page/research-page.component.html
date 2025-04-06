@@ -1,0 +1,30 @@
+<div class="max-w-full">
+    <h2 class="p-6 text-5xl font-bold text-(--color-main-light) dark:text-(--color-main-dark) w-fit">
+        Research: <span class="text-4xl text-(--font-color-light) dark:text-(--font-color-dark)">{{ searchQuery }}</span>
+    </h2>
+
+    <div class="px-6 mx-auto flex flex-wrap items-center gap-10 mt-4">
+        <!-- Display results if available -->
+        <ng-container *ngIf="searchResults.length > 0; else noResults">
+            <div *ngFor="let result of searchResults">
+                <app-content-card  
+                    *ngIf="!result.is_movie" 
+                    [type]="'series'" 
+                    [content]="result">
+                </app-content-card>
+                <app-content-card  
+                    *ngIf="result.is_movie" 
+                    [type]="'movies'" 
+                    [content]="result">
+                </app-content-card>
+            </div>
+        </ng-container>
+        <!-- No results template -->
+        <ng-template #noResults>
+            <div class="flex flex-col items-center justify-center w-full h-full mt-10">
+                <p class="text-lg text-(--bg-surface-5-light) dark:text-(--bg-surface-5-dark)">No results found for "{{ searchQuery }}"</p>
+            </div>
+        </ng-template>
+
+    </div>
+</div>

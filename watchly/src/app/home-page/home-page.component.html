@@ -1,0 +1,5 @@
+<!-- New Shows to Rate Section - Hide for admin users -->
+<div *ngIf="!isAdmin" class="mt-6">
+  <app-new-show-banner></app-new-show-banner>
+</div>
+<app-your-shows-section></app-your-shows-section>

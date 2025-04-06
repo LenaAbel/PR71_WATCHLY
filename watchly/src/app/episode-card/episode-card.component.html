@@ -1,0 +1,11 @@
+<div class="w-full sm:w-[180px] md:w-[200px] lg:w-[220px] h-auto bg-(--bg-surface-1-light) dark:bg-(--bg-surface-1-dark) dark:shadow-(--shadow-dark) shadow-(--shadow-light) rounded-(--radius-outer) transition-all duration-200 hover:scale-105 hover:shadow-lg cursor-pointer" routerLink="/{{episode.show_id}}/episode/{{episode.id}}">
+    <img [src]="getImageUrl()"
+         (error)="episode.thumbnail = defaultImage"
+         alt="Episode image"
+         class="rounded-t-xl w-full aspect-video object-cover">
+    <div class="p-3 md:p-4">
+        <h3 class="font-bold text-sm md:text-base line-clamp-2">{{ episode.name }}</h3>
+        <p class="text-xs md:text-sm pt-1">Episode {{ episode.number }}</p>
+        <p class="text-xs md:text-sm mt-2 line-clamp-3">{{ episode.description }}</p>
+    </div>
+</div>

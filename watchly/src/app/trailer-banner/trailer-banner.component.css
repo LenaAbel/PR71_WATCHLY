@@ -1,0 +1,15 @@
+.relative {
+    position: relative;
+    width: 100%;
+    height: 35vh;
+    overflow: hidden; /* Cache les débordements */
+}
+  
+.relative iframe {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 400%; /* Augmente la largeur pour éviter les bandes noires */
+    height: 400%; /* Augmente la hauteur pour couvrir la div */
+    transform: translate(-50%, -50%); /* Centre parfaitement la vidéo */
+}

@@ -1,10 +1,6 @@
 const { Model, DataTypes } = require('sequelize');
-const { Sequelize } = require('sequelize');
-
-const sequelize = new Sequelize({
-    dialect: 'sqlite',
-    storage: '../../data/watchlyDB',
-});
+const sequelize = require('../database');
+const path = require('path');
 
 class Has extends Model {}
 
@@ -37,10 +33,3 @@ Has.init(
 });
 
 module.exports = Has;
-
-// create a fav example
-const pl  = Has.build({
-    show_id: 1,
-    genre_id: 1,
-});
-pl.save().then(() => console.log('Play created'));

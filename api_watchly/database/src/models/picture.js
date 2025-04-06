@@ -1,9 +1,7 @@
-const { Model, DataTypes } = require('sequelize');
-const { Sequelize } = require('sequelize');
-const sequelize = new Sequelize({
-    dialect: 'sqlite',
-    storage: '../../data/watchlyDB',
-});
+const { DataTypes, Model } = require('sequelize');
+const sequelize = require('../database');
+
+const path = require('path');
 
 class Picture extends Model {}
 
@@ -18,6 +16,10 @@ Picture.init(
         link: {
             type: DataTypes.STRING(100),
         },
+        type: {
+            type: DataTypes.STRING(20),
+            defaultValue: null
+        },
     },
     {
         sequelize,
@@ -28,10 +30,3 @@ Picture.init(
 );
 
 module.exports = Picture;
-
-// create a picture example
-const picture = Picture.build({
-    picture_id: 1,
-    link: 'link',
-});
-picture.save().then(() => console.log('Picture saved!'));

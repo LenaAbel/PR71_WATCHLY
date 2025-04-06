@@ -1,10 +1,6 @@
 const { Model, DataTypes } = require('sequelize');
-const { Sequelize } = require('sequelize');
-
-const sequelize = new Sequelize({
-    dialect: 'sqlite',
-    storage: '../../data/watchlyDB',
-});
+const sequelize = require('../database');
+const path = require('path');
 
 class Shows extends Model {}
 
@@ -12,8 +8,8 @@ Shows.init(
     {
         show_id: {
             type: DataTypes.INTEGER,
-            autoIncrement: true,
             primaryKey: true,
+            autoIncrement: true,
         },
         name: {
             type: DataTypes.STRING(50),
@@ -39,6 +35,9 @@ Shows.init(
         is_movie: {
             type: DataTypes.BOOLEAN,
         },
+        is_displayed: {
+            type: DataTypes.BOOLEAN,
+        },
         rating: {
             type: DataTypes.TINYINT,
             validate: {
@@ -56,19 +55,3 @@ Shows.init(
 
 module.exports = Shows;
 
-// create a show example
-const shows  = Shows.build({
-    show_id: 1,
-    name: 'Breaking Bad',
-    description: 'A high school chemistry teacher turned meth maker',
-    released_date: '2008-01-20',
-    nationality: 'American',
-    trailer_link: 'https://www.youtube.com/watch?v=HhesaQXLuRY',
-    status: 'Finished',
-    duration: '00:45:00',
-    is_movie: false,
-    rating: 9,
-    picture_id: 1,
-
-});
-shows.save().then(() => console.log('Show created'));

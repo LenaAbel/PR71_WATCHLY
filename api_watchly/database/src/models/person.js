@@ -1,12 +1,9 @@
 const { Model, DataTypes } = require('sequelize');
-const { Sequelize } = require('sequelize');
-const sequelize = new Sequelize({
-    dialect: 'sqlite',
-    storage: '../../data/watchlyDB',
-});
+const sequelize = require('../database');
+const Favorite = require('./favorite');
+
 
 class Person extends Model {}
-
 Person.init(
     {
         person_id: {
@@ -31,8 +28,13 @@ Person.init(
             type: DataTypes.STRING(100),
         },
         password: {
-            type: DataTypes.STRING(50),
+            type: DataTypes.STRING(255),
         },
+        profile_picture: {
+            type: DataTypes.STRING(100),
+            allowNull: false, 
+            defaultValue: 'assets/img/default-person.jpg'
+        }
     },
     {
         sequelize,
@@ -43,15 +45,3 @@ Person.init(
 );
 
 module.exports = Person;
-
-// create a person example
-const person = Person.build({
-    person_id: 1,
-    username: 'username',
-    name: 'name',
-    surname: 'surname',
-    is_admin: true,
-    mail: 'mail',
-    password: 'password',
-});
-person.save().then(() => console.log('Person created'));

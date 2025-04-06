@@ -1,0 +1,77 @@
+.not-found {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  text-align: center;
+}
+
+.not-found h1 {
+  font-size: 8rem;
+  margin: 0;
+}
+
+.not-found h2 {
+  font-size: 2rem;
+  margin: 1rem 0;
+}
+
+.not-found p {
+  margin: 1rem 0;
+}
+
+.not-found button {
+  padding: 10px 20px;
+  margin-top: 20px;
+  border: none;
+  border-radius: var(--radius-inner);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+@media (prefers-color-scheme: dark) {
+  .not-found {
+    color: var(--font-color-dark);
+  }
+  
+  .not-found h1 {
+    color: var(--color-main-dark);
+  }
+  
+  .not-found p {
+    color: var(--bg-surface-5-dark);
+  }
+  
+  .not-found button {
+    background-color: var(--color-main-dark);
+    color: var(--bg-color-dark);
+  }
+  
+  .not-found button:hover {
+    background-color: var(--bg-surface-4-dark);
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  .not-found {
+    color: var(--font-color-light);
+  }
+  
+  .not-found h1 {
+    color: var(--color-main-light);
+  }
+  
+  .not-found p {
+    color: var(--bg-surface-5-light);
+  }
+  
+  .not-found button {
+    background-color: var(--color-main-light);
+    color: var(--bg-color-light);
+  }
+  
+  .not-found button:hover {
+    background-color: var(--bg-surface-4-light);
+  }
+}

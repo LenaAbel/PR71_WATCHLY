@@ -1,10 +1,5 @@
 const { Model, DataTypes } = require('sequelize');
-const { Sequelize } = require('sequelize');
-
-const sequelize = new Sequelize({
-    dialect: 'sqlite',
-    storage: '../../data/watchlyDB',
-});
+const sequelize = require('../database');
 
 class Illustrated extends Model {}
 
@@ -57,12 +52,3 @@ Illustrated.init(
 );
 
 module.exports = Illustrated;
-
-const illu = Illustrated.build({
-    illustrated_id: 1,
-    show_id: null,
-    picture_id: null,
-    episode_id: 1,
-    person_id: null,
-});
-illu.save().then(() => console.log('Illu saved!'));

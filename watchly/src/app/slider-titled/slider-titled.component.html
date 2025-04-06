@@ -1,0 +1,79 @@
+<div class="w-full">
+  <h3 class="text-2xl font-bold my-4">{{ title }}</h3>
+  
+  <div *ngIf="content && content.length > 0" 
+       [@listAnimation]="content.length" 
+       class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-8">
+    
+    <div *ngFor="let show of content; trackBy: trackById" 
+         [@cardAnimation]
+         class="card-wrapper">
+      
+      <!-- Card container with improved height and margins -->
+      <div class="card-container bg-(--bg-surface-1-light) dark:bg-(--bg-surface-1-dark) shadow-(--shadow-light) dark:shadow-(--shadow-dark) rounded-(--radius-outer) overflow-hidden">
+        
+        <img class="w-full h-48 object-cover" [src]="show.thumbnail" 
+             alt="Poster" 
+             onerror="this.src='assets/img/default-poster.jpg'" />
+        
+        <div class="p-4 flex flex-col gap-3">
+          <div class="flex items-center gap-2">
+            <h2 class="text-lg font-bold truncate">{{show.name}}</h2>
+            <p class="text-sm" *ngIf="type == 'series'"> - {{show.seasons}} seasons</p>
+          </div>
+          
+          <!-- Taller scrollable description container with the same height -->
+          <div class="description-wrapper h-[100px] relative">
+            <div class="description-container h-full overflow-y-auto pr-2">
+              <p class="text-sm text-justify">{{show.description}}</p>
+            </div>
+            <!-- Fade overlays to indicate scrolling -->
+            <div class="fade-top absolute top-0 left-0 right-0 h-6 bg-gradient-to-b from-(--bg-surface-1-light) dark:from-(--bg-surface-1-dark) to-transparent pointer-events-none"></div>
+            <div class="fade-bottom absolute bottom-0 left-0 right-0 h-6 bg-gradient-to-t from-(--bg-surface-1-light) dark:from-(--bg-surface-1-dark) to-transparent pointer-events-none"></div>
+          </div>
+          
+          <div class="flex items-center justify-between mt-2 mb-2">
+            <div class="flex items-center gap-1">
+              <div class="text-lg flex items-center" title="IMDB Rating">
+                <span class="text-(--color-main-light) dark:text-(--color-main-dark) mr-1 text-xs font-bold">IMDB</span>
+                <ng-container *ngFor="let star of [1,2,3,4,5]">
+                  <span *ngIf="show.rating && show.rating >= star" class="text-(--color-main-light) dark:text-(--color-main-dark)">★</span>
+                  <span *ngIf="!show.rating || show.rating < star" class="text-gray-300 dark:text-gray-600">☆</span>
+                </ng-container>
+              </div>
+            </div>
+            <p class="text-sm" *ngIf="type == 'movie'">{{show.duration}} min</p>
+            <p class="text-sm" *ngIf="type == 'series'">{{show.episodes}} episodes</p>
+          </div>
+          
+          <!-- Action button with icon - reduced top margin -->
+          <div class="flex justify-center mt-2">
+            <button (click)="handleButtonClick(show)"
+                    class="action-button px-5 py-3 rounded-(--radius-inner) transition-all duration-300 w-full flex items-center justify-center gap-2 font-medium"
+                    [ngClass]="{
+                      'add-button': buttonType === 'Add',
+                      'delete-button': buttonType === 'Delete'
+                    }">
+              <!-- Add icon -->
+              <svg *ngIf="buttonType === 'Add'" xmlns="http://www.w3.org/2000/svg" class="h-5 cursor-pointer w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+              </svg>
+              
+              <!-- Delete icon -->
+              <svg *ngIf="buttonType === 'Delete'" xmlns="http://www.w3.org/2000/svg" class="h-5 cursor-pointer w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+              </svg>
+              
+              {{ buttonType }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div *ngIf="!content || content.length === 0" class="text-center text-gray-500 py-8">
+    No {{ type === 'movie' ? 'movies' : 'series' }} available.
+  </div>
+</div>
+<div class="mb-4"></div>

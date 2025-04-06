@@ -1,10 +1,6 @@
 const { Model, DataTypes } = require('sequelize');
-const { Sequelize } = require('sequelize');
-
-const sequelize = new Sequelize({
-    dialect: 'sqlite',
-    storage: '../../data/watchlyDB',
-});
+const sequelize = require('../database');
+const Person = require('./person');
 
 class Comments extends Model {}
 
@@ -26,7 +22,7 @@ Comments.init (
             type: DataTypes.INTEGER,
         },
         comment_text: {
-            type: DataTypes.STRING(500),
+            type: DataTypes.TEXT, // Changed from STRING(500) to TEXT!!
         },
         comment_date: {
             type: DataTypes.DATE,
@@ -46,16 +42,3 @@ Comments.init (
 });
 
 module.exports = Comments;
-
-// create a comm example
-const comm = Comments.build({
-    comment_id: 1,
-    show_id: 1,
-    episode_id: 1,
-    person_id: 1,
-    comment_text: 'comment',
-    comment_date: '2021-01-01',
-    is_watched: true,
-    is_spoiler: false,
-});
-comm.save().then(() => console.log('Comment saved!'));

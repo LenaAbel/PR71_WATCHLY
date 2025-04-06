@@ -1,0 +1,7 @@
+<div class="w-fit h-fit flex flex-col items-center gap-2">
+  <img [src]="imageUrl" alt="{{ actor.character }} image" class="w-[5vw]" [ngClass]="{'h-[5vw] object-cover rounded-full': pageTitle ==='home'}">
+  <div class="card-body">
+    <p class="font-bold">{{ actor.character }}</p>
+    <p>{{ actor.name }}</p>
+  </div>
+</div>

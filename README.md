@@ -12,7 +12,6 @@ https://www.figma.com/design/BFw10l912WWP8uPyzLCNX7/Watchly-maquette-lololol?nod
 - Track watching progress
 - Discover new TV shows and movies
 - Rate and review content
-- Personal watching statistics
 - User authentication
 
 ## Prerequisites
@@ -31,10 +30,16 @@ cd PR71_WATCHLY
 
 2. Install dependencies:
 ```bash
+cd api_watchly
+```
+```bash
 npm install
 ```
 
 3. Start the development server:
+```bash
+cd watchly
+```
 ```bash
 ng serve
 ```

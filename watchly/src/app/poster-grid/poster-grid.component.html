@@ -1,0 +1,29 @@
+<div class="grid-container grid grid-cols-4 gap-2" [ngClass]="{'grid-cols-8 px-6': page === 'poster'}">
+    <div 
+      *ngFor="let image of images" 
+      #imageContainer
+      class="relative flex justify-center items-center overflow-hidden"
+    >
+      <img 
+        [src]="image.Picture.link" 
+        alt="Poster" 
+        (load)="onImageLoad()"
+        (click)="openImage(image.Picture.link)"
+        class="image w-full h-auto object-cover border-2 border-(--color-main-light) dark:border-(--color-main-dark) cursor-pointer"
+        loading="lazy"
+      >
+    </div>
+</div>
+
+<div *ngIf="selectedImage" 
+     class="fixed inset-0 flex items-center justify-center backdrop-blur-md z-50 animate-fadeIn" 
+     (click)="closeImage()">
+<div *ngIf="selectedImage" class="fixed inset-0 flex items-center justify-center backdrop-blur-md z-50 animate-fadeIn" (click)="closeImage()">
+  <div class="relative" (click)="$event.stopPropagation()">
+    <button class="absolute -top-13 -right-8 text-3xl text-(--color-main-light) hover:text-(--color-main-dark) font-bold" 
+            (click)="closeImage()">×</button>
+    <img [src]="selectedImage" 
+         alt="Enlarged Poster" 
+         class="max-w-[80vw] max-h-[80vh] border-4 border-(--color-main-light) dark:border-(--color-main-dark) transform transition duration-300 hover:scale-105">
+  </div>
+</div>
