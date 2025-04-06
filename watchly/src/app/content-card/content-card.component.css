@@ -6,7 +6,7 @@
 
 /* Ensure all cards have the same height in the user page */
 :host-context(.user-favorites) .relative {
-  height: 400px;
+  height: 350px;
   display: flex;
   flex-direction: column;
 }
