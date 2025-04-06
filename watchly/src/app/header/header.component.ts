@@ -52,7 +52,7 @@ export class HeaderComponent implements OnInit {
 
     this.route = this.router.url.split('/')[1]; // e.g. "login", "register"
   }
-
+  
   goToResearch() {
     this.router.navigate(['/research'], { queryParams: { q: this.searchQuery } });
   }

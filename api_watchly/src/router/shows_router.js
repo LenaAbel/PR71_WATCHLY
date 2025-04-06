@@ -40,6 +40,27 @@ router.get('/tv', showsController.getTV);
 
 /**
  * @swagger
+ * /api/shows/search:
+ *   get:
+ *     summary: Search for shows
+ *     tags: [Shows]
+ *     parameters:
+ *       - in: query
+ *         name: query
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Search query
+ *     responses:
+ *       200:
+ *         description: Search results
+ *       400:
+ *         description: Invalid query
+ */
+router.get('/search', showsController.search);
+
+/**
+ * @swagger
  * /api/shows/{id}:
  *   get:
  *     summary: Get a show by ID
@@ -79,5 +100,7 @@ router.get('/:id', showsController.getById);
  *         description: Trailer not found
  */
 router.get("/:id/trailer", showsController.getTrailer);
+
+
 
 module.exports = router;

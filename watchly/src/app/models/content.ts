@@ -9,7 +9,6 @@ export class Content {
   status!: string;
   duration!: number;
   is_movie!: boolean;
-  is_rated!: boolean;
   Genres!: any[];
   Favorite!: any;
   // Episode properties

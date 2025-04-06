@@ -5,7 +5,8 @@ const chalk = require('chalk');
 const bcrypt = require('bcrypt');
 const Shows = require('../../database/src/models/shows');
 const { Show } = require('../../database/src/models/associations');
-
+const Illustrated = require('../../database/src/models/illustrated');
+const Picture = require('../../database/src/models/picture');
 Person.hasMany(Favorite, { foreignKey: 'person_id', as: 'favorites' });
 
 
@@ -45,12 +46,32 @@ async function getPersonById(id) {
     return await Person.findByPk(id, 
         { 
             attributes: ['username', 'mail'],
-            include: Shows,
-            through: {
-                model: Favorite,
+        include: 
+            {
+                model: Shows,
+                through: {
+                    model: Favorite,
+                },
+                include: {
+                    model: Illustrated,
+                    include: {
+                        model: Picture,
+                        attributes: ['link'],
+                    },
+                },
             }
         }
-    );
+    ).then(person => {
+        if (!person) return null;
+
+        const shows = person.Shows.map(show => {
+            const thumbnail = show.Illustrateds?.[0]?.Picture?.link || null;
+            const { Illustrateds, ...showData } = show.toJSON();
+            return { ...showData, thumbnail };
+        })
+        const { Shows, ...personData } = person.toJSON();
+        return { ...personData, shows };
+    });
 }
 
 module.exports = { createUsers, getPersonById };

@@ -82,9 +82,9 @@ export class UserPageComponent implements OnInit {
 
   getPerson(id: number) {
     const endpoint = `http://localhost:3000/api/persons/id/${id}`;
-    this.http.get<{ Shows: Content[] }>(endpoint).subscribe({
+    this.http.get<{ shows: Content[] }>(endpoint).subscribe({
       next: (data) => {
-        this.shows = data.Shows;
+        this.shows = data.shows;
         console.log(this.shows);
         
         console.log(`Fetched person with id ${id}:`, data);
