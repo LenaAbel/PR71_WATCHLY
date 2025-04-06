@@ -13,8 +13,8 @@
         <app-admin-page></app-admin-page>
     </div>
 
-    <!-- Regular User Shows Section -->
-    <div *ngIf="!isAdmin">
+    <!-- Regular User Shows Section - Only display when logged in -->
+    <div *ngIf="!isAdmin && isLoggedIn">
         <h2 class="text-3xl font-bold text-(--color-main-light) dark:text-(--color-main-dark)">Your shows</h2>
         <div class="flex gap-4 p-4">
             <p [ngClass]="{'text-(--bg-surface-5-light) dark:text-(--bg-surface-5-dark)' : !isSelected('movies')}" (click)="selectTab('movies')" class="cursor-pointer">
@@ -25,7 +25,7 @@
             </p>
         </div>
 
-        <div class="overflow-hidden px-4 relative" *ngIf="isLoggedIn">
+        <div class="overflow-hidden px-4 relative">
             <!-- Swiper Implementation -->
             <div class="relative">
                 <button *ngIf="content && content.length > 0" 
@@ -82,14 +82,14 @@
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Not logged in message -->
-        <div *ngIf="!isLoggedIn">
-            <div class="flex flex-col items-center justify-center h-[25vh] w-full">
-                <p class="text-2xl font-bold text-(--color-main-light) dark:text-(--color-main-dark)">New here?</p>
-                <p class="text-(--bg-surface-5-light) dark:text-(--bg-surface-5-dark)">Login or register right now!</p>
-                <button routerLink="/login" class="bg-(--color-main-light) dark:bg-(--color-main-dark) text-(--bg-surface-1-light) dark:text-(--bg-surface-1-dark) px-4 py-2 rounded-(--radius-inner) mt-4">Go to login!</button>
-            </div>
+    <!-- Not logged in message -->
+    <div *ngIf="!isLoggedIn">
+        <div class="flex flex-col items-center justify-center h-[25vh] w-full">
+            <p class="text-2xl font-bold text-(--color-main-light) dark:text-(--color-main-dark)">New here?</p>
+            <p class="text-(--bg-surface-5-light) dark:text-(--bg-surface-5-dark)">Login or register right now!</p>
+            <button routerLink="/login" class="bg-(--color-main-light) dark:bg-(--color-main-dark) text-(--bg-surface-1-light) dark:text-(--bg-surface-1-dark) px-4 py-2 rounded-(--radius-inner) mt-4">Go to login!</button>
         </div>
     </div>
 </div>
