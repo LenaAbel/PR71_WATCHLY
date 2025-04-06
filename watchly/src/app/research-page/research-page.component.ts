@@ -17,15 +17,8 @@ export class ResearchPageComponent implements OnInit {
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       this.searchQuery = params['q'] || '';
+      this.searchContent();
     });
-    this.searchContent();
-  }
-
-  ngOnChanges(): void {
-    this.route.queryParams.subscribe(params => {
-      this.searchQuery = params['q'] || '';
-    });
-    this.searchContent();
   }
 
   searchContent(): void {

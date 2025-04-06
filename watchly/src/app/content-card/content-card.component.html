@@ -1,4 +1,4 @@
-<div class="relative mb-[2em] w-[250px] bg-(--bg-surface-1-light) dark:bg-(--bg-surface-1-dark) shadow-(--shadow-light) dark:shadow-(--shadow-dark) rounded-(--radius-outer) overflow-hidden mt-10 mx-4">
+<div class="cursor-pointer relative mb-[2em] w-[250px] bg-(--bg-surface-1-light) dark:bg-(--bg-surface-1-dark) shadow-(--shadow-light) dark:shadow-(--shadow-dark) rounded-(--radius-outer) overflow-hidden mt-10 mx-4">
     <!-- Alert Message -->
     <div *ngIf="alertMessage" 
          class="absolute top-0 left-0 right-0 p-2 text-center text-sm animate-slide-in"
@@ -25,7 +25,7 @@
             <h2 class="text-lg font-bold">{{content.name}}</h2>
         </div>
         <div class="description-container">
-            <p class="text-xs text-justify">{{content.description}}</p>
+            <p class="text-xs h-20 text-justify overflow-y-scroll">{{content.description}}</p>
         </div>
         <div class="flex items-center gap-4">
             <p class="text-(--color-main-light) dark:text-(--color-main-dark) text-2xl">
@@ -34,7 +34,7 @@
                     <span *ngIf="content.Favorite?.rating < star">&#9734;</span>
                 </ng-container>
             </p> <!-- faire logique en fonction du rating-->
-            <p class="font-bold">·</p>
+            <p class="font-bold " *ngIf="type == 'movies'">·</p>
             <p class="text-sm" *ngIf="type == 'movies'">{{content.duration}} min</p>
         </div>
     </div>

@@ -2,10 +2,10 @@
     <h2 class="p-6 text-5xl font-bold text-(--color-main-light) dark:text-(--color-main-dark) w-fit" (click)="searchContent()">
         Research : <span class="text-4xl text-(--font-color-light) dark:text-(--font-color-dark)">{{searchQuery}}</span>
     </h2>
-    <div class="px-6 mx-auto flex items-center gap-10 mt-4">
+    <div class="px-6 mx-auto flex flex-wrap items-center gap-10 mt-4">
         <div *ngFor="let result of searchResults">
-            <app-content-card *ngIf="!result.is_movie" [type]="'series'" [content]="result"></app-content-card>
-            <app-content-card *ngIf="result.is_movie" [type]="'movies'" [content]="result"></app-content-card>
+            <app-content-card routerLink="/{{result.show_id}}" *ngIf="!result.is_movie" [type]="'series'" [content]="result"></app-content-card>
+            <app-content-card routerLink="/{{result.show_id}}" *ngIf="result.is_movie" [type]="'movies'" [content]="result"></app-content-card>
         </div>
     </div>
 </div>

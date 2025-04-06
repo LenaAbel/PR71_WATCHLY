@@ -7,7 +7,7 @@
   <div class="flex-1 flex justify-center">
     <div class="w-1/3 flex gap-4 items-center" *ngIf="route !== 'login' && route !== 'register'">
       <input [(ngModel)]="searchQuery" type="text" placeholder="What are you looking for ?"
-        class="w-full px-4 py-1.5 rounded-full bg-(--bg-surface-1-light) dark:bg-(--bg-surface-1-dark) border border-(--bg-surface-2-light) dark:border-(--bg-surface-2-dark)" />
+        class="w-full px-4 py-1.5 rounded-full bg-(--bg-surface-1-light) dark:bg-(--bg-surface-1-dark) border border-(--bg-surface-2-light) dark:border-(--bg-surface-2-dark)" (keydown.enter)="goToResearch()"/>
       <svg class="cursor-pointer stroke-(--color-main-light) dark:stroke-(--color-main-dark)" (click)="goToResearch()"
         width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <circle cx="10" cy="10" r="7" stroke-width="2" fill="none" />
