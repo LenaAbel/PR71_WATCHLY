@@ -37,11 +37,22 @@ async function getAll(req, res) {
 
 async function getById(req, res) {
     try {
-        const show = await showsServices.getShowById(req.params.id);
-        if (!show) return res.status(404).json({ message: "Show not found" });
-        res.status(200).json(show);
+        const show = await showsServices.getShowById(req.params.id, req.query.user_id ?? null);
+
+        if (!show) {
+            return res.status(404).json({ message: "Show not found" });
+        }
+
+        console.log(chalk.cyan(`[DB] Found: ${show.name}`));
+
+        const showData = show.toJSON();
+        showData.Favorite = showData.Favorites[0];
+        delete showData.Favorites;
+
+        return res.status(200).json(showData);
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        console.error(err);
+        return res.status(500).json({ error: err.message });
     }
 }
 
@@ -72,11 +83,21 @@ async function getTrailer(req, res) {
     }
 }
 
+async function getShowRating(req, res) {
+    try {
+        const rating = await showsServices.getShowRating(req.params.id);
+        res.status(200).json({ rating });
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to fetch show rating' });
+    }
+}
+
 module.exports = {
     addsShowsDB,
     getAll,
     getById,
     getMovies,
     getTV,
-    getTrailer
+    getTrailer,
+    getShowRating
 };

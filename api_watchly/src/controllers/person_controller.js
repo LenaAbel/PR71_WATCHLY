@@ -19,7 +19,7 @@ async function getPersonByUsername(username){
 }
 
 async function getPersonById(id){
-    return await Person.findByPk(id);
+    return await personService.getPersonById(id);
 }
 
 async function getPersonByEmail(mail){

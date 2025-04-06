@@ -1,54 +1,65 @@
 const Favorite = require('../../database/src/models/favorite');
 const Person = require('../../database/src/models/person');
-const Show = require('../../database/src/models/shows');
 const chalk = require('chalk');
 const bcrypt = require('bcrypt');
 
 Favorite.belongsTo(Person, { foreignKey: 'person_id', as: 'person' });
 
-async function addFav(data) {
-    try {
-        const [person_id, show_id, rating, is_watched] = data;
+
+async function initializeTestFavorites(){
+    const favorites = [
+        [1, 1, 5, 1],
+        [1, 2, 4, 0],
+        [1, 3, 3, 1],
+        [1, 4, 2, 0],
+        [1, 5, 1, 1],
+        [2, 1, 5, 1],
+        [2, 2, 4, 0],
+        [2, 3, 3, 1],
+        [2, 4, 2, 0],
+        [2, 5, 1, 1],
+        [3, 1, 5, 1],
+        [3, 2, 4, 0],
+        [3, 3, 3, 1],
+        [3, 4, 2, 0],
+        [3, 5, 1, 1],
+        [4, 1, 5, 1],
+        [4, 2, 4, 0],
+        [4, 3, 3, 1],
+        [4, 4, 2, 0],
+        [4, 5, 1, 1],
+        [5, 1, 5, 1],
+        [5, 2, 4, 0],
+        [5, 3, 3, 1],
+        [5, 4, 2, 0],
+        [5, 5, 1, 1],
+        [6, 1, 5, 1],
+        [6, 2, 4, 0],
+        [6, 3, 3, 1],
+        [6, 4, 2, 0],
+        [6, 5, 1, 1],
+        [7, 1, 5, 1],
+        [7, 2, 4, 0],
+        [7, 3, 3, 1],
+        [7, 4, 2, 0],
+        [7, 5, 1, 1],
+        [8, 1, 5, 1],
+        [8, 2, 4, 0],
+        [8, 3, 3, 1],
+        [8, 4, 2, 0],
+        [8, 5, 1, 1],        
+    ];
+    console.log(chalk.cyan(`\n 💖 Processing favorites...`));
+    for (const f of favorites) {
+        const [person_id, show_id, rating, is_watched] = f;
         await Favorite.create({
-            person_id,
             show_id,
+            person_id,
             rating,
-            is_watched
+            is_watched,
         });
-        console.log(chalk.green(`✅ Added favorite for user ${person_id} and show ${show_id}`));
-    } catch (error) {
-        console.error(chalk.red(`❌ Error adding favorite:`, error));
     }
-}
-
-async function createFavorites() {
-    try {
-        // Get all valid person IDs and show IDs
-        const persons = await Person.findAll({ attributes: ['person_id'] });
-        const shows = await Show.findAll({ attributes: ['show_id'] });
-
-        const personIds = persons.map(p => p.person_id);
-        const showIds = shows.map(s => s.show_id);
-
-        console.log(chalk.cyan(`\n 💖 Processing favorites for ${personIds.length} users and ${showIds.length} shows...`));
-
-        // Create random favorites for each person
-        for (const personId of personIds) {
-            // Pick 3-5 random shows for each person
-            const numFavorites = Math.floor(Math.random() * 3) + 3;
-            const shuffledShows = showIds.sort(() => 0.5 - Math.random());
-            
-            for (let i = 0; i < Math.min(numFavorites, shuffledShows.length); i++) {
-                const rating = Math.floor(Math.random() * 5) + 1;
-                const is_watched = Math.random() > 0.5;
-                
-                await addFav([personId, shuffledShows[i], rating, is_watched]);
-            }
-        }
-    } catch (error) {
-        console.error(chalk.red('Error creating favorites:', error));
-    }
-}
+} 
 
 async function getAllFavorites() {
     const favorites = await Favorite.findAll({
@@ -61,14 +72,79 @@ async function getAllFavorites() {
     return favorites;
 }
 
+async function getFavoritesByPersonId(person_id) {
+    const favorites = await Favorite.findAll({
+        where: { person_id },
+        include: {
+            model: Person,
+            as: 'person',
+            attributes: ['person_id', 'name'],
+        },
+    });
+    console.log(favorites);
+    
+    return favorites;
+}
+async function getFavoritesByShowId(show_id) {
+    const favorites = await Favorite.findAll({
+        where: { show_id },
+        include: {
+            model: Person,
+            as: 'person',
+            attributes: ['person_id', 'name'],
+        },
+    });
+    return favorites;
+}
+
+async function getFavoritesByPersonIdAndShowId(person_id, show_id) {
+    const favorites = await Favorite.findAll({
+        where: { person_id, show_id },
+        include: {
+            model: Person,
+            as: 'person',
+            attributes: ['person_id', 'name'],
+        },
+    });
+    return favorites;
+}
+
 async function addFavorite(favoriteData) {
+    console.log('Service received favorite data:', favoriteData);
+    
+    if (!favoriteData) {
+        throw new Error('No favorite data provided');
+    }
+
+    const { show_id, person_id, rating = 0, is_watched = false } = favoriteData;
+
+    if (!show_id || !person_id) {
+        console.error('Missing data:', { show_id, person_id, rating, is_watched });
+        throw new Error(`Missing required favorite data: show_id=${show_id}, person_id=${person_id}`);
+    }
+
+    // Check if favorite already exists
+    const existingFavorite = await Favorite.findOne({
+        where: { show_id, person_id }
+    });
+
+    if (existingFavorite) {
+        throw new Error('Favorite already exists');
+    }
+
     try {
-        const favorite = await Favorite.create(favoriteData);
+        const favorite = await Favorite.create({
+            show_id,
+            person_id,
+            rating,
+            is_watched,
+        });
         return favorite;
     } catch (error) {
-        console.error(chalk.red(`❌ Error adding favorite:`, error));
-        throw error;
+        console.error(chalk.red('Database error:', error));
+        throw new Error('Failed to create favorite');
     }
 }
 
-module.exports = { createFavorites, addFavorite, getAllFavorites };
+
+module.exports = { initializeTestFavorites, addFavorite, getFavoritesByPersonId, getFavoritesByShowId, getFavoritesByPersonIdAndShowId, getAllFavorites };

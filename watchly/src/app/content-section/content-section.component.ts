@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Content } from '../models/content';
-
+import { AuthenticationService } from '../services/authentification.service';
 @Component({
   selector: 'app-content-section',
   templateUrl: './content-section.component.html',
@@ -11,13 +11,19 @@ export class ContentSectionComponent implements OnInit {
   @Input() type!: string;
   @Input() content!: Content;
   @Output() openRating = new EventEmitter<void>();
+  @Output() ratingSubmitted = new EventEmitter<void>();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private authService: AuthenticationService) {}
 
   ngOnInit(): void {
+    // Remove initialization since we're using the getter
   }
 
   onOpenRating(): void {
     this.openRating.emit();
+  }
+
+  get isLoggedIn(): boolean {
+    return this.authService.isLoggedIn();
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+  import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-poster-page',
@@ -19,7 +19,7 @@ export class PosterPageComponent implements OnInit {
     'https://static.posters.cz/image/1300/254049.jpg',
     'https://preview.redd.it/9qohwpg1h07e1.png?auto=webp&s=27efa4561c67425c1a342c4b0e2a89be62b6bcd5',
     'https://cmsassets.rgpub.io/sanity/images/dsfx7636/news_live/ddd91a06f8350d6cb8592483e0aabf528e543622-1280x720.jpg?auto=format&fit=fill&q=80&w=1082',
-    
+
   ];
 
 }

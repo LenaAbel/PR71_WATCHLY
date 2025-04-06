@@ -1,5 +1,5 @@
 const express = require('express');
-const { getFavorites, addFavorite, removeFavorite } = require('../controllers/favorite_controller');
+const favoriteController = require('../controllers/favorite_controller');
 
 const router = express.Router();
 
@@ -27,13 +27,86 @@ const router = express.Router();
  *       500:
  *         description: Failed to fetch favorites
  */
-router.get('/', async (req, res) => {
-    try {
-        const favorites = await getFavorites();
-        res.status(200).json(favorites);
-    } catch (err) {
-        res.status(500).json({ error: 'Failed to fetch favorites' });
-    }
+router.get('/user/:personId', async (req, res) => {
+    return favoriteController.getFavoritesByPersonId(req, res);
+});
+
+/**
+ * @swagger
+ * /favorites/show/{showId}:
+ *   get:
+ *     summary: Retrieve a list of favorite items for a specific show
+ *     parameters:
+ *       - in: path
+ *         name: showId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The ID of the show
+ *     responses:
+ *       200:
+ *         description: A list of favorite items for the show
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: string
+ *                     description: The favorite item ID
+ *                   name:
+ *                     type: string
+ *                     description: The name of the favorite item
+ *       404:
+ *         description: Show not found
+ *       500:
+ *         description: Failed to fetch favorites for the show
+ */
+router.get('/show/:showId', async (req, res) => {
+    return favoriteController.getFavoritesByShowId(req, res);
+});
+
+/**
+ * @swagger
+ * /favorites/user/{personId}/show/{showId}:
+ *   get:
+ *     summary: Retrieve a favorite item by person ID and show ID
+ *     parameters:
+ *       - in: path
+ *         name: personId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The ID of the person
+ *       - in: path
+ *         name: showId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The ID of the show
+ *     responses:
+ *       200:
+ *         description: Favorite item found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                   description: The favorite item ID
+ *                 name:
+ *                   type: string
+ *                   description: The name of the favorite item
+ *       404:
+ *         description: Favorite item not found
+ *       500:
+ *         description: Failed to fetch favorite item
+ */
+router.get('/user/:personId/show/:showId', async (req, res) => {
+    return favoriteController.getFavoritesByPersonIdAndShowId(req, res);
 });
 
 /**
@@ -59,11 +132,14 @@ router.get('/', async (req, res) => {
  */
 router.post('/', async (req, res) => {
     try {
-        console.log(req.body);
-        const favorite = await addFavorite(req.body);
-        res.status(201).json(favorite);
-    } catch (err) {
-        res.status(400).json({ error: 'Failed to add favorite' });
+        console.log('Raw request body:', req.body);
+        // Handle nested body structure if present
+        const favoriteData = req.body.body || req.body;
+        req.body = favoriteData;
+        return await favoriteController.addFavorite(req, res);
+    } catch (error) {
+        console.error('Router error:', error);
+        return res.status(500).json({ error: 'Internal server error' });
     }
 });
 
@@ -86,17 +162,7 @@ router.post('/', async (req, res) => {
  *         description: Favorite item not found
  */
 router.delete('/:id', async (req, res) => {
-    try {
-        const { id } = req.params;
-        const result = await removeFavorite(id);
-        if (result) {
-            res.status(200).json({ message: 'Favorite removed successfully' });
-        } else {
-            res.status(404).json({ error: 'Favorite not found' });
-        }
-    } catch (err) {
-        res.status(500).json({ error: 'Failed to remove favorite' });
-    }
+    return favoriteController.removeFavorite(req, res);
 });
 
 module.exports = router;

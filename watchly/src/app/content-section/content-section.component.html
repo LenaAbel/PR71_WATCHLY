@@ -1,7 +1,7 @@
-<div class="max-w-[70vw] overflow-hidden p-6">
-  <div class="flex justify-between items-center">
-    <h2 class="text-5xl font-bold text-(--color-main-light) dark:text-(--color-main-dark) w-fit">{{ content.name }}</h2>
-    <button (click)="onOpenRating()" class="bg-(--color-main-light) dark:bg-(--color-main-dark) text-sm font-bold px-4 py-1 rounded-full text-white">
+<div class="w-full overflow-hidden p-4 md:p-6">
+  <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+    <h2 class="text-3xl md:text-5xl font-bold text-(--color-main-light) dark:text-(--color-main-dark)">{{ content.name }}</h2>
+    <button *ngIf="!content.Favorite" (click)="onOpenRating()" class="bg-(--color-main-light) dark:bg-(--color-main-dark) text-sm font-bold px-4 py-1 rounded-full text-white">
       <span class="pr-2">+</span> Your rating
     </button>
   </div>
@@ -17,14 +17,42 @@
       <span class="pr-1">{{ content.nationality }}</span>
     </div>
     <div class="flex flex-col">
-      <div class="ml-auto">
-        <span class=" text-base">IMDB rating</span>
-        <div class=" text-lg">
-          <p class="text-(--color-main-light) dark:text-(--color-main-dark) text-2xl">&#9733; &#9733; &#9733; &#9733; &#9734;</p>
+      <div class="ml-auto flex flex-col gap-2">
+        <!-- TMDB Rating -->
+        <div class="flex flex-col items-end">
+          <span class="text-base">TMDB rating</span>
+          <div class="text-lg">
+            <ng-container *ngIf="content.rating != null; else noRating">
+              <ng-container *ngFor="let star of [1,2,3,4,5]">
+                <span class="text-(--color-main-light) dark:text-(--color-main-dark)" *ngIf="(content.rating || 0) >= star">★</span>
+                <span class="text-gray-300 dark:text-gray-600" *ngIf="(content.rating || 0) < star">☆</span>
+              </ng-container>
+            </ng-container>
+            <ng-template #noRating>
+              <p class="text-(--color-main-light) dark:text-(--color-main-dark) text-2xl">N/A</p>
+            </ng-template>
+          </div>
+        </div>
+        
+        <!-- User Rating when logged in -->
+        <div *ngIf="isLoggedIn" class="flex flex-col items-end">
+          <span class="text-base">Your rating</span>
+          <div class="text-lg">
+            <ng-container *ngIf="!content.Favorite">
+              <span class="text-gray-300 dark:text-gray-600">☆☆☆☆☆</span>
+            </ng-container>
+            <ng-container *ngIf="content.Favorite">
+              <ng-container *ngFor="let star of [1,2,3,4,5]">
+                <span class="text-(--color-main-light) dark:text-(--color-main-dark)" *ngIf="content.Favorite.rating >= star">★</span>
+                <span class="text-gray-300 dark:text-gray-600" *ngIf="content.Favorite.rating < star">☆</span>
+              </ng-container>
+            </ng-container>
+          </div>
         </div>
       </div>
     </div>
   </div>
+
   <p class="mt-5 text-justify">{{ content.description }}</p>
   <div class="flex flex-wrap gap-5 mt-4">
     <span *ngFor="let genre of content.Genres" class="border border-(--color-main-light) dark:border-(--color-main-dark) text-sm px-3 py-1 rounded-full">

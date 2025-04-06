@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { AuthenticationService } from '../services/authentification.service';
 import { CommentService } from '../services/comment.service';
 import { Comment } from '../models/comment';
+import { HttpClient } from '@angular/common/http';
+import { Content } from '../models/content';
 
 @Component({
   selector: 'app-user-page',
@@ -20,11 +22,14 @@ export class UserPageComponent implements OnInit {
 
   comments: Comment[] = [];
   successMessage: string | null = null;
+  shows: Content[] = [];
+  swiperRef: Swiper | undefined;
 
   constructor(
     private authService: AuthenticationService,
     private router: Router,
-    private commentService: CommentService
+    private commentService: CommentService,
+    private http: HttpClient
   ) {}
 
   ngOnInit(): void {
@@ -47,6 +52,8 @@ export class UserPageComponent implements OnInit {
 
       const userId = user.id; 
       this.loadUserComments(userId);
+      this.getPerson(userId)
+
     }
   }
 
@@ -86,5 +93,24 @@ export class UserPageComponent implements OnInit {
         console.error('Error deleting comment:', error);
       }
     });
+  }
+
+  getPerson(id: number) {
+    const endpoint = `http://localhost:3000/api/persons/id/${id}`;
+    this.http.get<{ Shows: Content[] }>(endpoint).subscribe({
+      next: (data) => {
+        this.shows = data.Shows;
+        console.log(this.shows);
+        
+        console.log(`Fetched person with id ${id}:`, data);
+      },
+      error: (err) => {
+        console.error(`Error fetching person with id ${id}:`, err);
+      }
+    });
+  }
+
+  onSwiper(swiper: Swiper) {
+    this.swiperRef = swiper;
   }
 }

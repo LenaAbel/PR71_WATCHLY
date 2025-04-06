@@ -1,5 +1,7 @@
 const Person = require('../../database/src/models/person');
 const Favorite = require('../../database/src/models/favorite');
+const Shows = require('../../database/src/models/shows');
+const Comments = require('../../database/src/models/comments');
 
 const chalk = require('chalk');
 const bcrypt = require('bcrypt');
@@ -52,4 +54,16 @@ async function getUserPicture(personId) {
     }
 }
 
-module.exports = { createUsers, getUserPicture };
+async function getPersonById(id) {
+    return await Person.findByPk(id, 
+        { 
+            attributes: ['username', 'mail'],
+            include: Shows,
+            through: {
+                model: Favorite,
+            }
+        }
+    );
+}
+
+module.exports = { createUsers, getUserPicture, getPersonById };

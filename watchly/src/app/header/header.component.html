@@ -34,7 +34,7 @@
              onerror="this.src='assets/img/default-person.jpg'"/>
       </div>
     </div>
-    <div *ngIf="!token" class="text-sm font-semibold cursor-pointer" routerLink="/login">
+    <div *ngIf="!token" class="text-sm font-semibold cursor-pointer" (click)="goToLogin()">
       Login
     </div>
 </header>

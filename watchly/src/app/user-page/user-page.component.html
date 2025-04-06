@@ -1,33 +1,57 @@
-<div class="w-full p-8">
-    <div class="flex gap-15 mt-12 p-6">
-        <div class="w-1/5 flex flex-col items-center gap-4">
+<div class="w-full p-4 md:p-8">
+    <div class="flex flex-col md:flex-row gap-8 md:gap-15 mt-8 md:mt-12 p-4 md:p-6">
+        <div class="w-full md:w-1/5 flex flex-col items-center gap-4">
             <img [src]="profilePicture" 
                  alt="Profile" 
-                 class="w-full rounded-full"
+                 class="w-48 md:w-full rounded-full"
                  onerror="this.src='assets/img/default-person.jpg'">
             <a routerLink="/parameters" class="underline cursor-pointer">Parameters</a>
             <p class="font-bold text-red-500 cursor-pointer" (click)="logout()">Logout</p>
         </div>
-        <div class="w-4/5 flex flex-col gap-4">
-            <p class="text-4xl font-bold">{{ firstname }} {{ lastname }} ({{ username }})</p>
-            <div class="w-full overflow-hidden mt-8 pb-15">
-                <h2 class="text-3xl font-bold text-(--color-main-light) dark:text-(--color-main-dark)">Favorite shows</h2>
+        <div class="w-full md:w-4/5 flex flex-col gap-4">
+            <p class="text-2xl md:text-4xl font-bold">{{ firstname }} {{ lastname }} <span class="block md:inline text-xl md:text-4xl">({{ username }})</span></p>
+            <div class="w-full overflow-hidden mt-4 md:mt-8 pb-15">
+                <h2 class="text-2xl md:text-3xl font-bold text-(--color-main-light) dark:text-(--color-main-dark)">Favorite shows</h2>
 
-                <swiper
-                    [slidesPerView]="3"
-                    [spaceBetween]="40"
-                    [navigation]="false"
-                    [keyboard]="true"
-                >
-                    <ng-template *ngFor="let i of [0, 1, 2, 3, 4, 5]" swiperSlide>
-                        <app-content-card [type]="'series'"></app-content-card>
-                    </ng-template>
-                </swiper>
+                <div *ngIf="!shows || shows.length === 0" class="mt-4 text-gray-500 text-center">
+                    No favorite shows yet. Start exploring and add some to your favorites!
+                </div>
+
+                <div class="relative">
+                    <button class="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-(--bg-surface-2-light) dark:bg-(--bg-surface-2-dark) rounded-full p-2" (click)="swiperRef?.slidePrev()">
+                        <svg width="20" height="20" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg" class="text-(--color-main-light) dark:text-(--color-main-dark)">
+                            <line x1="35" y1="10" x2="15" y2="25" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+                            <line x1="35" y1="40" x2="15" y2="25" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+                    <button class="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-(--bg-surface-2-light) dark:bg-(--bg-surface-2-dark) rounded-full p-2" (click)="swiperRef?.slideNext()">
+                        <svg width="20" height="20" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg" class="text-(--color-main-light) dark:text-(--color-main-dark)">
+                            <line x1="15" y1="10" x2="35" y2="25" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+                            <line x1="15" y1="40" x2="35" y2="25" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+                    <swiper
+                        [slidesPerView]="1.2"
+                        [spaceBetween]="20"
+                        [navigation]="false"
+                        [keyboard]="true"
+                        (swiper)="onSwiper($event)"
+                        [breakpoints]="{
+                            '640': { slidesPerView: 2, spaceBetween: 20 },
+                            '768': { slidesPerView: 2.5, spaceBetween: 30 },
+                            '1024': { slidesPerView: 3, spaceBetween: 40 }
+                        }"
+                    >
+                        <ng-template *ngFor="let show of shows" swiperSlide>
+                            <app-content-card [type]="'series'" [content]="show"></app-content-card>
+                        </ng-template>
+                    </swiper>
+                </div>
             </div>
         </div>
     </div>
-    <div class="px-6">
-        <h2 class="text-3xl font-bold">All comments</h2>
+    <div class="px-4 md:px-6">
+        <h2 class="text-2xl md:text-3xl font-bold">All comments</h2>
         <!-- Success Message -->
         <div *ngIf="successMessage" class="mt-4 p-3 bg-green-100 border border-green-400 text-green-700 rounded relative" role="alert">
             <span class="block sm:inline">{{ successMessage }}</span>

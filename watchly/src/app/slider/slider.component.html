@@ -1,10 +1,32 @@
-<swiper
-    [slidesPerView]="5"
-    [spaceBetween]="20"
-    [navigation]="false"
-    [keyboard]="true"
->
-    <ng-template *ngFor="let i of [0, 1, 2, 3, 4, 5]" class="w-0" swiperSlide>
-        <app-content-card [type]="type"></app-content-card>
-    </ng-template>
-</swiper>
+<div class="w-full overflow-hidden pb-8 md:pb-15 pr-4 md:pr-15 relative">
+    <button class="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-(--bg-surface-2-light) dark:bg-(--bg-surface-2-dark) rounded-full p-2 hidden md:block" (click)="swiperRef?.slidePrev()">
+        <svg width="20" height="20" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg" class="text-(--color-main-light) dark:text-(--color-main-dark)">
+            <line x1="35" y1="10" x2="15" y2="25" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+            <line x1="35" y1="40" x2="15" y2="25" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+        </svg>
+    </button>
+    <button class="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-(--bg-surface-2-light) dark:bg-(--bg-surface-2-dark) rounded-full p-2 hidden md:block" (click)="swiperRef?.slideNext()">
+        <svg width="20" height="20" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg" class="text-(--color-main-light) dark:text-(--color-main-dark)">
+            <line x1="15" y1="10" x2="35" y2="25" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+            <line x1="15" y1="40" x2="35" y2="25" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+        </svg>
+    </button>
+    <swiper 
+        [slidesPerView]="1.2"
+        [spaceBetween]="10"
+        [keyboard]="true"
+        (swiper)="onSwiper($event)"
+        [breakpoints]="{
+            '640': { slidesPerView: 2, spaceBetween: 15 },
+            '768': { slidesPerView: 2.5, spaceBetween: 20 },
+            '1024': { slidesPerView: 3, spaceBetween: 20 }
+        }"
+    >
+        <ng-template *ngFor="let item of items" swiperSlide>
+            <div class="py-4 md:py-8">
+                <ng-container *ngTemplateOutlet="itemTemplate; context: { $implicit: item }">
+                </ng-container>
+            </div>
+        </ng-template>
+    </swiper>
+</div>

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, tap, throwError } from 'rxjs';
+import { Observable, tap, throwError, Subject } from 'rxjs';
 
 interface LoginResponse {
   token: string;
@@ -23,6 +23,8 @@ interface ProfilePicture {
 })
 export class AuthenticationService {
   private apiUrl = 'http://localhost:3000/api/users';
+  private authStateSubject = new Subject<void>();
+  authState = this.authStateSubject.asObservable();
 
   constructor(private http: HttpClient) {}
 
@@ -51,21 +53,16 @@ export class AuthenticationService {
 
   login(credentials: any): Observable<{ token: string; user?: any }> {
     this.clearAllStorageAndCache();
-
     return this.http.post<{ token: string; user?: any }>(`${this.apiUrl}/login`, credentials)
       .pipe(
         tap(response => {
-          if (response.token) {
-            localStorage.setItem('authToken', response.token);
-          }
           if (response.user) {
-            // Ensure profile picture is set with default if null
             response.user.profile_picture = response.user.profile_picture || 'assets/img/default-person.jpg';
-            localStorage.setItem('userData', JSON.stringify(response.user));
             if (response.user.is_admin !== undefined) {
               localStorage.setItem('isAdmin', response.user.is_admin);
             }
           }
+          this.authStateSubject.next();
         })
       );
   }
@@ -78,14 +75,14 @@ export class AuthenticationService {
     return localStorage.getItem('authToken');
   }
 
-  // Check if the user is logged in
   isLoggedIn(): boolean {
     return !!this.getToken();
   }
 
-  // Log out the user
   logout(): void {
-    this.clearAllStorageAndCache();
+    localStorage.clear();
+    sessionStorage.clear();
+    this.authStateSubject.next(); // Notify subscribers about auth state change
   }
 
   updateUserProfile(userData: any): Observable<any> {

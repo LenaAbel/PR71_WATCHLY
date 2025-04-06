@@ -2,6 +2,8 @@ const Person = require('../models/person');
 const auth = require('../middleware/auth_middleware');
 const bcrypt = require('bcrypt');
 const Picture = require('../../database/src/models/picture'); 
+const Favorite = require('../../database/src/models/favorite');
+const Comment = require('../../database/src/models/comments');
 const personServices = require('../services/person_services');
 
 exports.getAllUsers = async (req, res) => {
@@ -58,13 +60,35 @@ exports.updateUser = async (req, res) => {
 
 exports.deleteUser = async (req, res) => {
     try {
-        const user = await Person.findByPk(req.params.id);
-        if (!user) return res.status(404).json({ message: 'User not found' });
+        const userId = req.params.id;
+        const user = await Person.findByPk(userId);
+        
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
 
+        // Delete user's favorites first
+        await Favorite.destroy({
+            where: { person_id: userId }
+        });
+
+        // Delete user's comments if you have them
+        await Comment.destroy({
+            where: { person_id: userId }
+        });
+
+        // Finally delete the user
         await user.destroy();
-        res.json({ message: 'User deleted' });
+
+        res.status(200).json({ 
+            message: 'User and associated data deleted successfully' 
+        });
     } catch (error) {
-        res.status(500).json({ message: 'Error deleting user', error });
+        console.error('Error deleting user:', error);
+        res.status(500).json({ 
+            message: 'Error deleting user', 
+            error: error.message 
+        });
     }
 };
 

@@ -30,8 +30,12 @@ export class LoginComponent implements OnInit {
 
     this.authService.login(this.form).subscribe({
       next: (response) => {
-        console.log('User Logging successfully!', response);
-        this.router.navigate(['']); // Redirect to login page after registration
+        if (response.token && response.user) {
+          localStorage.setItem('authToken', response.token);
+          localStorage.setItem('userData', JSON.stringify(response.user));
+          
+          window.location.href = '/';
+        }
       },
       error: (error) => {
         console.error('Error Logging user:', error);

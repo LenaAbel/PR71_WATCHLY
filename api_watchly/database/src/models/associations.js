@@ -34,6 +34,12 @@ Show.hasMany(Comments, { foreignKey: 'show_id' });
 Person.belongsToMany(Show, { through: Favorite, foreignKey: 'person_id' });
 Show.belongsToMany(Person, { through: Favorite, foreignKey: 'show_id' });
 
+Show.hasMany(Favorite, { foreignKey: 'show_id' });
+Favorite.belongsTo(Show, { foreignKey: 'show_id' });
+
+Person.hasMany(Favorite, { foreignKey: 'person_id' });
+Favorite.belongsTo(Person, { foreignKey: 'person_id' });
+
 module.exports = {
   Picture,
   Illustrated,

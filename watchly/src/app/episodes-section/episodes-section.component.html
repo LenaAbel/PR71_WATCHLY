@@ -1,6 +1,6 @@
-<div class="max-w-[70vw] p-6">
-    <h3 class="text-3xl font-bold">Episodes</h3>
-    <div class="p-6 mx-auto items-center gap-10 mt-4">
+<div class="w-full md:max-w-[70vw] p-4 md:p-6">
+    <h3 class="text-2xl md:text-3xl font-bold">Episodes</h3>
+    <div class="p-2 md:p-6 mx-auto items-center gap-6 md:gap-10 mt-2 md:mt-4">
         <app-season-dropdown *ngFor="let season of groupedSeasons; let i = index" [season]="season" [page]="'show'" [active]="i === 0"></app-season-dropdown>
     </div>
 </div>
