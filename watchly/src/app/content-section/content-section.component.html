@@ -1,30 +1,36 @@
 <div class="w-full overflow-hidden p-4 md:p-6">
-  <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-    <h2 class="text-3xl md:text-5xl font-bold text-(--color-main-light) dark:text-(--color-main-dark)">{{ content.name }}</h2>
-    <!-- Hide rating button for episodes -->
-    <button *ngIf="!content.Favorite && type !== 'episode'" 
-            (click)="onOpenRating()" 
-            class="bg-(--color-main-light) dark:bg-(--color-main-dark) text-sm font-bold px-4 py-1 rounded-full text-white">
-      <span class="pr-2">+</span> Your rating
-    </button>
-  </div>
-  <div class="flex justify-between items-end">
-    <div class="infos">
-      <span class="pr-1" *ngIf="type == 'series'">{{ content.status }}</span>
-      <span class="pr-1">{{ content.released_date | date:'mediumDate' }}</span>
-      <span class="pr-1" *ngIf="type == 'episode'">Season {{ content.season }}</span>
-      <span class="pr-1" *ngIf="type == 'episode'">Episode {{ content.number }}</span>
-      <span class="pr-1" *ngIf="type == 'series'">{{ content.seasons }} seasons</span>
-      <span class="pr-1" *ngIf="type == 'series'">{{ content.episodes }} episodes</span>
-      <span class="pr-1" *ngIf="content.duration">{{ content.duration }} mins</span>
-      <span class="pr-1">{{ content.nationality }}</span>
+  <div class="flex flex-col gap-2 md:gap-4">
+    <!-- Title Row with Rating Button -->
+    <div class="flex flex-col md:flex-row justify-between items-start gap-4">
+      <h2 class="text-3xl md:text-5xl font-bold text-(--color-main-light) dark:text-(--color-main-dark)">{{ content.name }}</h2>
+      <div class="flex flex-col items-end gap-2">
+        <!-- Rating Button -->
+        <button *ngIf="!content.Favorite && type !== 'episode'" 
+                (click)="onOpenRating()" 
+                class="bg-(--color-main-light) dark:bg-(--color-main-dark) text-sm font-bold px-4 py-1 rounded-full text-white">
+          <span class="pr-2">+</span> Your rating
+        </button>
+      </div>
     </div>
-    <div class="flex flex-col">
-      <!-- Only show ratings if not an episode -->
-      <div *ngIf="type !== 'episode'" class="ml-auto flex flex-col gap-2">
+
+    <!-- Info Row with TMDB Rating and User Rating -->
+    <div class="flex justify-between items-center">
+      <div class="infos text-sm md:text-base text-gray-600 dark:text-gray-400">
+        <span class="pr-2" *ngIf="type == 'series'">{{ content.status }}</span>
+        <span class="pr-2">{{ content.released_date | date:'mediumDate' }}</span>
+        <span class="pr-2" *ngIf="type == 'episode'">Season {{ content.season }}</span>
+        <span class="pr-2" *ngIf="type == 'episode'">Episode {{ content.number }}</span>
+        <span class="pr-2" *ngIf="type == 'series'">{{ content.seasons }} seasons</span>
+        <span class="pr-2" *ngIf="type == 'series'">{{ content.episodes }} episodes</span>
+        <span class="pr-2" *ngIf="content.duration">{{ content.duration }} mins</span>
+        <span class="pr-2">{{ content.nationality }}</span>
+      </div>
+      
+      <!-- Ratings -->
+      <div class="flex items-center gap-6">
         <!-- TMDB Rating -->
-        <div class="flex flex-col items-end">
-          <span class="text-base">TMDB rating</span>
+        <div *ngIf="type !== 'episode'" class="flex items-center gap-2">
+          <span class="text-sm">TMDB</span>
           <div class="text-lg">
             <ng-container *ngIf="content.rating != null; else noRating">
               <ng-container *ngFor="let star of [1,2,3,4,5]">
@@ -33,15 +39,26 @@
               </ng-container>
             </ng-container>
             <ng-template #noRating>
-              <p class="text-(--color-main-light) dark:text-(--color-main-dark) text-2xl">N/A</p>
+              <span class="text-(--color-main-light) dark:text-(--color-main-dark)">N/A</span>
             </ng-template>
           </div>
         </div>
-        
-        <!-- User Rating when logged in -->
-        <div *ngIf="isLoggedIn" class="flex flex-col items-end">
+
+        <!-- User Rating -->
+        <div *ngIf="isLoggedIn && type !== 'episode'" class="flex items-center gap-2">
+          <span class="text-sm">Your rating</span>
           <div class="flex items-center gap-2">
-            <span class="text-base">Your rating</span>
+            <div class="text-lg">
+              <ng-container *ngIf="!content.Favorite">
+                <span class="text-gray-300 dark:text-gray-600">☆☆☆☆☆</span>
+              </ng-container>
+              <ng-container *ngIf="content.Favorite">
+                <ng-container *ngFor="let star of [1,2,3,4,5]">
+                  <span class="text-(--color-main-light) dark:text-(--color-main-dark)" *ngIf="content.Favorite.rating >= star">★</span>
+                  <span class="text-gray-300 dark:text-gray-600" *ngIf="content.Favorite.rating < star">☆</span>
+                </ng-container>
+              </ng-container>
+            </div>
             <button *ngIf="content.Favorite" 
                     (click)="onDeleteRating()" 
                     class="text-red-500 hover:text-red-700">
@@ -50,26 +67,19 @@
               </svg>
             </button>
           </div>
-          <div class="text-lg">
-            <ng-container *ngIf="!content.Favorite">
-              <span class="text-gray-300 dark:text-gray-600">☆☆☆☆☆</span>
-            </ng-container>
-            <ng-container *ngIf="content.Favorite">
-              <ng-container *ngFor="let star of [1,2,3,4,5]">
-                <span class="text-(--color-main-light) dark:text-(--color-main-dark)" *ngIf="content.Favorite.rating >= star">★</span>
-                <span class="text-gray-300 dark:text-gray-600" *ngIf="content.Favorite.rating < star">☆</span>
-              </ng-container>
-            </ng-container>
-          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <p class="mt-5 text-justify">{{ content.description }}</p>
-  <div class="flex flex-wrap gap-5 mt-4">
-    <span *ngFor="let genre of content.Genres" class="border border-(--color-main-light) dark:border-(--color-main-dark) text-sm px-3 py-1 rounded-full">
-      {{ genre.name }}
-    </span>
+    <!-- Description -->
+    <div class="flex flex-col mt-4">
+      <p class="text-justify">{{ content.description }}</p>
+      <div class="flex flex-wrap gap-2 mt-4">
+        <span *ngFor="let genre of content.Genres" 
+              class="border border-(--color-main-light) dark:border-(--color-main-dark) text-sm px-3 py-1 rounded-full">
+          {{ genre.name }}
+        </span>
+      </div>
+    </div>
   </div>
 </div>

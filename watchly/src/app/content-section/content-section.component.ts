@@ -16,7 +16,7 @@ export class ContentSectionComponent implements OnInit {
   constructor(private http: HttpClient, private authService: AuthenticationService) {}
 
   ngOnInit(): void {
-    // Remove initialization since we're using the getter
+    // Empty since we're using the getter
   }
 
   onOpenRating(): void {

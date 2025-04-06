@@ -81,10 +81,9 @@ async function getFavoritesByPersonId(person_id) {
             attributes: ['person_id', 'name'],
         },
     });
-    console.log(favorites);
-    
     return favorites;
 }
+
 async function getFavoritesByShowId(show_id) {
     const favorites = await Favorite.findAll({
         where: { show_id },
@@ -109,9 +108,7 @@ async function getFavoritesByPersonIdAndShowId(person_id, show_id) {
     return favorites;
 }
 
-async function addFavorite(favoriteData) {
-    console.log('Service received favorite data:', favoriteData);
-    
+async function addFavorite(favoriteData) {    
     if (!favoriteData) {
         throw new Error('No favorite data provided');
     }

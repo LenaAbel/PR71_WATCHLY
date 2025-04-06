@@ -133,7 +133,6 @@ router.get('/user/:personId/show/:showId', async (req, res) => {
  */
 router.post('/', async (req, res) => {
     try {
-        console.log('Raw request body:', req.body);
         // Handle nested body structure if present
         const favoriteData = req.body.body || req.body;
         req.body = favoriteData;

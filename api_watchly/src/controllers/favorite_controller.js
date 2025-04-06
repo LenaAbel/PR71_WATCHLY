@@ -18,13 +18,11 @@ async function initializeFavorites(req, res) {
 
 async function addFavorite(req, res) {
     try {
-        console.log('Controller received request:', req.body);
         if (!req.body) {
             return res.status(400).json({ error: 'No data provided' });
         }
         
         const favorite = await favoriteServices.addFavorite(req.body);
-        console.log('Favorite created:', favorite);
         return res.status(201).json(favorite);
     } catch (error) {
         console.error(chalk.red('Error adding favorite:', error.message));

@@ -99,6 +99,7 @@ export class UserPageComponent implements OnInit {
     });
   }
 
+
   getPerson(id: number) {
     const endpoint = `http://localhost:3000/api/persons/id/${id}`;
     this.http.get<{ Shows: Content[] }>(endpoint).subscribe({
