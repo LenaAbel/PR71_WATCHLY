@@ -18,7 +18,7 @@
   <!-- Main content column -->
   <main class="flex-1 space-y-8 mb-12">
     <!-- First card: Profile info + form -->
-    <div class="rounded-(--radius-outer) shadow-(--shadow-light) 
+    <div class="rounded-(--radius-outer) shadow-(--shadow-light) dark:shadow-(--shadow-dark)
                 bg-(--bg-surface-1-light) dark:bg-(--bg-surface-1-dark) p-8 space-y-6">
 
       <!-- If success or error messages exist -->
@@ -120,7 +120,7 @@
     </div>
 
     <!-- Second card: theme settings + delete account -->
-    <div class="space-y-4 rounded-(--radius-outer) shadow-(--shadow-light)
+    <div class="space-y-4 rounded-(--radius-outer) shadow-(--shadow-light) dark:shadow-(--shadow-dark)
                 bg-(--bg-surface-1-light) dark:bg-(--bg-surface-1-dark) p-6">
       <button class="text-red-600 font-semibold hover:underline w-full text-left"
               (click)="deleteAccount()">

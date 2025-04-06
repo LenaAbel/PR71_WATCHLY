@@ -19,7 +19,7 @@
   <!-- User section with profile or login -->
   <div class="flex items-center space-x-4">
     <!-- User profile if logged in -->
-    <div class="flex items-center space-x-2 cursor-pointer" *ngIf="token" routerLink="/profile">
+    <div class="flex items-center space-x-2 cursor-pointer" *ngIf="token && route !== 'login' && route !== 'register'" routerLink="/profile">
       <span>{{ username }}</span>
       <div class="w-8 h-8 flex items-center justify-center rounded-full overflow-hidden">
         <img [src]="profilePicture" alt="Profile picture" class="w-full h-full object-cover"
@@ -28,7 +28,7 @@
     </div>
 
     <!-- Login link if not logged in -->
-    <div *ngIf="!token" class="text-sm font-semibold cursor-pointer" (click)="goToLogin()">
+    <div *ngIf="!token && route !== 'login' && route !== 'register'" class="text-sm font-semibold cursor-pointer" (click)="goToLogin()">
       Login
     </div>
   </div>

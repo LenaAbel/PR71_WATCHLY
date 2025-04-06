@@ -30,7 +30,7 @@ export class YourShowsSectionComponent implements OnInit {
     // Check if user is logged in
     const userData = localStorage.getItem('userData');
     this.isLoggedIn = !!userData;
-    
+
     if (this.isLoggedIn && userData) {
       const user = JSON.parse(userData);
       this.isAdmin = user.is_admin === true;
