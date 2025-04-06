@@ -43,6 +43,7 @@ import { ParametersComponent } from './parameters/parameters.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SliderTitledComponent } from './slider-titled/slider-titled.component';
 import { SliderButtonComponent } from './slider-button/slider-button.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -89,7 +90,8 @@ import { SliderButtonComponent } from './slider-button/slider-button.component';
     FormsModule,
     HttpClientModule,
     SwiperModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule
   ],
   providers: [
     AuthenticationService,

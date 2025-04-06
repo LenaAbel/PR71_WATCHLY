@@ -1,2 +1,6 @@
-<app-new-show-banner></app-new-show-banner>
+<!-- New Shows to Rate Section - Hide for admin users -->
+<div *ngIf="!isAdmin" class="mt-6">
+  <h2 class="text-2xl font-bold mb-4">NEW SHOWS TO RATE!</h2>
+  <app-new-show-banner></app-new-show-banner>
+</div>
 <app-your-shows-section></app-your-shows-section>
