@@ -95,6 +95,21 @@ async function updateDisplayedStatus(req, res) {
         res.status(200).json({ message: "Show displayed status updated" });
     } catch (err) {
         console.error(chalk.red(`[Controller] Error updating displayed status for ID: ${req.params.id}`));
+    }
+}
+
+async function search(req, res) {
+    console.log(chalk.cyan(`[DB] Searching for: ${req.query.name}`));
+    try {
+
+        if (!req.query) {
+            return res.status(400).json({ error: "Query parameter is required" });
+        }
+        const results = await showsServices.searchShows(req.query);
+        console.log(chalk.cyan(`[DB] Found: ${results.length} results`));
+        
+        res.status(200).json(results);
+    } catch (err) {
         res.status(500).json({ error: err.message });
     }
 }
@@ -116,5 +131,6 @@ module.exports = {
     getTV,
     getTrailer,
     updateDisplayedStatus,
+    search,
     getShowRating
 };

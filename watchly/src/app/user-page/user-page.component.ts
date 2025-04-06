@@ -22,12 +22,13 @@ export class UserPageComponent implements OnInit {
 
   comments: Comment[] = [];
   successMessage: string | null = null;
+  favoriteSuccessMessage: string | null = null; // New property for favorite deletion alerts
   shows: Content[] = [];
+  allShows: Content[] = []; 
   swiperRef: Swiper | undefined;
 
   currentFilter: 'all' | 'movies' | 'series' = 'all';
   searchQuery: string = '';
-  allShows: Content[] = [];
 
   constructor(
     private authService: AuthenticationService,
@@ -102,16 +103,21 @@ export class UserPageComponent implements OnInit {
 
   getPerson(id: number) {
     const endpoint = `http://localhost:3000/api/persons/id/${id}`;
-    this.http.get<{ Shows: Content[] }>(endpoint).subscribe({
+    this.http.get<{ shows: Content[] }>(endpoint).subscribe({
       next: (data) => {
-        this.allShows = data.Shows;
-        // Ensure each show has proper thumbnail paths
-        this.allShows.forEach(show => {
-          if (!show.thumbnail || show.thumbnail.trim() === '') {
-            show.thumbnail = 'assets/img/default-poster.jpg';
-          }
-        });
+        // Ensure is_movie is a proper boolean
+        this.allShows = data.shows.map(show => ({
+          ...show,
+          is_movie: Boolean(show.is_movie) 
+        }));
+        
+        this.shows = [...this.allShows]; // Initialize shows with all shows
         this.filterShows();
+        
+        // Debug logging
+        console.log('All shows:', this.allShows);
+        console.log('Movies count:', this.allShows.filter(s => s.is_movie).length);
+        console.log('Series count:', this.allShows.filter(s => !s.is_movie).length);
       },
       error: (err) => {
         console.error(`Error fetching person with id ${id}:`, err);
@@ -122,13 +128,18 @@ export class UserPageComponent implements OnInit {
   }
 
   filterShows() {
+    // Always start filtering from the original dataset
     let filtered = [...this.allShows];
     
-    // Apply type filter
+    // Apply type filter with improved boolean handling
     if (this.currentFilter !== 'all') {
-      filtered = filtered.filter(show => 
-        this.currentFilter === 'movies' ? show.is_movie : !show.is_movie
-      );
+      filtered = filtered.filter(show => {
+        if (this.currentFilter === 'movies') {
+          return Boolean(show.is_movie) === true;
+        } else {
+          return Boolean(show.is_movie) === false;
+        }
+      });
     }
     
     // Apply search filter
@@ -140,6 +151,9 @@ export class UserPageComponent implements OnInit {
     }
     
     this.shows = filtered;
+    
+    // Debug log after filtering
+    console.log(`Filter applied: ${this.currentFilter}, Results: ${filtered.length}`);
   }
 
   onFilterChange(filter: 'all' | 'movies' | 'series') {
@@ -154,5 +168,20 @@ export class UserPageComponent implements OnInit {
 
   onSwiper(swiper: Swiper) {
     this.swiperRef = swiper;
+  }
+
+  // Handle favorite deletion alert
+  handleFavoriteDeleted(showName: string) {
+    this.favoriteSuccessMessage = `"${showName}" removed from favorites`;
+    // Refresh the favorites list
+    const userData = localStorage.getItem('userData');
+    if (userData) {
+      const user = JSON.parse(userData);
+      this.getPerson(user.id);
+    }
+    // Auto-hide the message after 3 seconds
+    setTimeout(() => {
+      this.favoriteSuccessMessage = null;
+    }, 3000);
   }
 }

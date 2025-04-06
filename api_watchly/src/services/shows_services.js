@@ -6,6 +6,9 @@ const Genre = require('../../database/src/models/genre.js');
 const Has = require('../../database/src/models/has.js');
 const Favorite = require('../../database/src/models/favorite.js');
 const Person = require('../../database/src/models/person.js');
+const { Op } = require('sequelize');
+const Illustrated = require('../../database/src/models/illustrated.js');
+const Picture = require('../../database/src/models/picture.js');
 
 // --- TMDB Fetching ---
 async function getIds(name, time, pages = process.env.TMDB_PAGES) {
@@ -159,6 +162,63 @@ async function saveShow(show) {
 }
 
 /**
+ * Search for shows with optional filters
+ * @param {Object} filters - Filters to apply to the search
+ * @param {string} filters.name - Name of the show to search for
+ * @param {boolean} filters.is_movie - Filter by movie or TV show
+ * @param {string} filters.genre - Filter by genre
+ * @param {string} filters.order_by - Field to order the results by
+ * @param {string} filters.order - Order direction ('ASC' or 'DESC')
+ * @returns {Promise<Array>} - List of shows matching the search criteria
+ */
+async function searchShows(filters = {}) {
+    const { name, is_movie, genre, order_by = 'rating', order = 'DESC' } = filters;
+    const include = [];
+
+    console.log(`[DB] Searching for shows with filters: ${JSON.stringify(filters)}`);
+    
+    const whereClause = {
+        is_displayed: true,
+    };
+
+    if (name) {
+        whereClause.name = { [Op.like]: `%${name}%` };
+    }
+
+    /*if (is_movie === 'true') {
+        whereClause.is_movie = true;
+    } else {
+        whereClause.is_movie = false;
+    }
+
+    if (genre) {
+        include.push({
+            model: Genre,
+            where: { name: { [Op.like]: `%${genre}%` } },
+            through: { model: Has },
+        });
+    }*/
+
+    console.log(`[DB] Searching with where clause: ${JSON.stringify(whereClause)}`);    
+    
+    return await Show.findAll({
+        include: {
+            model: Illustrated,
+            include: [Picture],
+            required: false,
+            limit: 1,
+        },
+        where: whereClause,
+    }).then(shows => {
+        return shows.map(show => {
+            const thumbnail = show.Illustrateds?.[0]?.Picture?.link || null;
+            const { Illustrateds, ...showData } = show.toJSON();
+            return { ...showData, thumbnail };
+        });
+    });
+}
+
+/**
  * Update the displayed status of a show
  * @param {Show} show 
  * @param {boolean} isDisplayed 
@@ -191,6 +251,7 @@ module.exports = {
     createMovie,
     createTv,
     saveShow,
+    searchShows,
     getShowRating,
     saveShow,
     updateShowDisplayedStatus

@@ -1,0 +1,39 @@
+:host {
+  display: block;
+  margin: 0.01rem; /* Reduced from 0.1rem */
+  margin-left: 0.5rem; /* Reduced from 0.5rem */
+}
+
+/* Ensure all cards have the same height in the user page */
+:host-context(.user-favorites) .relative {
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+}
+
+:host-context(.user-favorites) .relative img {
+  height: 160px;
+  object-fit: cover;
+}
+
+:host-context(.user-favorites) .relative .description-container {
+  height: 80px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+/* Card hover effect */
+.relative {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.relative:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Delete button hover effect */
+button:hover {
+  transform: scale(1.1);
+  transition: transform 0.2s ease;
+}

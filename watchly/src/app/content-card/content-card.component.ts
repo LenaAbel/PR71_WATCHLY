@@ -1,6 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Content } from '../models/content';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-content-card',
@@ -10,18 +10,15 @@ import { Content } from '../models/content';
 export class ContentCardComponent implements OnInit {
   @Input() type! : string;
   @Input() content! : Content;
+  @Output() favoriteDeleted = new EventEmitter<void>();
   alertMessage: string = '';
   alertType: 'success' | 'error' | '' = '';
 
   constructor(private http: HttpClient) {}
 
-  ngOnInit() {
-    // Ensure thumbnail is available
-    if (!this.content || !this.content.thumbnail || this.content.thumbnail.trim() === '') {
-      if (this.content) {
-        this.content.thumbnail = 'assets/img/default-poster.jpg';
-      }
-    }
+  ngOnInit(): void {
+    // Debug: Log the content object to see what's being received
+    console.log(`Content card for ${this.content.name}, type: ${this.type}`, this.content);
   }
 
   onDeleteFavorite(event: Event): void {
@@ -35,6 +32,7 @@ export class ContentCardComponent implements OnInit {
           next: () => {
             this.showAlert('Show removed from favorites', 'success');
             setTimeout(() => window.location.reload(), 1500);
+            this.favoriteDeleted.emit();
           },
           error: () => {
             this.showAlert('Error removing show from favorites', 'error');
@@ -50,5 +48,19 @@ export class ContentCardComponent implements OnInit {
       this.alertMessage = '';
       this.alertType = '';
     }, 3000);
+  }
+
+  // Helper method to safely get seasons count
+  getSeasonsCount(): number {
+    // Return seasons count or 0 if not available
+    if (this.content.seasons !== undefined && this.content.seasons !== null) {
+      return this.content.seasons;
+    }
+    // Try to get from episodes array if available
+    if (this.content.episodes && Array.isArray(this.content.episodes)) {
+      const seasons = [...new Set(this.content.episodes.map((ep: any) => ep.season))];
+      return seasons.length;
+    }
+    return 0;
   }
 }

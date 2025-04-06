@@ -68,7 +68,7 @@ export class HeaderComponent implements OnInit, OnChanges {
       this.isAdmin = false;
     }
   }
-
+  
   goToResearch() {
     if (this.searchQuery.trim()) {
       this.router.navigate(['/research'], { queryParams: { q: this.searchQuery } });
