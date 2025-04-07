@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const showsController = require('../controllers/shows_controller');
 const showsService = require('../services/shows_services');
+const Show = require('../../database/src/models/shows');
 
 /**
  * @swagger
@@ -272,6 +273,42 @@ router.patch('/:id/displayed', async (req, res) => {
     console.error('Error updating show display status:', error);
     res.status(500).json({ error: 'Failed to update show display status' });
   }
+});
+
+/**
+ * @swagger
+ * /api/shows/display-status/{id}:
+ *   get:
+ *     summary: Check if a show is displayed
+ *     tags: [Shows]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: The show ID
+ *     responses:
+ *       200:
+ *         description: Returns the display status of the show
+ *       404:
+ *         description: Show not found
+ */
+router.get('/display-status/:id', async (req, res) => {
+    try {
+        const show = await Show.findByPk(req.params.id, {
+            attributes: ['is_displayed']
+        });
+        
+        if (!show) {
+            return res.status(404).json({ message: 'Show not found' });
+        }
+        
+        res.json({ is_displayed: show.is_displayed });
+    } catch (error) {
+        console.error('Error checking show display status:', error);
+        res.status(500).json({ message: 'Error checking show display status' });
+    }
 });
 
 module.exports = router;

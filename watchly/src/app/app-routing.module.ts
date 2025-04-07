@@ -14,6 +14,8 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { ResearchPageComponent } from './research-page/research-page.component';
 import { ParametersComponent } from './parameters/parameters.component';
 import { DiscoverPageComponent } from './discover-page/discover-page.component';
+import { ShowGuard } from './guards/show.guard';
+
 /**
  * This module defines the routing configuration for the application.
  */
@@ -27,16 +29,15 @@ const routes: Routes = [
   {path: 'error/404', component: NotFoundComponent},
   {path: 'research', component: ResearchPageComponent},
   {path: 'parameters', component: ParametersComponent},
-  {path: ':id', component: ShowPageComponent},
-  {path: ':id/episode/:episodeId', component: ShowPageComponent},
+  {path: ':id', component: ShowPageComponent, canActivate: [ShowGuard]},
+  {path: ':id/episode/:episodeId', component: ShowPageComponent, canActivate: [ShowGuard]},
   {path: '', component: HomePageComponent},
-  {path: ':id/casting', component: CastPageComponent},
-  {path: ':id/episodes', component: EpisodePageComponent},
-  {path: ':id/comments', component: CommentPageComponent},
-  {path: ':id/posters', component: PosterPageComponent},
+  {path: ':id/casting', component: CastPageComponent, canActivate: [ShowGuard]},
+  {path: ':id/episodes', component: EpisodePageComponent, canActivate: [ShowGuard]},
+  {path: ':id/comments', component: CommentPageComponent, canActivate: [ShowGuard]},
+  {path: ':id/posters', component: PosterPageComponent, canActivate: [ShowGuard]},
   {path: '**', redirectTo: 'error/404'}, 
 ];
-
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

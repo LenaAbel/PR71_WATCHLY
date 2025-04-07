@@ -43,6 +43,7 @@ const personRoutes = require('./src/router/person_router');
 const commentRoutes = require('./src/router/comment_router');
 const favoriteRoutes = require('./src/router/favorite_router');
 const userRouter = require('./src/router/userRouter');
+const adminRouter = require('./src/router/admin_router');
 
 // CONTROLLERS / SERVICES
 const showsServices = require('./src/services/shows_services');
@@ -83,6 +84,7 @@ server.use('/api/persons', personRoutes);
 server.use('/api/users', userRouter);
 server.use('/api/comments', commentRoutes);
 server.use('/api/favorites', favoriteRoutes);
+server.use('/api/admin', adminRouter); // Add the admin route
 // Swagger route
 server.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 

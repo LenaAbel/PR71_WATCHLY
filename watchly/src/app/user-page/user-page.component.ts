@@ -33,16 +33,32 @@ export class UserPageComponent implements OnInit {
   lastname: string = '';
   username: string = '';
   profilePicture: string = '';
+  isAdmin: boolean = false;
 
   comments: Comment[] = [];
   successMessage: string | null = null;
-  favoriteSuccessMessage: string | null = null; // New property for favorite deletion alerts
+  favoriteSuccessMessage: string | null = null;
   shows: Content[] = [];
   allShows: Content[] = []; 
   swiperRef: Swiper | undefined;
 
   currentFilter: 'all' | 'movies' | 'series' = 'all';
   searchQuery: string = '';
+
+  // Admin statistics
+  statistics: any = {
+    userCount: 0,
+    showCount: 0,
+    commentCount: 0,
+    favoriteCount: 0,
+    moviesCount: 0,
+    seriesCount: 0,
+    popularShows: [],
+    recentComments: []
+  };
+
+  // Add a success message for admin actions
+  adminActionMessage: string | null = null;
 
   constructor(
     private authService: AuthenticationService,
@@ -59,6 +75,7 @@ export class UserPageComponent implements OnInit {
       this.firstname = user.firstname;
       this.lastname = user.lastname;
       this.profilePicture = user.profile_picture || 'assets/img/default-person.jpg';
+      this.isAdmin = user.is_admin === true;
 
       // Listen for changes in localStorage
       window.addEventListener('storage', (e) => {
@@ -69,9 +86,15 @@ export class UserPageComponent implements OnInit {
       });
 
       const userId = user.id; 
-      this.loadUserComments(userId);
-      this.getPerson(userId)
-
+      
+      if (this.isAdmin) {
+        // Load admin statistics
+        this.loadAdminStatistics();
+      } else {
+        // Load regular user data
+        this.loadUserComments(userId);
+        this.getPerson(userId);
+      }
     }
   }
 
@@ -193,5 +216,41 @@ export class UserPageComponent implements OnInit {
     setTimeout(() => {
       this.favoriteSuccessMessage = null;
     }, 3000);
+  }
+
+  // New method to load admin statistics
+  loadAdminStatistics() {
+    this.http.get<any>('http://localhost:3000/api/admin/statistics').subscribe({
+      next: (data) => {
+        this.statistics = data;
+      },
+      error: (error) => {
+        console.error('Error loading admin statistics:', error);
+      }
+    });
+  }
+
+  // New method to delete a comment as admin
+  adminDeleteComment(commentId: number) {
+    this.http.delete<any>(`http://localhost:3000/api/admin/comments/${commentId}`).subscribe({
+      next: () => {
+        // Remove the deleted comment from the list
+        this.statistics.recentComments = this.statistics.recentComments.filter(
+          (comment: any) => comment.comment_id !== commentId
+        );
+        
+        // Update the comment count in statistics
+        this.statistics.commentCount = Math.max(0, this.statistics.commentCount - 1);
+        
+        // Show success message
+        this.adminActionMessage = "Comment deleted successfully!";
+        setTimeout(() => {
+          this.adminActionMessage = null;
+        }, 3000);
+      },
+      error: (error) => {
+        console.error('Error deleting comment:', error);
+      }
+    });
   }
 }
