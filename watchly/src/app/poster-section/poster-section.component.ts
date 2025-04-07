@@ -6,7 +6,7 @@ import { Component, OnInit, ElementRef, ViewChildren, QueryList, AfterViewInit, 
   styleUrls: ['./poster-section.component.css']
 })
 export class PosterSectionComponent {
-  @Input() images: any[] = [];
+  @Input() images: string[] = [];
   @Input() showId!: number;
 
   ngOnInit(): void {}

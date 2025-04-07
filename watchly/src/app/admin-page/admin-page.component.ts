@@ -11,10 +11,10 @@ import { Content } from '../models/content';
 export class AdminPageComponent implements OnInit {
   isAdmin: boolean = false;
   content: Content[] = [];
-  displayedMovies: any[] = [];
-  displayedSeries: any[] = [];
-  nonDisplayedMovies: any[] = [];
-  nonDisplayedSeries: any[] = [];
+  displayedMovies: Content[] = [];
+  displayedSeries: Content[] = [];
+  nonDisplayedMovies: Content[] = [];
+  nonDisplayedSeries: Content[] = [];
 
   // Change the constructor parameter from private to public
   constructor(private router: Router, public showsService: ShowsService) { }

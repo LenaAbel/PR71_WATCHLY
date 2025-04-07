@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 export class CastPageComponent implements OnInit {
   showId!: number;
   type!: string;
-  cast: any;
+  cast: Actor[] = [];
 
   constructor(private route: ActivatedRoute, private http: HttpClient) {}
 
