@@ -7,7 +7,7 @@ import { Actor } from '../models/actor';
   styleUrls: ['./actor-card.component.css']
 })
 export class ActorCardComponent {
-  @Input() pageTitle!: any;
+  @Input() pageTitle!: string;
   @Input() actor!: Actor;
 
   get imageUrl(): string {

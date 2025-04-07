@@ -11,7 +11,7 @@ Swiper.use([Navigation, Pagination, Keyboard]);
   styleUrls: ['./slider.component.css']
 })
 export class SliderComponent implements OnInit {
-  @Input() items: any[] = [];
+  @Input() items: Content[] = [];
   @Input() type!: string; // 'movie' or 'series'
   @Input() itemTemplate!: TemplateRef<any>;
   @Input() content: Content[] = [];

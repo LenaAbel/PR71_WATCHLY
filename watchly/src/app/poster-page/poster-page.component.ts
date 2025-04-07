@@ -23,7 +23,7 @@ export class PosterPageComponent implements OnInit {
     this.getImages(this.showId);
   }
 
-  images: any[] = [];
+  images: string[] = [];
 
   getImages(id: number): void {
     const endpoint = `http://localhost:3000/api/pictures/show/${id}`;
