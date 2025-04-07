@@ -33,7 +33,21 @@ export class ShowPageComponent implements OnInit {
   images!: any[];
   isRatingPopupOpen = false;
   isLoggedIn = false;
-  constructor(private route: ActivatedRoute, private http: HttpClient, private authService: AuthenticationService, private router :Router) {}
+
+  innerWidth: number = window.innerWidth;
+
+  ngOnDestroy() {
+      window.removeEventListener('resize', () => {
+          this.innerWidth = window.innerWidth;
+      });
+  }
+
+  constructor(private route: ActivatedRoute, private http: HttpClient, private authService: AuthenticationService, private router :Router) {
+
+    window.addEventListener('resize', () => {
+      this.innerWidth = window.innerWidth;
+    });
+  }
 
   ngOnInit(): void {
     this.type = this.route.snapshot.url.some(segment => segment.path === 'episode')

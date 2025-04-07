@@ -2,7 +2,7 @@
     <app-trailer-banner class="col-span-full md:col-span-2" [showId]="showId"></app-trailer-banner>
     <app-return-btn *ngIf="type === 'episode'"></app-return-btn>
     <app-cast-section 
-        class="row-span-3" 
+        class="row-span-3 hidden md:block" 
         *ngIf="type === 'episode'" 
         [cast]="cast" 
         [showId]="showId">
@@ -14,7 +14,7 @@
     </app-content-section>
     <app-cast-section 
         class="row-span-1 md:row-span-3" 
-        *ngIf="type !== 'episode'" 
+        *ngIf="type !== 'episode' || (type === 'episode' && innerWidth <= 768)" 
         [cast]="cast" 
         [showId]="showId">
     </app-cast-section>
