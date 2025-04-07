@@ -15,6 +15,22 @@ router.get('/', commentController.getAll);
  * /api/comments/show/{showId}:
  *   get:
  *     summary: Get comments by show ID
+ *     description: Retrieve all comments for a specific show. If the show ID does not exist in the database, a 404 error is returned.
+ *     tags: [Comments]
+ *     parameters:
+ *       - in: path
+ *         name: showId
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: ID of the show to retrieve comments for
+ *     responses:
+ *       200:
+ *         description: List of comments for the specified show
+ *       404:
+ *         description: Show not found
+ *       500:
+ *         description: Server error
  */
 router.get('/show/:showId', commentController.getByShow);
 
@@ -23,6 +39,22 @@ router.get('/show/:showId', commentController.getByShow);
  * /api/comments/episode/{episodeId}:
  *   get:
  *     summary: Get comments by episode ID
+ *     description: Retrieve all comments for a specific episode. If the episode ID does not exist in the database, a 404 error is returned.
+ *     tags: [Comments]
+ *     parameters:
+ *       - in: path
+ *         name: episodeId
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: ID of the episode to retrieve comments for
+ *     responses:
+ *       200:
+ *         description: List of comments for the specified episode
+ *       404:
+ *         description: Episode not found
+ *       500:
+ *         description: Server error
  */
 router.get('/episode/:episodeId', commentController.getByEpisode);
 

@@ -71,6 +71,12 @@ async function getAllComments() {
  */
 async function getCommentsByShowId(showId) {
     try {
+        const showExists = await Show.findByPk(showId);
+        if (!showExists) {
+            throw new Error(`Show with ID ${showId} does not exist`);
+        }
+
+        // Récupère les commentaires associés au show
         const comments = await Comments.findAll({ 
             where: { show_id: showId },
             order: [['comment_date', 'DESC']],
@@ -80,12 +86,14 @@ async function getCommentsByShowId(showId) {
                 attributes: ['username']
             }]
         });
+
         // Map output to merge username property into the comment object
         const mappedComments = comments.map(comment => {
             const plain = comment.get({ plain: true });
             plain.username = plain.person ? plain.person.username : 'Anonymous';
             return plain;
         });
+
         return mappedComments;
     } catch (error) {
         console.error('Error fetching comments:', error);
@@ -99,7 +107,34 @@ async function getCommentsByShowId(showId) {
  * @returns 
  */
 async function getCommentsByEpisodeId(episodeId) {
-    return await Comment.findAll({ where: { episode_id: episodeId } });
+    try {
+        const episodeExists = await Episode.findByPk(episodeId); 
+        if (!episodeExists) {
+            throw new Error(`Episode with ID ${episodeId} does not exist`);
+        }
+
+        const comments = await Comment.findAll({ 
+            where: { episode_id: episodeId },
+            order: [['comment_date', 'DESC']],
+            include: [{
+                model: Person,
+                as: 'person',
+                attributes: ['username']
+            }]
+        });
+
+        // Map output to merge username property into the comment object
+        const mappedComments = comments.map(comment => {
+            const plain = comment.get({ plain: true });
+            plain.username = plain.person ? plain.person.username : 'Anonymous';
+            return plain;
+        });
+
+        return mappedComments;
+    } catch (error) {
+        console.error('Error fetching comments by episode ID:', error.message);
+        throw error;
+    }
 }
 
 /**

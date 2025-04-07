@@ -107,10 +107,24 @@ async function getAllPictures(limit = 10) {
  * @returns 
  */
 async function getPicturesForShow(showId) {
-    return await Illustrated.findAll({
-        where: { show_id: showId },
-        include: [Picture]
-    });
+    try {
+        // Vérifie si le show existe dans la base de données
+        const show = await Show.findByPk(showId);
+        if (!show) {
+            throw new Error(`Show with ID ${showId} does not exist`);
+        }
+
+        // Récupère les images associées au show
+        const pictures = await Illustrated.findAll({
+            where: { show_id: showId },
+            include: [Picture]
+        });
+
+        return pictures;
+    } catch (error) {
+        console.error(`Error fetching pictures for show ID ${showId}:`, error.message);
+        throw error;
+    }
 }
 
 /**
