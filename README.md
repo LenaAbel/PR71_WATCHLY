@@ -28,31 +28,30 @@ git clone https://github.com/yourusername/PR71_WATCHLY.git
 cd PR71_WATCHLY
 ```
 
-2. Install dependencies:
+2. Start the API:
 ```bash
 cd api_watchly
 ```
 ```bash
 npm install
 ```
+```bash
+npm start
+```
+3. Open your browser and navigate to `http://localhost:3000/api-docs`
 
-3. Start the development server:
+4. Start the development server:
 ```bash
 cd watchly
+```
+```bash
+npm install
 ```
 ```bash
 ng serve
 ```
 
-4. Open your browser and navigate to `http://localhost:4200`
-
-
-5. Start the API :
-```bash
-npm start
-```
-
-6. Open your browser and navigate to `http://localhost:3000/api/`
+5. Open your browser and navigate to `http://localhost:4200`
 
 ## Development
 
