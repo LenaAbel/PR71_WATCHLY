@@ -15,7 +15,6 @@ export class TrailerBannerComponent implements OnInit {
   constructor(private sanitizer: DomSanitizer, private http: HttpClient) { }
 
   ngOnInit(): void {
-    console.log(this.showId);
     this.getTrailerLink(this.showId);
   }
 

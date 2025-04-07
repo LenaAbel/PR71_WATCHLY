@@ -45,8 +45,6 @@ export class ShowPageComponent implements OnInit {
     this.http.get(endpoint, options).subscribe({
       next: (data) => {
         this.show = data as Content;
-        console.log(`Fetched with id ${id}:`, data);
-        console.log(this.show);
         if (this.show.is_movie) {
           this.type = 'movie';
         } else {
@@ -84,8 +82,6 @@ export class ShowPageComponent implements OnInit {
         this.episodes = data;
         this.groupSeasons();
         this.show.episodes = this.episodes.length;
-        console.log(`Fetched with id ${id}:`, data);
-        console.log(this.groupedSeasons);
       },
       error: (err) => {
         console.error(`Error fetching with id ${id}:`, err);
@@ -117,7 +113,6 @@ export class ShowPageComponent implements OnInit {
     this.http.get<any[]>(endpoint).subscribe({
       next: (data: any[]) => {
         this.images = data;
-        console.log(`Fetched with id ${id}:`, data);
       },
       error: (err) => {
         console.error(`Error fetching with id ${id}:`, err);
@@ -161,11 +156,9 @@ export class ShowPageComponent implements OnInit {
       rating: rating,
       is_watched: false
     };
-    console.log('Adding rating:', body);
 
     this.http.post('http://localhost:3000/api/favorites/', { body: body })
       .subscribe(response => {
-        console.log('Rating added successfully:', response);
       }, error => {
         console.error('Error adding rating:', error);
       });

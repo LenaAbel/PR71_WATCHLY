@@ -51,7 +51,6 @@ export class UserPageComponent implements OnInit {
         if (e.key === 'userData') {
           const updatedUser = JSON.parse(e.newValue || '{}');
           this.profilePicture = updatedUser.profile_picture || 'assets/img/default-person.jpg';
-          console.log('Updated profile picture:', this.profilePicture);
         }
       });
 
@@ -115,9 +114,6 @@ export class UserPageComponent implements OnInit {
         this.filterShows();
         
         // Debug logging
-        console.log('All shows:', this.allShows);
-        console.log('Movies count:', this.allShows.filter(s => s.is_movie).length);
-        console.log('Series count:', this.allShows.filter(s => !s.is_movie).length);
       },
       error: (err) => {
         console.error(`Error fetching person with id ${id}:`, err);
@@ -153,7 +149,7 @@ export class UserPageComponent implements OnInit {
     this.shows = filtered;
     
     // Debug log after filtering
-    console.log(`Filter applied: ${this.currentFilter}, Results: ${filtered.length}`);
+    // console.log(`Filter applied: ${this.currentFilter}, Results: ${filtered.length}`);
   }
 
   onFilterChange(filter: 'all' | 'movies' | 'series') {

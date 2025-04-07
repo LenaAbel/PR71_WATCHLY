@@ -45,7 +45,6 @@ export class SliderTitledComponent implements OnInit {
   }
 
   handleButtonClick(show: Content): void {
-    console.log('Button clicked for show:', show);
     this.buttonClick.emit(show); 
   }
   

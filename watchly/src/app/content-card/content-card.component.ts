@@ -18,7 +18,7 @@ export class ContentCardComponent implements OnInit {
 
   ngOnInit(): void {
     // Debug: Log the content object to see what's being received
-    console.log(`Content card for ${this.content.name}, type: ${this.type}`, this.content);
+    // console.log(`Content card for ${this.content.name}, type: ${this.type}`, this.content);
   }
 
   onDeleteFavorite(event: Event): void {

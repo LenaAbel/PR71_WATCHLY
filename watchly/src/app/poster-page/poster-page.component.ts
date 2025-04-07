@@ -30,7 +30,6 @@ export class PosterPageComponent implements OnInit {
     this.http.get<any[]>(endpoint).subscribe({
       next: (data: any[]) => {
         this.images = data;
-        console.log(`Fetched with id ${id}:`, data);
       },
       error: (err) => {
         console.error(`Error fetching with id ${id}:`, err);

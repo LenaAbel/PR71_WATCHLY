@@ -198,7 +198,6 @@ export class ShowsService {
       this.http.put(`http://localhost:3000/api/shows/${id}/displayed`, { is_displayed: isDisplayed })
         .pipe(
           map((response: any) => {
-            console.log('Update response:', response);
             // Show success alert
             this.showAlert(`Success! ${isDisplayed ? 'Added' : 'Removed'} show with ID: ${id}`, 'success');
             return response;

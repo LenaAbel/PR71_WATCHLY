@@ -25,8 +25,6 @@ export class ResearchPageComponent implements OnInit {
   }
 
   searchContent(): void {
-    console.log(`Searching for: ${this.searchQuery}`);
-    
     if (this.searchQuery) {
       const endpoint = `http://localhost:3000/api/shows/search`;
       const options = { 
@@ -38,7 +36,6 @@ export class ResearchPageComponent implements OnInit {
       this.httpClient.get<Content[]>(endpoint, options).subscribe({
         next: (response) => {
           this.searchResults = response;
-          console.log(`Search results for query "${this.searchQuery}":`, response);
           if (this.searchResults.length > 0) {
             this.getUserFavorites(this.userId);
           }
@@ -51,16 +48,13 @@ export class ResearchPageComponent implements OnInit {
   }
 
   getUserFavorites(id: number): void {
-    console.log(`Fetching user favorites for ID: ${id}`);
     const endpoint = `http://localhost:3000/api/persons/id/${id}/favorites`;
   
     this.httpClient.get<any>(endpoint).subscribe({
       next: (response) => {
-        console.log(`User favorites response:`, response);
   
         if (response.favorites && Array.isArray(response.favorites)) {
           this.userFavorites = response.favorites.map((fav: { show_id: number }) => fav.show_id); 
-          console.log(`User favorites IDs:`, this.userFavorites);
   
           this.markFavorites(response.favorites);
         } else {
@@ -82,7 +76,5 @@ export class ResearchPageComponent implements OnInit {
         Favorite: favorite ? { ...favorite } : null
       };
     });
-  
-    console.log('Updated search results with favorites:', this.searchResults);
   }
 }

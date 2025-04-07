@@ -100,7 +100,6 @@ export class CommentSectionComponent implements OnInit {
 
     this.commentService.addComment(comment).subscribe({
       next: (response) => {
-        console.log('Comment posted successfully:', response);
         this.comments.unshift(response);
         this.newComment.comment_text = '';
         this.newComment.is_spoiler = false;

@@ -26,13 +26,9 @@ export class EpisodePageComponent implements OnInit {
     this.http.get<any[]>(endpoint).subscribe({
       next: (data: any[]) => {
         this.episodes = data;
-        console.log('Episodes:', this.episodes);
         
         this.groupSeasons();
         
-        console.log(`Fetched with id ${id}:`, data);
-        console.log(this.groupedSeasons);
-
         if(this.episodes.length === 0) {
           this.router.navigate(['/error/404']);
         }

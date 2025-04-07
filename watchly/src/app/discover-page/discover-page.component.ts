@@ -34,7 +34,6 @@ export class DiscoverPageComponent implements OnInit {
     this.http.get<Content[]>(endpoint).subscribe({
       next: (response) => {
         this.displayedShows = response;
-        console.log(`📺 displayedShows`, this.displayedShows);
         if (this.displayedShows.length > 0) {
           this.getUserFavorites(this.userId, 'series');
         }
@@ -50,7 +49,6 @@ export class DiscoverPageComponent implements OnInit {
     this.http.get<Content[]>(endpoint).subscribe({
       next: (response) => {
         this.displayedMovies = response;
-        console.log(`🎬 displayedMovies`, this.displayedMovies);
         if (this.displayedMovies.length > 0) {
           this.getUserFavorites(this.userId, 'movies');
         }
@@ -114,7 +112,6 @@ export class DiscoverPageComponent implements OnInit {
       };
     });
   
-    console.log('✅ Updated displayedMovies with favorites:', this.displayedMovies);
   }
   
   markFavoriteSeries(favorites: { show_id: number }[]): void {
@@ -127,7 +124,6 @@ export class DiscoverPageComponent implements OnInit {
       };
     });
   
-    console.log('✅ Updated displayedShows with favorites:', this.displayedShows);
   }
   
 }

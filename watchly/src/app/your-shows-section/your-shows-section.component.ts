@@ -54,9 +54,6 @@ export class YourShowsSectionComponent implements OnInit {
         
         this.filterShows();
         
-        console.log('All shows:', this.allShows);
-        console.log('Movies count:', this.allShows.filter(s => s.is_movie).length);
-        console.log('Series count:', this.allShows.filter(s => !s.is_movie).length);
       },
       error: (err) => {
         console.error(`Error fetching person with id ${id}:`, err);
@@ -73,8 +70,6 @@ export class YourShowsSectionComponent implements OnInit {
     } else {
       this.content = this.allShows.filter(show => Boolean(show.is_movie) === false);
     }
-    
-    console.log(`Filter applied: ${this.selectedTab}, Results: ${this.content.length}`);
   }
 
   selectTab(tab: string): void {
