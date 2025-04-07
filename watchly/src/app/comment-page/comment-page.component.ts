@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommentService } from '../services/comment.service';
 import { Comment } from '../models/comment';
+import {Router} from '@angular/router';
+import { Utils } from '../utils';
 
 @Component({
   selector: 'app-comment-page',
@@ -15,7 +17,8 @@ export class CommentPageComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private commentService: CommentService
+    private commentService: CommentService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -31,8 +34,13 @@ export class CommentPageComponent implements OnInit {
   private loadComments() {
     if (this.showId) {
       this.commentService.getShowComments(this.showId).subscribe({
-        next: (comments) => this.comments = comments,
-        error: (error) => console.error('Error loading comments:', error)
+        next: (comments) => {
+          this.comments = comments
+        },
+        error: (error) => {
+          console.error('Error loading comments:', error)
+          Utils.redirection404(this.router);
+        }
       });
     }
   }
