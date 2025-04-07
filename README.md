@@ -20,6 +20,12 @@ https://www.figma.com/design/BFw10l912WWP8uPyzLCNX7/Watchly-maquette-lololol?nod
 - npm (v6 or higher)
 - Angular CLI (v13.3 or higher)
 
+## Project Structure
+
+The project consists of two main parts:
+- `watchly/` - Angular frontend application
+- `api_watchly/` - Backend API server
+
 ## Installation
 
 1. Clone the repository:
@@ -28,33 +34,63 @@ git clone https://github.com/yourusername/PR71_WATCHLY.git
 cd PR71_WATCHLY
 ```
 
-2. Install dependencies:
+2. Install backend dependencies:
 ```bash
 cd api_watchly
-```
-```bash
 npm install
+cd ..
 ```
 
-3. Start the development server:
+3. Install frontend dependencies:
 ```bash
 cd watchly
+npm install
+cd ..
 ```
+
+## Running the Application
+
+1. Start the API server:
 ```bash
-ng serve
-```
-
-4. Open your browser and navigate to `http://localhost:4200`
-
-
-5. Start the API :
-```bash
+cd api_watchly
 npm start
 ```
+The API will be available at `http://localhost:3000/api/`
 
-6. Open your browser and navigate to `http://localhost:3000/api/`
+2. In a new terminal, start the Angular development server:
+```bash
+cd watchly
+ng serve
+```
+The frontend will be available at `http://localhost:4200`
 
 ## Development
 
-- Run `ng serve` for a dev front
-- Run `npm start` for a dev api
+- Frontend: Changes to Angular code will automatically reload in the browser
+
+## API Documentation
+
+The API includes Swagger documentation for easy exploration of endpoints:
+
+- Once the API server is running, visit `http://localhost:3000/api-docs` to access the interactive Swagger UI
+- The documentation provides details on all available endpoints, request parameters, and response formats
+
+## Environment Configuration
+
+The backend requires a `.env` file in the `api_watchly` directory with the following variables:
+
+```properties
+# TMDB API access token (required)
+API_KEYS=your_tmdb_api_token
+
+# Secret key for JWT authentication (required)
+JWT_SECRET=your_secret_key
+
+# Number of pages to fetch from TMDB API (default: 1)
+TMDB_PAGES=1
+```
+
+### Notes:
+- The API will not function correctly without the proper environment variables
+- Higher values for TMDB_PAGES will load more content but increase initialization time
+- Do not commit your .env file to version control
