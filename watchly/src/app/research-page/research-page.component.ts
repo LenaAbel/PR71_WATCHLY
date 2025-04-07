@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Content } from '../models/content';
+import { Utils } from '../utils';
 
 @Component({
   selector: 'app-research-page',
@@ -15,7 +16,7 @@ export class ResearchPageComponent implements OnInit {
   userFavorites: number[] = []; // Stocke les IDs des favoris de l'utilisateur
   userId: number = JSON.parse(localStorage.getItem('userData') || '{}').id;
 
-  constructor(private route: ActivatedRoute, private httpClient: HttpClient) { }
+  constructor(private route: ActivatedRoute, private httpClient: HttpClient, private router :Router) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -42,6 +43,7 @@ export class ResearchPageComponent implements OnInit {
         },
         error: (error) => {
           console.error('Error fetching search results:', error);
+          Utils.redirection404(this.router);
         }
       });
     }

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, UrlSegment } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { Utils } from '../utils';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-poster-page',
@@ -11,7 +13,7 @@ export class PosterPageComponent implements OnInit {
 
   showId!: number ;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient) { }
+  constructor(private route: ActivatedRoute, private http: HttpClient, private router : Router) { }
 
   ngOnInit(): void {
     this.route.url.subscribe((segments: UrlSegment[]) => {
@@ -33,6 +35,7 @@ export class PosterPageComponent implements OnInit {
       },
       error: (err) => {
         console.error(`Error fetching with id ${id}:`, err);
+        Utils.redirection404(this.router);
       }
     });
   }

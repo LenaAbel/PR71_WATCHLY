@@ -3,6 +3,8 @@ import { SwiperComponent } from 'swiper/angular';
 import { HttpClient } from '@angular/common/http';
 import { Content } from '../models/content';
 import { Swiper } from 'swiper';
+import { Utils } from '../utils';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-discover-page',
@@ -22,7 +24,7 @@ export class DiscoverPageComponent implements OnInit {
 
   swiperRef: Swiper | undefined;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router :Router) {}
 
   ngOnInit(): void {
     this.getDisplayedShows();
@@ -40,6 +42,7 @@ export class DiscoverPageComponent implements OnInit {
       },
       error: (error) => {
         console.error('❌ Error fetching displayed shows:', error);
+        Utils.redirection404(this.router);
       }
     });
   }
@@ -55,6 +58,7 @@ export class DiscoverPageComponent implements OnInit {
       },
       error: (error) => {
         console.error('❌ Error fetching displayed movies:', error);
+        Utils.redirection404(this.router);
       }
     });
   }

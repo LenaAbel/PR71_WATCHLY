@@ -4,6 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { Actor } from '../models/actor';
 import { Content } from '../models/content';
 import { AuthenticationService } from '../services/authentification.service';
+import { Utils } from '../utils';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-show-page',
   templateUrl: './show-page.component.html',
@@ -19,7 +21,7 @@ export class ShowPageComponent implements OnInit {
   images!: any[];
   isRatingPopupOpen = false;
   isLoggedIn = false;
-  constructor(private route: ActivatedRoute, private http: HttpClient, private authService: AuthenticationService) {}
+  constructor(private route: ActivatedRoute, private http: HttpClient, private authService: AuthenticationService, private router :Router) {}
 
   ngOnInit(): void {
     this.type = this.route.snapshot.url.some(segment => segment.path === 'episode')
@@ -55,6 +57,7 @@ export class ShowPageComponent implements OnInit {
       },
       error: (err) => {
         console.error(`Error fetching with id ${id}:`, err);
+        Utils.redirection404(this.router);
       }
     });
   }
@@ -85,6 +88,7 @@ export class ShowPageComponent implements OnInit {
       },
       error: (err) => {
         console.error(`Error fetching with id ${id}:`, err);
+        Utils.redirection404(this.router);
       }
     });
   }

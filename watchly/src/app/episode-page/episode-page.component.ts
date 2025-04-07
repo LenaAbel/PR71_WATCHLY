@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
+import { Utils } from '../utils';
 
 @Component({
   selector: 'app-episode-page',
@@ -36,6 +37,7 @@ export class EpisodePageComponent implements OnInit {
       },
       error: (err) => {
         console.error(`Error fetching with id ${id}:`, err);
+        Utils.redirection404(this.router);
       }
     });
   }
