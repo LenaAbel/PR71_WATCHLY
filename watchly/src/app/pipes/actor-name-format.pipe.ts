@@ -3,6 +3,10 @@ import { Pipe, PipeTransform } from '@angular/core';
 @Pipe({
   name: 'actorNameFormat'
 })
+/**
+ * Pipe to format actor names by removing additional information in parentheses.
+ * @param actor - The actor object containing the name to be formatted.
+ */
 export class ActorNameFormatPipe implements PipeTransform {
   transform(actor: any): any {
     if (!actor || !actor.name) return actor;

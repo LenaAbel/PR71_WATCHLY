@@ -6,6 +6,12 @@ import { Actor } from '../models/actor';
   templateUrl: './cast-section.component.html',
   styleUrls: ['./cast-section.component.css']
 })
+/**
+ * Component to display the cast section of a movie or series.
+ * It shows a list of actors with their names and character roles.
+ * @param cast - Array of Actor objects representing the cast of the show.
+ * @param showId - The ID of the movie or series.
+ */
 export class CastSectionComponent implements OnInit {
   @Input() cast: Actor[] = [];
    

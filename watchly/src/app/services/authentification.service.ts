@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap, throwError, Subject } from 'rxjs';
 
+
 interface LoginResponse {
   token: string;
   user: {
@@ -21,6 +22,13 @@ interface ProfilePicture {
 @Injectable({
   providedIn: 'root'
 })
+/**
+ * AuthenticationService handles user authentication, including login, registration, and profile management.
+ * @param apiUrl - The base URL for the API.
+ * @param authStateSubject - Subject to notify subscribers about authentication state changes.
+ * @param authState - Observable to listen for authentication state changes.
+ * @param http - HttpClient service to make HTTP requests.
+ */
 export class AuthenticationService {
   private apiUrl = 'http://localhost:3000/api/users';
   private authStateSubject = new Subject<void>();

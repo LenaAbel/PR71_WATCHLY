@@ -8,6 +8,16 @@ import { Router, ActivatedRoute } from '@angular/router';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
+/**
+ * LoginComponent handles user login functionality.
+ * @param form - User object containing email and password.
+ * @param showPassword - Boolean to toggle password visibility.
+ * @param errorMessage - String to display error messages.
+ * @param sessionExpiredMessage - String to display session expired messages.
+ * @param authService - AuthenticationService to handle authentication-related tasks.
+ * @param router - Router service to navigate between pages.
+ * @param route - ActivatedRoute service to access route parameters.
+ */
 export class LoginComponent implements OnInit {
   form = new User();
   showPassword = false;

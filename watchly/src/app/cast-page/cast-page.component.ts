@@ -10,6 +10,15 @@ import { Utils } from '../utils';
   templateUrl: './cast-page.component.html',
   styleUrls: ['./cast-page.component.css']
 })
+/**
+ * Component to display the cast of a movie or series.
+ * @param showId - The ID of the movie or series.
+ * @param type - The type of the show (either "movies" or "series").
+ * @param cast - Array of Actor objects representing the cast of the show.
+ * @param route - ActivatedRoute service to access route parameters.
+ * @param http - HttpClient service to make HTTP requests.
+ * @param router - Router service to navigate between pages.
+ */
 export class CastPageComponent implements OnInit {
   showId!: number;
   type!: string;

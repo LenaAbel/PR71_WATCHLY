@@ -8,6 +8,18 @@ import { Content } from '../models/content';
   templateUrl: './admin-page.component.html',
   styleUrls: ['./admin-page.component.css']
 })
+
+/**
+ * AdminPageComponent is responsible for managing the admin page.
+ * @param isAdmin - Indicates if the user is an admin.
+ * @param content - Array of Content objects representing all shows.
+ * @param displayedMovies - Array of Content objects representing movies that are currently displayed.
+ * @param displayedSeries - Array of Content objects representing series that are currently displayed.
+ * @param nonDisplayedMovies - Array of Content objects representing movies that are not displayed.
+ * @param nonDisplayedSeries - Array of Content objects representing series that are not displayed.
+ * @param showsService - Service to manage shows data.
+ * @param router - Router service to navigate between pages.
+ */
 export class AdminPageComponent implements OnInit {
   isAdmin: boolean = false;
   content: Content[] = [];

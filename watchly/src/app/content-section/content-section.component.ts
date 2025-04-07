@@ -8,6 +8,14 @@ import { AuthenticationService } from '../services/authentification.service';
   templateUrl: './content-section.component.html',
   styleUrls: ['./content-section.component.css']
 })
+/**
+ * Component to display a section for movies or series.
+ * @param type - The type of content (movies or series).
+ * @param content - The content object containing details about the movie or series.
+ * @param openRating - Event emitter to notify when the rating section is opened.
+ * @param ratingSubmitted - Event emitter to notify when a rating is submitted.
+ * @param isLoading - Indicates if the content is still loading.
+ */
 export class ContentSectionComponent implements OnInit {
   @Input() type!: string;
   @Input() content!: Content;

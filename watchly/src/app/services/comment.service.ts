@@ -9,6 +9,11 @@ import { environment } from '../../environments/environment';
   providedIn: 'root'
 })
 
+/**
+ * CommentService handles operations related to comments.
+ * @param apiUrl - The base URL for the API.
+ * @param http - HttpClient service to make HTTP requests.
+ */
 export class CommentService {
   private apiUrl = `http://localhost:3000/api/comments`;
   

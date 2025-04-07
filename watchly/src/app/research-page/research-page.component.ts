@@ -9,6 +9,13 @@ import { Utils } from '../utils';
   templateUrl: './research-page.component.html',
   styleUrls: ['./research-page.component.css']
 })
+/**
+ * Component to handle the research page functionality.
+ * @param searchQuery - The query string used for searching content.
+ * @param searchResults - Array of Content objects representing the search results.
+ * @param userFavorites - Array of IDs representing the user's favorite content.
+ * @param userId - The ID of the user.
+*/
 export class ResearchPageComponent implements OnInit {
 
   searchQuery!: string;

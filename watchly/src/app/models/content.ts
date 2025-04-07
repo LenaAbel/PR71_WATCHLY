@@ -1,3 +1,26 @@
+/**
+ * Content model for representing movies and series.
+ * @param show_id - Unique identifier for the show.
+ * @param name - Name of the show.
+ * @param description - Description of the show.
+ * @param released_date - Release date of the show.
+ * @param nationality - The nationality of the show.
+ * @param trailer_link - Link to the trailer of the show.
+ * @param status - Status of the show (e.g., ongoing, completed).
+ * @param duration - Duration of the show in minutes.
+ * @param is_movie - Indicates if the show is a movie.
+ * @param is_rated - Indicates if the show has a rating.
+ * @param is_displayed - Indicates if the show is displayed.
+ * @param Genres - Array of genres associated with the show.
+ * @param Favorite - Indicates if the show is marked as favorite.
+ * @param imdb_rating - IMDb rating of the show.
+ * @param rating - TMDB rating of the show on a 5-scale.
+ * @param season - Season number for the episode.
+ * @param number - Episode number.
+ * @param episodes - Total number of episodes in the series or season.
+ * @param seasons - Total number of seasons in the series.
+ * @param thumbnail - Thumbnail image URL for the show.
+ */
 export class Content {
   // Show properties
   show_id!: number;

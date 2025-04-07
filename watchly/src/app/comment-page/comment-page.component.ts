@@ -10,6 +10,15 @@ import { Utils } from '../utils';
   templateUrl: './comment-page.component.html',
   styleUrls: ['./comment-page.component.css']
 })
+/**
+ * Component to display comments for a specific show or user.
+ * @param type - The type of the page (either "show" or "user").
+ * @param showId - The ID of the show for which comments are displayed.
+ * @param comments - Array of Comment objects representing the comments.
+ * @param route - ActivatedRoute service to access route parameters.
+ * @param commentService - CommentService to fetch comments from the server.
+ * @param router - Router service to navigate between pages.
+*/
 export class CommentPageComponent implements OnInit {
   type!: string;
   showId!: number;

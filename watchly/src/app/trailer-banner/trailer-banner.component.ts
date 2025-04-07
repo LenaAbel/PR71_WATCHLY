@@ -7,6 +7,13 @@ import { HttpClient } from '@angular/common/http';
   templateUrl: './trailer-banner.component.html',
   styleUrls: ['./trailer-banner.component.css']
 })
+/**
+ * Component to display a trailer banner for a show.
+ * @param showId - The ID of the show for which the trailer is to be displayed.
+ * @param embedLink - The sanitized URL for the YouTube trailer.
+ * @param sanitizer - Service to sanitize the URL for safe embedding.
+ * @param http - Service to make HTTP requests.
+ */
 export class TrailerBannerComponent implements OnInit {
 
   @Input() showId!: number;

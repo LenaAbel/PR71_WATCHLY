@@ -6,6 +6,11 @@ import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
+/**
+ * Main application component.
+ * This component serves as the root of the application and handles routing events.
+ * 
+ */
 export class AppComponent implements OnInit {
   title = 'watchly';
 

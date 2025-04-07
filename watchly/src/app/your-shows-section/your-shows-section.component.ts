@@ -10,6 +10,16 @@ import Swiper from 'swiper';
   templateUrl: './your-shows-section.component.html',
   styleUrls: ['./your-shows-section.component.css']
 })
+/**
+ * Component to display the user's favorite movies and series.
+ * @param selectedTab - The currently selected tab ('movies' or 'series').
+ * @param allShows - Array of all shows fetched from the server.
+ * @param content - Array of Content objects representing the user's favorite shows.  
+* @param isLoggedIn - Boolean indicating if the user is logged in.
+ * @param isAdmin - Boolean indicating if the user is an admin.
+ * @param swiperRef - Reference to the Swiper instance for navigation.
+ * @param favoriteSuccessMessage - Message to display after successfully deleting a favorite show.
+ */
 export class YourShowsSectionComponent implements OnInit {
   @ViewChild(SwiperComponent, { static: false }) swiper?: SwiperComponent;
   selectedTab: string = 'movies'; 

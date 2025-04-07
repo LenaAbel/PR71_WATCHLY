@@ -9,6 +9,10 @@ import { Router } from '@angular/router';
   templateUrl: './poster-page.component.html',
   styleUrls: ['./poster-page.component.css']
 })
+/**
+ * Component to display the poster page of a movie or series.
+ * @param showId - The ID of the movie or series.
+ */
 export class PosterPageComponent implements OnInit {
 
   showId!: number ;

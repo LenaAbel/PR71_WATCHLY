@@ -9,6 +9,15 @@ import { Input, ViewChild } from '@angular/core';
   templateUrl: './slider-button.component.html',
   styleUrls: ['./slider-button.component.css']
 })
+/**
+ * Component to display a slider of movies or series with buttons to add or delete content.
+ * @param type - Type of content ('movie' or 'series').
+ * @param content - Array of Content objects representing the items to be displayed in the slider.
+ * @param buttonType - Type of button ('delete' or 'add').  
+ * @param isClicked - Boolean to control the visibility of the button.
+ * @param selectedItem - The currently selected item in the slider.
+ * @param swiperRef - Reference to the Swiper instance for navigation.
+ */
 export class SliderButtonComponent implements OnInit {
   @Output() buttonClick = new EventEmitter<Content>();
 

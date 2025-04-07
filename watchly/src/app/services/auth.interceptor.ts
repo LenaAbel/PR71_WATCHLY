@@ -6,6 +6,12 @@ import { Router } from '@angular/router';
 import { AuthenticationService } from './authentification.service';
 
 @Injectable()
+/**
+ * AuthInterceptor intercepts HTTP requests and adds the Authorization header if a token is present.
+ * It also handles 401 Unauthorized errors by redirecting to the login page.
+ * @param router - Router service to navigate between pages.
+ * @param authService - AuthenticationService to handle authentication-related tasks.
+ */
 export class AuthInterceptor implements HttpInterceptor {
   constructor(
     private router: Router,

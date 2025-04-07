@@ -9,6 +9,15 @@ import { Utils } from '../utils';
   templateUrl: './episode-page.component.html',
   styleUrls: ['./episode-page.component.css']
 })
+/**
+ * Component to display episodes of a series.
+ * @param episodes - Array of episodes fetched from the server.
+ * @param groupedSeasons - Array of seasons with their respective episodes.
+ * @param showId - The ID of the series.
+ * @param route - ActivatedRoute service to access route parameters.
+ * @param http - HttpClient service to make HTTP requests.
+ * @param router - Router service to navigate between pages.
+ */
 export class EpisodePageComponent implements OnInit {
   episodes!: any[];
   groupedSeasons!: any[];;

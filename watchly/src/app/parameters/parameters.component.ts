@@ -14,6 +14,23 @@ interface ProfilePicture {
   templateUrl: './parameters.component.html',
   styleUrls: ['./parameters.component.css']
 })
+/**
+ * Component to manage user parameters including profile picture, username, email, and password.
+ * @param userForm - FormGroup to handle user input.
+ * @param successMessage - Message to display on successful update.
+ * @param errorMessage - Message to display on error.
+ * @param showPassword - Boolean to toggle password visibility.
+ * @param defaultProfilePictures - Array of default profile pictures.
+ * @param selectedPictureId - ID of the selected profile picture.
+ * @param showPictureSelector - Boolean to show/hide picture selector.
+ * @param selectedPicture - Currently selected profile picture.
+ * @param currentProfilePicture - URL of the current profile picture.
+ * @param originalFormValues - Original values of the form for comparison.
+ * @param showDeleteConfirmation - Boolean to show/hide delete confirmation.
+ * @param authService - AuthenticationService to handle user authentication.
+ * @param router - Router service to navigate between pages.
+ * @param fb - FormBuilder service to create reactive forms.
+ */
 export class ParametersComponent implements OnInit {
   userForm: FormGroup;
   successMessage: string = '';

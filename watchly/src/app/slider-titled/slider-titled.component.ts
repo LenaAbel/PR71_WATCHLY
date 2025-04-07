@@ -31,6 +31,14 @@ import { trigger, transition, style, animate, query, stagger } from '@angular/an
     ])
   ]
 })
+/**
+ * Component to display a titled slider of movies or series.
+ * @param title - The title of the slider.
+ * @param type - Type of content ('movie' or 'series').
+ * @param buttonType - Type of button ('delete' or 'add').
+ * @param content - Array of Content objects representing the items to be displayed in the slider.
+ * @param animateCards - Boolean to control card animation.
+ */
 export class SliderTitledComponent implements OnInit {
   @Input() title: string = '';
   @Input() type: string = '';

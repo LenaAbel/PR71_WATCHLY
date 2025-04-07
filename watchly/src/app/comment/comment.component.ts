@@ -8,6 +8,17 @@ import { marked } from 'marked';
   templateUrl: './comment.component.html',
   styleUrls: ['./comment.component.css']
 })
+/**
+ * Component to display a comment with options to delete and toggle spoiler content.
+ * @param page - The page where the comment is displayed.
+ * @param isPage - Indicates if the comment is related to a page.
+ * @param comment - The comment object containing the comment text and other details.
+ * @param canDelete - Indicates if the user has permission to delete the comment.
+ * @param deleteComment - Event emitter to notify when a comment is deleted.
+ * @param showSpoilerContent - Indicates if the spoiler content should be shown.
+ * @param parsedComment - The parsed HTML content of the comment.
+ * @param sanitizer - Service to sanitize HTML content.
+ */
 export class CommentComponent implements OnInit {
   @Input() page!: string;
   @Input() isPage!: boolean;

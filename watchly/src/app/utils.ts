@@ -1,4 +1,7 @@
 import { Router } from '@angular/router';
+/**
+ * Utility class for common functions.
+ */
 export class Utils {
 
     constructor() { }

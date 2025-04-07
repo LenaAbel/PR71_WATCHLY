@@ -9,6 +9,13 @@ import { Router } from '@angular/router';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
+/**
+ * Component to handle user registration.
+ * @param registerForm - FormGroup to handle user input.
+ * @param showPassword - Boolean to toggle password visibility.
+ * @param errorMessage - Message to display on error.
+ * @param authService - AuthenticationService to handle user authentication.
+ */
 export class RegisterComponent implements OnInit {
 
   registerForm: FormGroup = new FormGroup({}); // Ensuring initialization

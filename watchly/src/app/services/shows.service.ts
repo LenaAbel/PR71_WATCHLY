@@ -8,6 +8,26 @@ import { Content } from '../models/content';
 @Injectable({
   providedIn: 'root'
 })
+/**
+ * ShowsService handles operations related to movies and series.
+ * It fetches, updates, and manages the display status of content.
+ * @param apiURLMovie - The base URL for the movie API.
+ * @param apiUrlTv - The base URL for the TV series API.
+ * @param apiUrlPictures - The base URL for fetching pictures.
+ * @param alertMessage - Message to display in the UI.
+ * @param alertType - Type of alert (success or error).
+ * @param alertTimeout - Timeout for auto-dismissing alerts.
+ * @param movies - Array of movies.
+ * @param series - Array of TV series.
+ * @param notDisplayedMovies - Array of movies not displayed.
+ * @param notDisplayedSeries - Array of TV series not displayed.
+ * @param favoritesMovies - Array of favorite movies.
+ * @param favoritesSeries - Array of favorite TV series.
+ * @param displayedMoviesSubject - Subject to notify subscribers about displayed movies.
+ * @param displayedSeriesSubject - Subject to notify subscribers about displayed series.
+ * @param nonDisplayedMoviesSubject - Subject to notify subscribers about non-displayed movies.
+ * @param nonDisplayedSeriesSubject - Subject to notify subscribers about non-displayed series.
+ */
 export class ShowsService {
   private apiURLMovie = 'http://localhost:3000/api/shows';
   private apiUrlTv = 'http://localhost:3000/api/episodes/details';

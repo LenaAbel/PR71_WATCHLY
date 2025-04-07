@@ -8,6 +8,16 @@ import { AuthenticationService } from '../services/authentification.service';
   templateUrl: './comment-section.component.html',
   styleUrls: ['./comment-section.component.css']
 })
+/**
+ * Component to display a section for adding and viewing comments.
+ * @param showId - The ID of the show for which comments are displayed.
+ * @param comments - Array of Comment objects representing the comments.
+ * @param newComment - Object representing a new comment to be added.
+ * @param errorMessage - Error message to be displayed in case of an error.
+ * @param successMessage - Success message to be displayed after a successful comment submission.
+ * @param commentService - Service to manage comments.
+ * @param authService - Service to manage authentication.
+ */
 export class CommentSectionComponent implements OnInit {
   @Input() showId!: number;
   comments: Comment[] = [];

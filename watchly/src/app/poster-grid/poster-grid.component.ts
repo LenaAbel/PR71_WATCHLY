@@ -5,6 +5,14 @@ import { Component, Input, OnInit, OnDestroy, ViewChildren, QueryList, ElementRe
   templateUrl: './poster-grid.component.html',
   styleUrls: ['./poster-grid.component.css']
 })
+/**
+ * Component to display a grid of images (posters).
+ * It adjusts the grid layout based on the size of the images.
+ * @param images - Array of image URLs to be displayed in the grid.
+ * @param page - The page where the poster grid is displayed.
+ * @param imageContainers - QueryList of image container elements for layout adjustment.
+ * @param selectedImage - The currently selected image for viewing in a larger format.
+ */
 export class PosterGridComponent implements OnInit, OnDestroy {
 
   @Input() images: any[] = [];

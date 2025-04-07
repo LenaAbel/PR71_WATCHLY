@@ -7,6 +7,15 @@ import { HttpClient } from '@angular/common/http';
   templateUrl: './content-card.component.html',
   styleUrls: ['./content-card.component.css']
 })
+/**
+ * Component to display a content card for movies or series.
+ * @param type - The type of content (movies or series).
+ * @param content - The content object containing details about the movie or series.
+ * @param favoriteDeleted - Event emitter to notify when a favorite is deleted.
+ * @param alertMessage - Message to display for alerts.
+ * @param alertType - Type of alert (success or error).
+ * @param http - HttpClient service to make HTTP requests.
+ */
 export class ContentCardComponent implements OnInit {
   @Input() type! : string;
   @Input() content! : Content;

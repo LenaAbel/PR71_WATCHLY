@@ -1,3 +1,7 @@
+/**
+ * User class
+ * Represents a user in the application.
+ */
 export class User {
   firstname: string;
   lastname: string;

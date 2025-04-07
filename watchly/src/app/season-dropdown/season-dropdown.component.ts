@@ -9,6 +9,15 @@ Swiper.use([Navigation, Pagination, Keyboard]);
   templateUrl: './season-dropdown.component.html',
   styleUrls: ['./season-dropdown.component.css']
 })
+/**
+ * Component to display a dropdown of episodes for a specific season of a show.
+ * @param active - Boolean to control the visibility of the dropdown.
+ * @param page - The current page of the application.
+ * @param season - The season object containing information about the episodes.
+ * @param episodes - Array of episode objects for the selected season.
+ * @param seasonNumber - The number of the current season.
+ * @param swiperRef - Reference to the Swiper instance for navigation.
+*/
 export class SeasonDropdownComponent implements OnInit {
 
   @Input() active !: boolean;

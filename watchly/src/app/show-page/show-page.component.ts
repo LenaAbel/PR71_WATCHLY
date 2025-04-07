@@ -11,6 +11,18 @@ import { Router } from '@angular/router';
   templateUrl: './show-page.component.html',
   styleUrls: ['./show-page.component.css']
 })
+/**
+ * Component to display the details of a movie or series.
+ * @param showId - The ID of the movie or series.
+ * @param type - The type of the show (either "movies" or "series").
+ * @param show - The Content object containing details about the movie or series.
+ * @param cast - Array of Actor objects representing the cast of the show.
+ * @param episodes - Array of episodes for the series.
+ * @param groupedSeasons - Array of grouped seasons for the series.   
+ * @param images - Array of images related to the show.
+ * @param isRatingPopupOpen - Boolean to control the visibility of the rating popup.
+ * @param isLoggedIn - Boolean to check if the user is logged in.
+ */
 export class ShowPageComponent implements OnInit {
   showId!: number;
   type!: string;

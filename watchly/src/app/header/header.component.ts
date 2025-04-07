@@ -7,6 +7,17 @@ import { AuthenticationService } from '../services/authentification.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
+/**
+ * HeaderComponent is responsible for displaying the header of the application.
+ * It includes navigation links, search functionality, and user authentication status.
+ * 
+ * @param route - The current route of the application.
+ * @param searchQuery - The query string for searching shows.
+ * @param token - The authentication token for the user.
+ * @param isAdmin - Indicates if the user is an admin.
+ * @param username - The username of the logged-in user.
+ * @param profilePicture - The URL of the user's profile picture.
+ */
 export class HeaderComponent implements OnInit, OnChanges {
   @Input() route!: string;
   searchQuery: string = '';

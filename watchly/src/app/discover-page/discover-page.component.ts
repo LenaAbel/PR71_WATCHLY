@@ -11,6 +11,19 @@ import { Router } from '@angular/router';
   templateUrl: './discover-page.component.html',
   styleUrls: ['./discover-page.component.css']
 })
+/**
+ * Component to display the discover page with movies and series.
+ * @param seriesSwiper - Swiper component for series.
+ * @param moviesSwiper - Swiper component for movies.
+ * @param displayedShows - Array of Content objects representing the displayed shows.
+ * @param displayedMovies - Array of Content objects representing the displayed movies.
+ * @param userFavoritesSeries - Array of favorite series IDs for the user.
+ * @param userFavoritesMovies - Array of favorite movies IDs for the user.
+ * @param userId - ID of the user.
+ * @param swiperRef - Reference to the Swiper instance.
+ * @param http - HttpClient service to make HTTP requests.
+ * @param router - Router service to navigate between pages.
+ */
 export class DiscoverPageComponent implements OnInit {
 
   @ViewChild('seriesSwiper', { static: false }) seriesSwiper?: SwiperComponent;

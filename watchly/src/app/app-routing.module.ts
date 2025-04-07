@@ -14,7 +14,9 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { ResearchPageComponent } from './research-page/research-page.component';
 import { ParametersComponent } from './parameters/parameters.component';
 import { DiscoverPageComponent } from './discover-page/discover-page.component';
-
+/**
+ * This module defines the routing configuration for the application.
+ */
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},

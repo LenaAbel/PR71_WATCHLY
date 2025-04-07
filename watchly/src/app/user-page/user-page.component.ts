@@ -13,6 +13,20 @@ import { Content } from '../models/content';
   templateUrl: './user-page.component.html',
   styleUrls: ['./user-page.component.css']
 })
+/**
+ * Component to display user information and comments.
+ * @param firstname - User's first name.
+ * @param lastname - User's last name.
+ * @param username - User's username.
+ * @param profilePicture - User's profile picture URL.
+ * @param comments - Array of Comment objects representing the user's comments.
+ * @param successMessage - Message to display after successfully deleting a comment.
+ * @param shows - Array of Content objects representing the user's favorite shows.
+ * @param allShows - Array of all shows fetched from the server.
+ * @param swiperRef - Reference to the Swiper instance for navigation.
+ * @param currentFilter - Current filter applied to the shows ('all', 'movies', or 'series').
+ * @param searchQuery - Search query for filtering shows.
+ */
 export class UserPageComponent implements OnInit {
   @ViewChild(SwiperComponent, { static: false }) swiper?: SwiperComponent;
   firstname: string = '';

@@ -7,6 +7,12 @@ import { Content } from '../models/content';
   templateUrl: './new-show-banner.component.html',
   styleUrls: ['./new-show-banner.component.css']
 })
+/**
+ * Component to display a banner for new shows.
+ * @param newShow - The new show object containing details about the show.
+ * @param picUrl - The URL of the show's image.
+ * @param http - The HttpClient service for making HTTP requests.
+ */
 export class NewShowBannerComponent implements OnInit {
 
   newShow !: Content;
