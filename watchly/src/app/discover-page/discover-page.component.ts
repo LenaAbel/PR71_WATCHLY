@@ -5,11 +5,32 @@ import { Content } from '../models/content';
 import { Swiper } from 'swiper';
 import { Utils } from '../utils';
 import { Router } from '@angular/router';
+import { trigger, state, style, animate, transition } from '@angular/animations';
 
 @Component({
   selector: 'app-discover-page',
   templateUrl: './discover-page.component.html',
-  styleUrls: ['./discover-page.component.css']
+  styleUrls: ['./discover-page.component.css'],
+  animations: [
+    trigger('fadeIn', [
+      state('void', style({ opacity: 0 })),
+      transition(':enter', [
+        animate('0.5s ease-in', style({ opacity: 1 }))
+      ])
+    ]),
+    trigger('slideIn', [
+      state('void', style({ transform: 'translateY(30px)', opacity: 0 })),
+      transition(':enter', [
+        animate('0.6s ease-out', style({ transform: 'translateY(0)', opacity: 1 }))
+      ])
+    ]),
+    trigger('staggerIn', [
+      transition('* => *', [
+        style({ opacity: 0, transform: 'translateX(-20px)' }),
+        animate('0.5s ease', style({ opacity: 1, transform: 'translateX(0)' }))
+      ])
+    ])
+  ]
 })
 /**
  * Component to display the discover page with movies and series.

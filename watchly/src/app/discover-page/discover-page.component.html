@@ -1,14 +1,14 @@
 <div class="max-w-full">
-    <h2 class="p-6 text-5xl font-bold text-(--color-main-light) dark:text-(--color-main-dark) w-fit">
+    <h2 class="p-6 text-5xl font-bold text-(--color-main-light) dark:text-(--color-main-dark) w-fit" @fadeIn>
         Discover series & movies
     </h2>
 
-    <div class="overflow-hidden px-4 relative">
+    <div class="overflow-hidden px-4 relative" @slideIn>
         <!-- SERIES Swiper -->
-        <h3 class="p-4 font-bold text-3xl">Series</h3>
+        <h3 class="p-4 font-bold text-3xl" @fadeIn>Series</h3>
         <div class="relative">
             <button *ngIf="displayedShows && displayedShows.length > 0" 
-                    class="cursor-pointer absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-(--bg-surface-2-light) dark:bg-(--bg-surface-2-dark) rounded-full p-2" 
+                    class="cursor-pointer absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-(--bg-surface-2-light) dark:bg-(--bg-surface-2-dark) rounded-full p-2 nav-button" 
                     (click)="slidePrev('series', $event)">
                 <svg width="20" height="20" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg" class="text-(--color-main-light) dark:text-(--color-main-dark)">
                     <line x1="35" y1="10" x2="15" y2="25" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
@@ -16,7 +16,7 @@
                 </svg>
             </button>
             <button *ngIf="displayedShows && displayedShows.length > 0"
-                    class="cursor-pointer absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-(--bg-surface-2-light) dark:bg-(--bg-surface-2-dark) rounded-full p-2" 
+                    class="cursor-pointer absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-(--bg-surface-2-light) dark:bg-(--bg-surface-2-dark) rounded-full p-2 nav-button" 
                     (click)="slideNext('series', $event)">
                 <svg width="20" height="20" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg" class="text-(--color-main-light) dark:text-(--color-main-dark)">
                     <line x1="15" y1="10" x2="35" y2="25" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
@@ -36,22 +36,24 @@
                 }"
                 class="user-favorites"
                 *ngIf="displayedShows && displayedShows.length > 0">
-                <ng-template *ngFor="let show of displayedShows" swiperSlide>
-                    <app-content-card 
-                        [type]="show.is_movie ? 'movies' : 'series'" 
-                        [content]="show">
-                    </app-content-card>
+                <ng-template *ngFor="let show of displayedShows; let i = index" swiperSlide>
+                    <div @staggerIn class="card-container" [style.animation-delay]="i * 100 + 'ms'">
+                        <app-content-card 
+                            [type]="show.is_movie ? 'movies' : 'series'" 
+                            [content]="show">
+                        </app-content-card>
+                    </div>
                 </ng-template>
             </swiper>
         </div>
     </div>
 
-    <div class="overflow-hidden px-4 relative">
+    <div class="overflow-hidden px-4 relative" @slideIn>
         <!-- MOVIES Swiper -->
-        <h3 class="p-4 font-bold text-3xl">Movies</h3>
+        <h3 class="p-4 font-bold text-3xl" @fadeIn>Movies</h3>
         <div class="relative">
             <button *ngIf="displayedMovies && displayedMovies.length > 0" 
-                    class="cursor-pointer absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-(--bg-surface-2-light) dark:bg-(--bg-surface-2-dark) rounded-full p-2" 
+                    class="cursor-pointer absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-(--bg-surface-2-light) dark:bg-(--bg-surface-2-dark) rounded-full p-2 nav-button" 
                     (click)="slidePrev('movies', $event)">
                 <svg width="20" height="20" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg" class="text-(--color-main-light) dark:text-(--color-main-dark)">
                     <line x1="35" y1="10" x2="15" y2="25" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
@@ -59,7 +61,7 @@
                 </svg>
             </button>
             <button *ngIf="displayedMovies && displayedMovies.length > 0"
-                    class="cursor-pointer absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-(--bg-surface-2-light) dark:bg-(--bg-surface-2-dark) rounded-full p-2" 
+                    class="cursor-pointer absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-(--bg-surface-2-light) dark:bg-(--bg-surface-2-dark) rounded-full p-2 nav-button" 
                     (click)="slideNext('movies', $event)">
                 <svg width="20" height="20" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg" class="text-(--color-main-light) dark:text-(--color-main-dark)">
                     <line x1="15" y1="10" x2="35" y2="25" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
@@ -79,11 +81,13 @@
                 }"
                 class="user-favorites"
                 *ngIf="displayedMovies && displayedMovies.length > 0">
-                <ng-template *ngFor="let show of displayedMovies" swiperSlide>
-                    <app-content-card 
-                        [type]="show.is_movie ? 'movies' : 'series'" 
-                        [content]="show">
-                    </app-content-card>
+                <ng-template *ngFor="let show of displayedMovies; let i = index" swiperSlide>
+                    <div @staggerIn class="card-container" [style.animation-delay]="i * 100 + 'ms'">
+                        <app-content-card 
+                            [type]="show.is_movie ? 'movies' : 'series'" 
+                            [content]="show">
+                        </app-content-card>
+                    </div>
                 </ng-template>
             </swiper>
         </div>
